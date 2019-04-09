@@ -30,5 +30,15 @@ const productsReducer = (state =[], action) => {
     }
 }
 
+const cartDetailScreenReducer = (state =[], action) => {
+    switch (action.type) {
+        case 'GET_CART_DETAIL':
+            return { ...state, ...action.payload }      
 
-export default reducer = combineReducers({userReducer,homeScreenReducer,productsReducer });
+        default:
+            return state
+    }
+}
+
+
+export default reducer = combineReducers({userReducer,homeScreenReducer,productsReducer,cartDetailScreenReducer });
