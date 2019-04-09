@@ -18,7 +18,7 @@ export const homeApi = (token) => {
        const {sponsored_products,sponsored_shops,slides,banners,collections}=data
        //const {'3','4',5}=collections
        const three=collections['4']
-       console.log(JSON.stringify(three))
+       //console.log(JSON.stringify(three))
         dispatch({type:'GET_HOME_ITEMS',payload:{slides,collections}})
       })
       .catch((error) => {
@@ -58,7 +58,9 @@ export const addToCartApi = (token,selprod_id) => {
     const currency=1
     const language=1
     //const selprod_id=test
-    quantity=1
+    const quantity=1
+
+    console.log(`inilah barisan kita : ${currency}  ${language}  ${selprod_id} ${quantity}`)
 
     fetch(`${apiUrl}add_to_cart`, {
       method: 'POST',
@@ -68,14 +70,10 @@ export const addToCartApi = (token,selprod_id) => {
         'X-TOKEN': token,
         'X-USER-TYPE': '1',
       },
-      body: JSON.stringify({ currency,language,selprod_id,quantity }),
+      formData: JSON.stringify({ currency,language,selprod_id,quantity }),
     }).then((response) => response.json())
       .then( (responseJson) => {
-       
-       const {status,currencySymbol,unread_notifications,data,cart_count,fav_count,unread_messages}=responseJson
-       const {products,total_pages,page,total_records}=data
-      
-        dispatch({type:'GET_PRODUCTS',payload:{products,total_pages,page,total_records}})
+    console.log(JSON.stringify(responseJson))
       })
       .catch((error) => {
         console.log('Error adding : ' + error + selprod_id); 
@@ -96,13 +94,11 @@ export const getCartDetailAPI = (token) => {
       }
     }).then((response) => response.json())
       .then( (responseJson) => {
-       
-       const {status,currencySymbol,unread_notifications,data,cart_count,fav_count,unread_messages}=responseJson
-       const {sponsored_products,sponsored_shops,slides,banners,collections}=data
-       //const {'3','4',5}=collections
-       const three=collections['4']
-       console.log(JSON.stringify(three))
-        dispatch({type:'GET_HOME_ITEMS',payload:{slides,collections}})
+    
+       const {data}=responseJson
+       const {products,cartSummary,}=data
+      
+        dispatch({type:'GET_CART_DETAIL',payload:{products,cartSummary}})
       })
       .catch((error) => {
         console.log('Error initiating cart detail : ' + error); 
