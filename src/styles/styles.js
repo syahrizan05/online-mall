@@ -3,8 +3,16 @@ import Layout from '../constants/Layout'
 import {Constants} from 'expo'
 export default StyleSheet.create({
     container: {
-   
+        backgroundColor:'#f8f8f8',
         paddingTop:Constants.statusBarHeight,
+    },
+
+    statusBar:{
+        paddingTop:Constants.statusBarHeight,
+    },
+
+    authContainer: {
+        backgroundColor:'#f8f8f8',
     },
 
     headerBox: { flex: 1, },
@@ -63,12 +71,6 @@ export default StyleSheet.create({
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
         
-        elevation: 10,},lowOpac:{opacity:0.5},normalOpac:{opacity:1}  
-
-        
-
-        
-        
-
+        elevation: 10,},lowOpac:{opacity:0.5},normalOpac:{opacity:1}     
 });
 
