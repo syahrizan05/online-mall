@@ -3,8 +3,9 @@ import Layout from '../constants/Layout'
 import {Constants} from 'expo'
 export default StyleSheet.create({
     container: {
-        backgroundColor:'#f8f8f8',
-        paddingTop:Constants.statusBarHeight,
+   
+        //paddingTop:Constants.statusBarHeight,
+        backgroundColor:'aliceblue'
     },
 
     statusBar:{

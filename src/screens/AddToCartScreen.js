@@ -19,7 +19,7 @@ import { connect } from 'react-redux'
 import * as actionCreator from '../store/actions/action'
 
 
-class CartDetailScreen extends React.PureComponent {
+class AddToCartScreen extends React.PureComponent {
   static navigationOptions = {
     header: null 
   };
@@ -33,32 +33,13 @@ class CartDetailScreen extends React.PureComponent {
     this.props.products&&console.log(`products : ${JSON.stringify(this.props.products)}`)
     
     return (
-      <Container style={styles.container}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Cart</Title>
-          </Body>
-          <Right><Text>{this.props.cart_count}</Text></Right>
-        </Header>       
-        <Content>
-         <Text>Test</Text> 
-         <Button info style={{height:30, width:70}} onPress={() => this.props.navigation.navigate('Orders')}>
-                      <Text style={{fontSize:9}}>View Order</Text>
-                    </Button>         
-        </Content>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
+      <View style={{position:'absolute',top:Layout.window.height/2}}>      
+    <Card>
+        <CardItem>
+            
+        </CardItem>
+    </Card>
+      </View>
     );
   }
 }
@@ -79,4 +60,4 @@ function mapDispatchToProps(dispatch) {
 
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CartDetailScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(AddToCartScreen)
