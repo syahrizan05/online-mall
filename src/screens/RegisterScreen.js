@@ -18,11 +18,27 @@ import {
   View,
   Card,
 } from 'native-base';
+import { connect } from 'react-redux'
+import * as actionCreator from '../store/actions/action'
+ class RegisterScreen extends React.Component {
 
-export default class RegisterScreen extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      name:null,
+      username:null,
+      email:null,
+      password:null,
+    }
+  }
     static navigationOptions = {
         header: null 
       };
+      
+register(){
+      this.props.register(this.state.name, this.state.username, this.state.email, this.state.password)
+      alert(this.props.status)
+}
 
   render() {
     return (
@@ -34,31 +50,29 @@ export default class RegisterScreen extends Component {
         <Form>
         <FormItem floatingLabel style={{margin:7}} >
             <Label>Name</Label>
-            <Input />
+            <Input value={this.state.name} onChangeText={(name)=>this.setState({name})}/>
           </FormItem>
         <FormItem floatingLabel style={{margin:7}} >
             <Label>Username</Label>
-            <Input />
+            <Input value={this.state.username} onChangeText={(username)=>this.setState({username})}/>
           </FormItem>
           <FormItem floatingLabel style={{margin:7}}>
             <Label>Email</Label>
-            <Input />
+            <Input value={this.state.email} onChangeText={(email)=>this.setState({email})}/>
           </FormItem>
           <FormItem floatingLabel last style={{margin:7}}>
             <Label>Password</Label>
-            <Input secureTextEntry={true} />
+            <Input secureTextEntry={true} value={this.state.password} onChangeText={(password)=>this.setState({password})}/>
           </FormItem>
           <FormItem floatingLabel last style={{margin:7}}>
             <Label>Confirm Password</Label>
-            <Input secureTextEntry={true} />
+            <Input secureTextEntry={true} value={this.state.password} onChangeText={(password)=>this.setState({password})}/>
           </FormItem>
             <View style={{flexDirection:'row', marginTop:5}}>
             <CheckBox checked={true} style={{marginRight:15}}/>
-              {/* <Text style={{fontSize:8, width:Layout.window.width/2}}>I agree to MayaMall Terms of Usage and for my personal data to be processed 
-              accrording to MayaMall Privacy Policy</Text> */}
               <Text style={{fontSize:12}}>I agree to MayaMall  <Text style={{fontSize:12, color:'blue'}} onPress={() => Linking.openURL('https://www.mayamall.com/term-and-condition')}>Term {'&'} Conditions</Text></Text>
             </View>
-          <Button full primary style={{ margin:13, borderRadius:15 }}>
+          <Button full primary style={{ margin:13, borderRadius:15 }} onPress={()=>this.register()}>
             <Text> Sign Up </Text>
           </Button>
           <Button full transparent style={{margin:13, borderRadius:15, height:Layout.window.width/14, width:Layout.window.width/2, alignSelf:'center'}} onPress={() => this.props.navigation.goBack()}>
@@ -70,3 +84,15 @@ export default class RegisterScreen extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+      register:state.registerReducer,
+      status:state.registerReducer.status
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {     
+    register: (name, username, email, password) => dispatch(actionCreator.register(name, username, email, password)),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen)

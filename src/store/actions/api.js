@@ -105,3 +105,27 @@ export const getCartDetailAPI = (token) => {
       });
   }
 }
+
+export const registerApi = (user_name, user_username, user_email, user_password) => {
+  console.log("PAsswrod"+user_password)
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('user_name', user_name);
+    formData.append('user_username', user_username);
+    formData.append('user_email', user_email);
+    formData.append('user_password', user_password);
+    fetch(`${apiUrl}signup`, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        // const { status } = responseJson
+
+        // dispatch({ type: 'SIGN_UP', payload: {status} })
+      })
+      .catch((error) => {
+        console.log('Registration Error : ' + error);
+      });
+  }
+}

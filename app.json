@@ -4,6 +4,19 @@
     "slug": "MayaMallV2",
     "privacy": "public",
     "sdkVersion": "32.0.0",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fintech.mayamall",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.467837506857-2i8hst1co80s654o9ahldhuv5n8mlauc"
+        }
+      }
+    },
+    "android": {
+      "package": "com.fintech.mayamall",
+      "googleServicesFile": "./google-services.json"
+    },
     "platforms": [
       "ios",
       "android"

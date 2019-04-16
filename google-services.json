@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "467837506857",
+    "firebase_url": "https://mayamall-1546244978705.firebaseio.com",
+    "project_id": "mayamall-1546244978705",
+    "storage_bucket": "mayamall-1546244978705.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467837506857:android:d18764d54c6510df",
+        "android_client_info": {
+          "package_name": "com.fintech.mayamall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467837506857-qq9ifj2a1fmbfu5h1lrdss8sle1pgknm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANq-6HBOWezO7RVOqKFJoUy3OaVvg_XYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467837506857-qq9ifj2a1fmbfu5h1lrdss8sle1pgknm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

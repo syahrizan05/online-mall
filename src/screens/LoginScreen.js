@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {Constants, Facebook, Google} from 'expo'
-import styles from '../styles/styles'
-import Layout from '../constants/Layout'
-import {Image} from 'react-native'
-import { GoogleSignIn } from 'expo-google-sign-in';
+import {Constants, Facebook, GoogleSignIn} from 'expo';
+import styles from '../styles/styles';
+import Layout from '../constants/Layout';
+import {Image} from 'react-native';
 import {
   Container,
   Header,
@@ -54,48 +53,11 @@ export default class LoginScreen extends Component {
         }
       }
 
-      initAsync = async () => {
-        await GoogleSignIn.initAsync({
-          clientId: '<YOUR_IOS_CLIENT_ID>',
-        });
-        this._syncUserWithStateAsync();
-      };
-    
-      _syncUserWithStateAsync = async () => {
-        const user = await GoogleSignIn.signInSilentlyAsync();
-        this.setState({ user });
-      };
-    
-      signOutAsync = async () => {
-        await GoogleSignIn.signOutAsync();
-        this.setState({ user: null });
-      };
-    
-      signInAsync = async () => {
-        try {
-          await GoogleSignIn.askForPlayServicesAsync();
-          const { type, user } = await GoogleSignIn.signInAsync();
-          if (type === 'success') {
-            this._syncUserWithStateAsync();
-          }
-        } catch ({ message }) {
-          alert('login: Error:' + message);
-        }
-      };
-    
-      onPress = () => {
-        if (this.state.user) {
-          this.signOutAsync();
-        } else {
-          this.signInAsync();
-        }
-      };
-  
-
-
   render() {
+
     return (
       <Container style={styles.authContainer}>
+
       <Header style={[styles.statusBar,{height:Layout.window.height/3.5, borderBottomLeftRadius:225, borderBottomRightRadius:225}]}>
           <Image source={require('../assets/images/icon.png') } resizeMode={'contain'} style={{width:200, height:200, alignSelf:'center'}} />
       </Header>
@@ -123,7 +85,7 @@ export default class LoginScreen extends Component {
         <Icon name='home'/>
           <Text> Facebook</Text>
         </Button>
-        <Button  iconLeft style={{backgroundColor:'red', margin:10, borderRadius:10}} onPress={this.onPress}>
+        <Button  iconLeft style={{backgroundColor:'red', margin:10, borderRadius:10}} onPress={this.googleSignIn}>
         <Icon name='people'/>
           <Text> Google</Text>
         </Button>

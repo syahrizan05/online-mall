@@ -40,5 +40,13 @@ const cartDetailScreenReducer = (state =[], action) => {
     }
 }
 
+const registerReducer = (state =[], action) => {
+    switch (action.type) {
+        case 'SIGN_UP':
+            return { ...state, ...action.payload }      
+        default:
+            return state
+    }
+}
 
-export default reducer = combineReducers({userReducer,homeScreenReducer,productsReducer,cartDetailScreenReducer });
+export default reducer = combineReducers({userReducer,homeScreenReducer,productsReducer,cartDetailScreenReducer, registerReducer });
