@@ -1,9 +1,23 @@
-import { homeApi,getProductsApi,addToCartApi,getCartDetailAPI } from './api'
+import { homeApi,getProductsApi,addToCartApi,getCartDetailAPI,getBuyerOrderApi,getProductDetailApi,getBuyerOrdersApi,searchProductsApi,profileInfoApi,notificationApi } from './api'
 
 export const initiateHomeScreen = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
-        dispatch(homeApi(token))
+        dispatch(homeApi())
+    }
+}
+
+export const initiateAccountScreen = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(profileInfoApi(token))
+    }
+}
+
+export const initiateNotificationScreen = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(notificationApi(token))
     }
 }
 
@@ -11,6 +25,13 @@ export const getProducts = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(getProductsApi(token))
+    }
+}
+
+export const searchProducts = (val) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(searchProductsApi(token,val))
     }
 }
 
@@ -25,5 +46,26 @@ export const initiateCartDetailScreen = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(getCartDetailAPI(token))
+    }
+}
+
+export const initiateOrdersScreen = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getBuyerOrdersApi(token))
+    }
+}
+
+export const initiateOrderScreen = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getBuyerOrderApi(token))
+    }
+}
+
+export const initiateProductDetailScreen = (product_id) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getProductDetailApi(token,product_id))
     }
 }

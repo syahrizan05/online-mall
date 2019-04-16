@@ -19,7 +19,7 @@ import { connect } from 'react-redux'
 import * as actionCreator from '../store/actions/action'
 
 
-class CartDetailScreen extends React.PureComponent {
+class CartScreen extends React.PureComponent {
   static navigationOptions = {
     header: null 
   };
@@ -52,12 +52,21 @@ class CartDetailScreen extends React.PureComponent {
                     </Button>         
         </Content>
         <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>Footer</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+            <FooterTab>
+              <Button  vertical active={(this.props.navigation.state.routeName==="Home")?true:false}  onPress={()=>this.props.navigation.navigate('Home')}>
+                <Icon name="home"  active={(this.props.navigation.state.routeName==="Home")?true:false}   />             
+              </Button>
+              <Button vertical active={(this.props.navigation.state.routeName==="Cart")?true:false}  onPress={()=>this.props.navigation.navigate('Cart')} >
+                <Icon name="cart"   active={(this.props.navigation.state.routeName==="Cart")?true:false} />          
+              </Button>
+              <Button vertical active={(this.props.navigation.state.routeName==="Notification")?true:false}  onPress={()=>this.props.navigation.navigate('Notification')} >
+                <Icon name="text"  active={(this.props.navigation.state.routeName==="Notification")?true:false} />              
+              </Button>           
+              <Button vertical active={(this.props.navigation.state.routeName==="Account")?true:false}  onPress={()=>this.props.navigation.navigate('Account')} >
+                <Icon name="person"  active={(this.props.navigation.state.routeName==="Account")?true:false} />
+              </Button>
+            </FooterTab>
+          </Footer>
       </Container>
     );
   }
@@ -79,4 +88,4 @@ function mapDispatchToProps(dispatch) {
 
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CartDetailScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen)

@@ -4,7 +4,8 @@ import {Constants} from 'expo'
 export default StyleSheet.create({
     container: {
    
-        paddingTop:Constants.statusBarHeight,
+        //paddingTop:Constants.statusBarHeight,
+        backgroundColor:'aliceblue'
     },
 
     headerBox: { flex: 1, },
