@@ -95,7 +95,7 @@ class NotificationScreen extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     records: state.notificationScreenReducer.records,
-
+    cart_count: state.homeScreenReducer.cart_count,
     unread_notifications: state.homeScreenReducer.unread_notifications || 0,
     unread_messages: state.notificationScreenReducer.unread_messages || 0,
   }

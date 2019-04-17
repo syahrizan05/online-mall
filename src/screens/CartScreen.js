@@ -124,6 +124,7 @@ class CartScreen extends React.PureComponent {
               </View>
             </View>
           </Content>
+
           :
           <Content padder scrollEnabled={false}>
             <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
@@ -200,7 +201,6 @@ function mapStateToProps(state) {
     password: state.loginReducer.password,
     msg: state.loginReducer.msg,
     cartSummary: state.cartDetailScreenReducer.cartSummary,
-    products: state.cartDetailScreenReducer.products,
     unread_notifications: state.cartDetailScreenReducer.unread_notifications || 0,
     cart_count: state.cartDetailScreenReducer.cart_count || 0,
 

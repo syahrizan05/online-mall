@@ -283,7 +283,7 @@ export const getCartDetailAPI = (token) => {
     }).then((response) => response.json())
       .then((responseJson) => {
         console.log(`cart api : ${JSON.stringify(responseJson)}`)
-        const { data } = responseJson
+        const { data,  cart_count, unread_notifications } = responseJson
         const { products, cartSummary, cart_selected_billing_address, cart_selected_shipping_address } = data
         const { cartTotal, cartTaxTotal, orderNetAmount, orderPaymentGatewayCharges } = cartSummary
 
