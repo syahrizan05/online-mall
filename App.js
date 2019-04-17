@@ -4,6 +4,8 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
 
+import {initiateApp} from './src/store/actions/action'
+
 import material from './native-base-theme/variables/material';
 import variables from './native-base-theme/variables/variables';
 import commonColor from './native-base-theme/variables/commonColor';
@@ -23,6 +25,21 @@ export default class App extends React.PureComponent {
   state = {
     isLoadingComplete: false,
   };
+
+  // function onAppInit(dispatch) {
+  //   return (nextState, replace, callback) => {
+  //     dispatch(performTokenRequest())
+  //       .then(() => {
+  //         // callback is like a "next" function, app initialization is stopped until it is called.
+  //         callback();
+  //       });
+  //   };
+  // }
+
+  componentDidMount(){
+    
+    //store.dispatch(initiateApp())
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -50,9 +67,11 @@ export default class App extends React.PureComponent {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
+        require('./src/assets/images/splash.png'),
         require('./src/assets/images/robot-dev.png'),
         require('./src/assets/images/robot-prod.png'),
         require('./src/assets/images/mm_white.png'),
+        require('./src/assets/images/icon.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

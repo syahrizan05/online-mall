@@ -9,8 +9,9 @@ import {
   View,
   FlatList
 } from 'react-native';
+import {Constants} from 'expo'
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Form,Item,Label,Input,Picker } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
@@ -22,54 +23,53 @@ import * as actionCreator from '../store/actions/action'
 class Sidebar extends React.PureComponent {
   static navigationOptions = {
     header: null 
+   
   };
+  state={selected2:undefined}
 
-  componentDidMount(){
-    //this.props.initiateCartDetailScreen()  
+  onValueChange2(value) {
+    this.setState({
+      selected2: value
+    });
   }
 
   render() {
-    
-    
+
     return (
-      <Container style={{paddingTop:0}}>        
+      <Container style={{ paddingTop: Constants.statusBarHeight, backgroundColor: '#fff' }}>
         <Content>
-            <Text>{this.props.sidebar}</Text>
-          <Card>
-              <CardItem>
-                  <Left /><Body>
-                  <Icon name='person' style={{fontSize:48}} /></Body>
-                  <Right />
-              </CardItem>
-            <CardItem>
-              <Icon active name="logo-googleplus" />
-              <Text>Google Plus</Text>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-             </CardItem>
-             <CardItem>
-              <Icon active name="logo-googleplus" />
-              <Text>Google Plus</Text>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-             </CardItem>
-             <CardItem>
-              <Icon active name="logo-googleplus" />
-              <Text>Google Plus</Text>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-             </CardItem>
-             <CardItem>
-              <Icon active name="logo-googleplus" />
-              <Text>Google Plus</Text>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-             </CardItem>
-           </Card>
+          <Form>
+            <Item stackedLabel>
+              <Label>Keyword</Label>
+              <Input />
+            </Item>
+            <Item stackedLabel picker>
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" />}
+                style={{ width: undefined }}
+                placeholder="Select your SIM"
+                placeholderStyle={{ color: "#bfc6ea" }}
+                placeholderIconColor="#007aff"
+                selectedValue={this.state.selected2}
+                onValueChange={this.onValueChange2.bind(this)}
+              >
+                <Picker.Item label="Condition" value="" />
+                <Picker.Item label="New" value="0" />
+                <Picker.Item label="Refurbished" value="1" />
+                <Picker.Item label="Used" value="2" />
+               
+              </Picker>
+            </Item>
+            <Item stackedLabel>
+              <Label>Minimum Price</Label>
+              <Input />
+            </Item>
+            <Item stackedLabel>
+              <Label>Maximum</Label>
+              <Input />
+            </Item>
+          </Form>
         </Content>
       </Container>
     );

@@ -14,7 +14,7 @@
       }
     },
     "android": {
-      "package": "com.fintech.mayamall",
+      "package": "com.fcsb.mm",
       "googleServicesFile": "./google-services.json"
     },
     "platforms": [
@@ -34,9 +34,7 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    }
+    ]
+  
   }
 }

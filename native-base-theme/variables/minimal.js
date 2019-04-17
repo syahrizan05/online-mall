@@ -125,7 +125,7 @@ import color from "color";
       "topTabBarActiveBorderColor": "rgba(155,155,155,1)",
       "tabBgColor": "#F8F8F8",
       "tabFontSize": 14,
-      "textColor": "rgba(155,155,155,1)",
+      "textColor": "#000",
       "inverseTextColor": "#fff",
       "noteFontSize": 12,
       "defaultTextColor": "#000",

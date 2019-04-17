@@ -3,25 +3,13 @@ import {Constants, Facebook, GoogleSignIn} from 'expo';
 import styles from '../styles/styles';
 import Layout from '../constants/Layout';
 import {Image} from 'react-native';
-import {
-  Container,
-  Header,
-  Button,
-  Text,
-  Body,
-  Form,
-  Item as FormItem,
-  Input,
-  Label,
-  Title,
-  View,
-  Card,
-  Icon,
-  Left,
-  Right,
-} from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Badge,Form,Item as FormItem,Input,Label } from 'native-base';
 
-export default class LoginScreen extends Component {
+
+import { connect } from 'react-redux'
+import * as actionCreator from '../store/actions/action'
+
+class LoginScreen extends Component {
     static navigationOptions = {
         header: null 
         
@@ -57,43 +45,82 @@ export default class LoginScreen extends Component {
 
     return (
       <Container style={styles.authContainer}>
-
-      <Header style={[styles.statusBar,{height:Layout.window.height/3.5, borderBottomLeftRadius:225, borderBottomRightRadius:225}]}>
-          <Image source={require('../assets/images/icon.png') } resizeMode={'contain'} style={{width:200, height:200, alignSelf:'center'}} />
-      </Header>
-     <Card style={{width:Layout.window.width/1.5, alignSelf:'center', borderRadius:20}}>
-        <Form>
-          <FormItem floatingLabel >
-            <Label>Email</Label>
-            <Input />
-          </FormItem>
-          <FormItem floatingLabel last>
-            <Label>Password</Label>
-            <Input secureTextEntry={true} />
-          </FormItem>
-          <Button full primary style={{ margin:13, borderRadius:15, width:Layout.window.width/2.5, alignSelf:'center' }}>
-            <Text> Login </Text>
+        <Content scrollEnabled={false}>
+         
+          <Button info style={{ height: 30, width: 70 }} onPress={() => this.props.navigation.navigate('Orders')}>
+            <Text style={{ fontSize: 9 }}>View Order</Text>
           </Button>
-          <Button full transparent style={{margin:13, height:Layout.window.width/14, width:Layout.window.width/2, alignSelf:'center'}}  onPress={() => this.props.navigation.navigate('Forgot')}>
-          <Text style={{fontSize:10}}> Forgot Password ?</Text>
-          </Button>
-        </Form>
-     </Card>
-     <Text style={{alignSelf:'center', marginTop:5, fontSize:12}}>Connect with other ways</Text>
-     <View style={{flexDirection:'row', marginTop:5, alignSelf:'center'}}>
-        <Button  iconLeft style={{margin:10, borderRadius:10}} onPress={this.fbLogIn}> 
-        <Icon name='home'/>
-          <Text> Facebook</Text>
-        </Button>
-        <Button  iconLeft style={{backgroundColor:'red', margin:10, borderRadius:10}} onPress={this.googleSignIn}>
-        <Icon name='people'/>
-          <Text> Google</Text>
-        </Button>
-    </View>
-    <Button full transparent style={{margin:13, height:Layout.window.width/14, width:Layout.window.width/2, alignSelf:'center'}}  onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={{fontSize:12}}> Sign Up Now </Text>
-    </Button>
+          <Button onPress={() => this.props.logout()}><Text>Logout</Text></Button>
+        </Content>:
+        <Content padder scrollEnabled={false}>
+          <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
+            <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
+          </View>
+          <Form>
+            <FormItem floatingLabel >
+              <Label>Email</Label>
+              <Input value={this.props.email} onChangeText={(email) => this.props.setLogin({ email })} />
+            </FormItem>
+            <FormItem floatingLabel>
+              <Label>Password</Label>
+              <Input secureTextEntry={true} value={this.props.password} onChangeText={(password) => this.props.setLogin({ password })} />
+            </FormItem>
+            <View style={{ margin: 10 }} />
+            <Text note danger>{this.props.msg}</Text>
+            <Button info full onPress={() => this.props.login()}>
+              <Text> Login </Text>
+            </Button>
+            <Button transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Forgot')}>
+              <Text note> Forgot Password ?</Text>
+            </Button>
+          </Form>
+          <Text style={{ alignSelf: 'center', marginTop: 5, fontSize: 12 }}>Connect with other ways</Text>
+          <View style={{ flexDirection: 'row', marginTop: 5, alignSelf: 'center' }}>
+            <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.fbLogin()}>
+              <Icon name='logo-facebook' />
+              <Text> Facebook</Text>
+            </Button>
+          </View>
+          <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
+            <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
+          </Button></Content>
       </Container>
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  return {
+      user:state.userReducer, 
+      
+      token:state.userReducer.token, 
+      
+      email:state.loginReducer.email,
+      password:state.loginReducer.password,
+      msg:state.loginReducer.msg,
+      
+      cartSummary:state.cartDetailScreenReducer.cartSummary,
+      products:state.cartDetailScreenReducer.products, 
+
+      unread_notifications:state.cartDetailScreenReducer.unread_notifications||0,
+      cart_count:state.cartDetailScreenReducer.cart_count||0,
+  
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {     
+    initiateCartDetailScreen: () => dispatch(actionCreator.initiateCartDetailScreen()),
+    setLogin: (value) => dispatch({type:'SET_LOGIN',payload:{...value}}),
+    login: () => dispatch(actionCreator.login()),
+    logout: () => dispatch(actionCreator.logout()),
+    fbLogin:()=>dispatch(actionCreator.fbLogin())
+
+    
+
+  
+
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

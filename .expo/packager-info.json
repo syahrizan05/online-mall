@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "expoServerPort": null,
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
@@ -6,4 +7,13 @@
   "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null
+=======
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://p7-jt8.syahrizan05.mayamall-mobile.exp.direct",
+  "packagerNgrokUrl": "https://packager.p7-jt8.syahrizan05.mayamall-mobile.exp.direct",
+  "ngrokPid": 16980,
+  "devToolsPort": 19002,
+  "packagerPort": 19001,
+  "packagerPid": 13240
+>>>>>>> origin/april16
 }

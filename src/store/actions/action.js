@@ -1,9 +1,13 @@
-import { homeApi,getProductsApi,addToCartApi,getCartDetailAPI,getBuyerOrderApi,getProductDetailApi,getBuyerOrdersApi,searchProductsApi,profileInfoApi,notificationApi, registerApi } from './api'
+import {SecureStore, Facebook, GoogleSignIn} from 'expo'
+import { homeApi,getProductsApi,addToCartApi,getCartDetailAPI,getBuyerOrderApi,getProductDetailApi,getBuyerOrdersApi,searchProductsApi,profileInfoApi,notificationApi, registerApi,loginApi,fbLoginApi } from './api'
+
+
+
 
 export const initiateHomeScreen = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
-        dispatch(homeApi())
+        dispatch(homeApi(token))
     }
 }
 
@@ -55,6 +59,51 @@ export const register = (user_name, user_username, user_email, user_password ) =
     }
 }
 
+export const login = () => {
+    return (dispatch, getState) => {
+        const {email,password} = getState().loginReducer
+      
+        dispatch(loginApi(email,password ))
+    }
+}
+
+export const logout = () => {
+    return async (dispatch, getState) => {
+     
+        await SecureStore.deleteItemAsync('authentication')
+        dispatch({type:'LOGOUT'})
+    }
+}
+
+export const fbLogin = () => {
+    return async  (dispatch, getState) => {     
+        try{
+            const {
+              type,
+              token,
+              expires,
+              permissions,
+              declinedPermissions,
+            } =  await Facebook.logInWithReadPermissionsAsync('1985454545081156', {permissions: ['public_profile'],});
+            dispatch(fbLoginApi(token))
+          }catch ({ message }) {
+            console.log(`Facebook Login Error: ${message}`);
+          }
+    }
+}
+
+
+
+export const checkLogin = () => {
+    return async (dispatch, getState) => {
+        const authentication = await SecureStore.getItemAsync('authentication');
+        const parsedAuthentication= JSON.parse(authentication)
+authentication?dispatch({type:'GET_USER',payload:{...parsedAuthentication}}):null
+      
+        
+    }
+}
+
 export const initiateOrdersScreen = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
@@ -73,5 +122,13 @@ export const initiateProductDetailScreen = (product_id) => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(getProductDetailApi(token,product_id))
+    }
+}
+
+export const initiateApp = () => {
+    return (dispatch, getState) => {        
+        dispatch(checkLogin())
+        dispatch(initiateHomeScreen())
+        dispatch(getProducts())
     }
 }
