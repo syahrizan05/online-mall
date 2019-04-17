@@ -1,9 +1,22 @@
 import { combineReducers } from "redux";
 
-const userReducer = (state ={token:'593046ed2eeae7fe934a35e9e024e2b6'}, action) => {
+const loginReducer = (state =[], action) => {
+    switch (action.type) {
+        case 'SET_LOGIN':
+            return { ...state, ...action.payload }      
+
+        default:
+            return state
+    }
+}
+
+const userReducer = (state =[], action) => {
     switch (action.type) {
         case 'GET_USER':
-            return { ...state, ...action.payload }      
+            return { ...state, ...action.payload }   
+            
+            case 'LOGOUT':
+            return { state:null }    
 
         default:
             return state
@@ -44,6 +57,9 @@ const registerReducer = (state =[], action) => {
     switch (action.type) {
         case 'SIGN_UP':
             return { ...state, ...action.payload } 
+
+            default:
+            return state
     }
 }
 
@@ -121,4 +137,4 @@ const searchReducer = (state =[], action) => {
     }
 }
 
-export default reducer = combineReducers({userReducer,homeScreenReducer,productsReducer,cartDetailScreenReducer,orderScreenReducer,productDetailScreenReducer,ordersScreenReducer,sidebarReducer,searchReducer,accountScreenReducer,notificationScreenReducer, registerReducer });
+export default reducer = combineReducers({userReducer,homeScreenReducer,productsReducer,cartDetailScreenReducer,orderScreenReducer,productDetailScreenReducer,ordersScreenReducer,sidebarReducer,searchReducer,accountScreenReducer,notificationScreenReducer, registerReducer,loginReducer });

@@ -10,7 +10,7 @@ import {
   FlatList
 } from 'react-native';
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Badge } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
@@ -49,15 +49,17 @@ class NotificationScreen extends React.PureComponent {
                     <Text style={{ fontSize: 9 }}>View Order</Text>
                 </Button>
             </Content>
-        <Footer>
+            <Footer>
             <FooterTab>
               <Button  vertical active={(this.props.navigation.state.routeName==="Home")?true:false}  onPress={()=>this.props.navigation.navigate('Home')}>
                 <Icon name="home"  active={(this.props.navigation.state.routeName==="Home")?true:false}   />             
               </Button>
-              <Button vertical active={(this.props.navigation.state.routeName==="Cart")?true:false}  onPress={()=>this.props.navigation.navigate('Cart')} >
+              <Button badge vertical active={(this.props.navigation.state.routeName==="Cart")?true:false}  onPress={()=>this.props.navigation.navigate('Cart')} >
+              <Badge><Text>{this.props.cart_count}</Text></Badge>
                 <Icon name="cart"   active={(this.props.navigation.state.routeName==="Cart")?true:false} />          
-              </Button>
-              <Button vertical active={(this.props.navigation.state.routeName==="Notification")?true:false}  onPress={()=>this.props.navigation.navigate('Notification')} >
+              </Button>              
+              <Button badge vertical active={(this.props.navigation.state.routeName==="Notification")?true:false}  onPress={()=>this.props.navigation.navigate('Notification')} >
+               <Badge><Text>{this.props.unread_notifications}</Text></Badge>
                 <Icon name="text"  active={(this.props.navigation.state.routeName==="Notification")?true:false} />              
               </Button>           
               <Button vertical active={(this.props.navigation.state.routeName==="Account")?true:false}  onPress={()=>this.props.navigation.navigate('Account')} >
@@ -74,7 +76,10 @@ class NotificationScreen extends React.PureComponent {
 
 function mapStateToProps(state) {
   return {
-     records:state.notificationScreenReducer.records
+     records:state.notificationScreenReducer.records,
+
+     unread_notifications:state.homeScreenReducer.unread_notifications||0,
+      unread_messages:state.notificationScreenReducer.unread_messages||0,
   }
 }
 

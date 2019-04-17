@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   View,
-  FlatList
+  FlatList,Transforms
 } from 'react-native';
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Item, Input, Subtitle,Badge,Drawer,H1,H2,H3 } from 'native-base';
@@ -43,12 +43,10 @@ class HomeScreen extends React.PureComponent {
     this.drawer._root.open() 
   }
 
-  componentDidMount(){
-    this.props.initiateHomeScreen()
-    this.props.getProducts()
-
-    const { navigation } = this.props;
-    console.log(`navigation ialah : ${JSON.stringify(this.props.navigation.state.routeName)}`)
+  async componentDidMount(){
+    await this.props.checkLogin()
+    await this.props.initiateHomeScreen()
+    await this.props.getProducts()
   }
 
   handleSearch(val){
@@ -69,7 +67,7 @@ class HomeScreen extends React.PureComponent {
       screenshotUri: image.image_url
     }))
 
-    this.props.products&&console.log(`inilah  products: ${JSON.stringify(this.props.products)}`)
+ this.props.user&&console.log(`this user :  ${JSON.stringify(this.props.user)}`)
   
     return (
       <Drawer side='right' ref={(ref) => { this.drawer = ref; }} content={<Sidebar navigator={this.navigator} />} onClose={() => this.closeDrawer()} >
@@ -79,9 +77,10 @@ class HomeScreen extends React.PureComponent {
             
             <Input placeholder="Search MayaMall" value={this.state.keyword} onChangeText={(val)=>this.handleSearch(val)} />            
           </Item>
-          {this.state.keyword?<Button transparent onPress={()=>this.clearKeyword()}><Icon name="close" /></Button>:<Button transparent><Icon name="ios-search" /></Button>}
+          {this.state.keyword?<View style={{flexDirection:'row'}}><Button transparent onPress={()=>this.clearKeyword()}><Icon name="close" /></Button><Button transparent onPress={()=>this.openDrawer('search')}><Icon name="options" /></Button></View>:<Button transparent><Icon name="ios-search" /></Button>}
         
         </Header>
+        
           {this.props.result?
           <Content>
             <FlatList
@@ -129,13 +128,14 @@ class HomeScreen extends React.PureComponent {
                 )}
               />
             </View>
+            
             <Card transparent>
-              <CardItem header style={{paddingTop:10,paddingBottom:10}}>
+              <CardItem header style={{paddingLeft:10,paddingRight:10,paddingTop:10,paddingBottom:10}}>
               <Left>
               <H2>New Collections</H2>
               </Left>               
                 <Right>
-                  <Icon name='fastforward' />
+                  <Icon name='fastforward' style={{color:'#000'}}  />
                 </Right>
               </CardItem>
               <CardItem>
@@ -149,7 +149,7 @@ class HomeScreen extends React.PureComponent {
                       <Card transparent>
                         <CardItem cardBody button  onPress={()=>this.props.navigation.navigate('ProductDetail',{product_id:item.product_id})}>
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
-                          <View style={{ position: 'absolute', top: 0, right: 10 }}><Text note>{this.props.currencySymbol}{item.theprice}</Text></View>
+                          <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor:'rgba(0,0,102,0.5)', paddingTop:0, alignItems:'flex-start',justifyContent:'flex-start' }}><Text note style={{color:'#fff',textAlignVertical:'center',textAlign:'center',marginTop:0}}>{this.props.currencySymbol}{item.theprice}</Text></View>
                         </CardItem>
                         <CardItem footer>
                           <Left>
@@ -163,11 +163,11 @@ class HomeScreen extends React.PureComponent {
               </CardItem>
             </Card>
             <Card transparent>
-            <CardItem header style={{paddingTop:10,paddingBottom:10}}>
+            <CardItem header style={{paddingLeft:10,paddingRight:10,paddingTop:10,paddingBottom:10}}>
               <Left>
                 <H2>Featured Products</H2></Left>
                 <Right>
-                  <Icon name='fastforward' />
+                  <Icon name='fastforward' style={{color:'#000',transform:[{rotate:'90deg'}]}}   />
                 </Right>
               </CardItem>
               <CardItem> 
@@ -176,17 +176,17 @@ class HomeScreen extends React.PureComponent {
                   keyExtractor={(item, index) => index.toString()}
                   numColumns={2}
                   renderItem={({ item }) => (
-                    <Card style={{ flex:1,marginRight:10,marginLeft:10,marginTop:10,marginBottom:10 }}>
+                    <Card transparent style={{ flex:1,marginRight:10,marginLeft:10,marginTop:10,marginBottom:10 }}>
                       <CardItem>
                         <Left>
-                          <Thumbnail small source={{ uri: item.shop_logo }} />
+                          <Thumbnail style={{borderWidth:1,borderColor:'rgba(0,0,102,0.5)'}} small source={{ uri: item.shop_logo }} />
                           <Text note>{item.shop_name}</Text>
-                          </Left>                         
-                      
+                          </Left>  
                       </CardItem>
                       <CardItem cardBody button  onPress={()=>this.props.navigation.navigate('ProductDetail',{product_id:item.product_id})}>
                         <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
-                        <View style={{ position: 'absolute', top: 0, right: 10 }}><Text>{this.props.currencySymbol}{item.theprice}</Text></View>
+                        <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor:'rgba(0,0,102,0.5)', paddingTop:0, alignItems:'flex-start',justifyContent:'flex-start' }}>
+                        <Text note style={{color:'#fff',textAlignVertical:'center',textAlign:'center',marginTop:0}}>{this.props.currencySymbol}{item.theprice}</Text></View>
                       </CardItem>
                       <CardItem footer>
                         <Left>
@@ -200,11 +200,11 @@ class HomeScreen extends React.PureComponent {
 
             </Card>
             <Card transparent>
-            <CardItem header style={{paddingTop:10,paddingBottom:10}}>
+            <CardItem header style={{paddingLeft:10,paddingRight:10,paddingTop:10,paddingBottom:10}}>
               <Left>
                 <H2>All Products</H2></Left>
                 <Right>
-                  <Icon name='fastforward' />
+                <Icon name='fastforward' style={{color:'#000',transform:[{rotate:'90deg'}]}}/>
                 </Right>
               </CardItem>
               <CardItem> 
@@ -213,7 +213,7 @@ class HomeScreen extends React.PureComponent {
                   keyExtractor={(item, index) => index.toString()}
                   numColumns={2}
                   renderItem={({ item }) => (
-                    <Card style={{ flex:1,marginRight:10,marginLeft:10,marginTop:10,marginBottom:10 }}>
+                    <Card transparent style={{ flex:1,marginRight:10,marginLeft:10,marginTop:10,marginBottom:10 }}>
                       <CardItem>
                       
                           <Left><Text note>{item.prodcat_name}</Text></Left>
@@ -221,7 +221,8 @@ class HomeScreen extends React.PureComponent {
                       </CardItem>
                       <CardItem cardBody button  onPress={()=>this.props.navigation.navigate('ProductDetail',{product_id:item.product_id})}>
                         <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.product_image }} />
-                        <View style={{ position: 'absolute', top: 0, right: 10 }}><Text>{this.props.currencySymbol}{item.theprice}</Text></View>
+                        <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor:'rgba(0,0,102,0.5)', paddingTop:0, alignItems:'flex-start',justifyContent:'flex-start' }}>
+                        <Text note style={{color:'#fff',textAlignVertical:'center',textAlign:'center',marginTop:0}}>{this.props.currencySymbol}{item.theprice}</Text></View>
                       </CardItem>
                       <CardItem footer>
                         <Left>
@@ -232,22 +233,21 @@ class HomeScreen extends React.PureComponent {
                   )}
                 />
               </CardItem>
-
             </Card>
-
-            
-          </Content>
-        }
-          
+            </Content>
+        }          
+        {!this.props.token&&<View style={{backgroundColor:'rgba(255,153,51,0.2)',padding:5,flexDirection:'row',justifyContent:'space-between'}}><Text note style={{textAlignVertical:'center'}}>Please login to access more features</Text><Button small rounded info onPress={()=>this.props.navigation.navigate('Login')}><Text>Login</Text></Button></View>} 
           <Footer>
             <FooterTab>
               <Button  vertical active={(this.props.navigation.state.routeName==="Home")?true:false}  onPress={()=>this.props.navigation.navigate('Home')}>
                 <Icon name="home"  active={(this.props.navigation.state.routeName==="Home")?true:false}   />             
               </Button>
-              <Button vertical active={(this.props.navigation.state.routeName==="Cart")?true:false}  onPress={()=>this.props.navigation.navigate('Cart')} >
+              <Button badge vertical active={(this.props.navigation.state.routeName==="Cart")?true:false}  onPress={()=>this.props.navigation.navigate('Cart')} >
+              <Badge><Text>{this.props.cart_count}</Text></Badge>
                 <Icon name="cart"   active={(this.props.navigation.state.routeName==="Cart")?true:false} />          
-              </Button>
-              <Button vertical active={(this.props.navigation.state.routeName==="Notification")?true:false}  onPress={()=>this.props.navigation.navigate('Notification')} >
+              </Button>              
+              <Button badge vertical active={(this.props.navigation.state.routeName==="Notification")?true:false}  onPress={()=>this.props.navigation.navigate('Notification')} >
+               <Badge><Text>{this.props.unread_notifications}</Text></Badge>
                 <Icon name="text"  active={(this.props.navigation.state.routeName==="Notification")?true:false} />              
               </Button>           
               <Button vertical active={(this.props.navigation.state.routeName==="Account")?true:false}  onPress={()=>this.props.navigation.navigate('Account')} >
@@ -279,19 +279,22 @@ function mapStateToProps(state) {
       
       cart_count:state.homeScreenReducer.cart_count,
       currencySymbol:state.homeScreenReducer.currencySymbol,
-      unread_notifications:state.homeScreenReducer.unread_notifications,
-      unread_messages:state.homeScreenReducer.unread_messages,
+      unread_notifications:state.homeScreenReducer.unread_notifications||0,
+      unread_messages:state.homeScreenReducer.unread_messages||0,
       fav_count:state.homeScreenReducer.fav_count,
 
       featuredShopDetail:state.homeScreenReducer.featuredShopDetail,
       featuredProduct:state.homeScreenReducer.featuredProduct,
 
-      result:state.searchReducer.result
+      result:state.searchReducer.result,
+
+      token:state.userReducer.token
  
   }
 }
 function mapDispatchToProps(dispatch) {
-  return {     
+  return {    
+    initiateApp: () => dispatch(actionCreator.initiateApp()), 
       initiateHomeScreen: () => dispatch(actionCreator.initiateHomeScreen()),
       getProducts: () => dispatch(actionCreator.getProducts()),
       
@@ -301,7 +304,9 @@ function mapDispatchToProps(dispatch) {
 
       setSideBar: (sidebar) => dispatch({type:'SET_SIDEBAR',payload:{sidebar}}),
 
-      clearResult:()=>dispatch({type:'CLEAR_RESULT'})
+      clearResult:()=>dispatch({type:'CLEAR_RESULT'}),
+
+      checkLogin:()=>dispatch(actionCreator.checkLogin()),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

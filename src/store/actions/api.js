@@ -1,45 +1,113 @@
+import {SecureStore, Facebook, GoogleSignIn} from 'expo'
+// import {Constants, Facebook, GoogleSignIn} from 'expo';
 import _ from 'lodash'
 const apiUrl = 'https://www.mayamall.com/mobile-app-api/'
 
-export const homeApi = () => {
+export const loginApi = (email,password) => {
+
   return async (dispatch, getState) => {
-
-    fetch(`${apiUrl}home`, {
+    var formData = new FormData();
+    formData.append('username', email);
+    formData.append('password', password);
+    fetch(`${apiUrl}login`, {
       method: 'POST',      
+      body: formData,
     }).then((response) => response.json())
-      .then( (responseJson) => {
-       console.log(`test : ${JSON.stringify(responseJson)}`)
-       const {status,currencySymbol,unread_notifications,data,cart_count,fav_count,unread_messages}=responseJson
-       const {sponsored_products,sponsored_shops,slides,banners,collections}=data
-       //const {'3','4',5}=collections
-       const two=collections['2'] //new collections
-        const newCollection=two['1'] 
-        const newCollectionItems=newCollection.products
+      .then(async (responseJson) => {
+        console.log(`login Response : ${JSON.stringify(responseJson)}`)
+        const authentication = responseJson
+        const {status}=authentication
+         if (status==1){
+          const stringifyAuthentication =  await JSON.stringify(authentication)     
+          await SecureStore.setItemAsync('authentication', stringifyAuthentication);
 
-       const four=collections['4']
-       const featured=four['2']
-       const featuredShop=_.values(featured.shops)
-       const featuredShopDetail=[]
-       featuredShop.forEach((fs)=>featuredShopDetail.push({...fs.shopData,products:fs.products}))
+          dispatch({ type: 'SET_LOGIN', payload: { msg:'' } })
+          dispatch({ type: 'GET_USER', payload: { ...authentication } })
 
-const featuredProduct=[]
+         }else{
+          dispatch({ type: 'SET_LOGIN', payload: { msg } })
+         }
 
-featuredShopDetail.forEach(fsd=>{
-  const prod=fsd.products
-  prod.forEach(pr=>{
-    featuredProduct.push({...fsd,...pr})
-  })
-
-  
-  
-})
-console.log(`uyaya : ${JSON.stringify(featuredProduct)}`)
-
-       console.log(JSON.stringify(collections))
-        dispatch({type:'GET_HOME_ITEMS',payload:{currencySymbol,unread_notifications,cart_count,fav_count,unread_messages,slides,newCollection,newCollectionItems,collections,featuredShopDetail,featuredProduct}})
+         
       })
       .catch((error) => {
-        console.log('Error initiating home : ' + error); 
+        console.log('Error initiating login : ' + error);
+      });
+  }
+}
+
+export const fbLoginApi = (token) => {
+
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('fb_token', token);
+  
+    fetch(`${apiUrl}login_facebook`, {
+      method: 'POST',      
+      body: formData,
+    }).then((response) => response.json())
+      .then(async (responseJson) => {
+        console.log(`fb login Response : ${JSON.stringify(responseJson)}`)
+        const authentication = responseJson
+        const {status}=authentication
+         if (status==1){
+          const stringifyAuthentication =  await JSON.stringify(authentication)     
+          await SecureStore.setItemAsync('authentication', stringifyAuthentication);
+
+          dispatch({ type: 'SET_LOGIN', payload: { msg:'' } })
+          dispatch({ type: 'GET_USER', payload: { ...authentication } })
+
+         }else{
+          dispatch({ type: 'SET_LOGIN', payload: { msg } })
+         }
+
+         
+      })
+      .catch((error) => {
+        console.log('Error initiating login : ' + error);
+      });
+  }
+}
+
+export const homeApi = (token) => {
+
+  const headers = token === undefined ? null : { 'X-TOKEN': token, 'X-USER-TYPE': '1', }
+  return async (dispatch, getState) => {
+    fetch(`${apiUrl}home`, {
+      method: 'POST',
+      headers,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(`inilah apa yang home keluarkan : ${JSON.stringify(responseJson)}`)
+        const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
+        const { sponsored_products, sponsored_shops, slides, banners, collections } = data
+        
+        console.log(`inilah cart count : ${cart_count}`)
+
+        const two = collections['2'] //new collections
+        const newCollection = two['1']
+        const newCollectionItems = newCollection.products
+
+        const four = collections['4']
+        const featured = four['2']
+        const featuredShop = _.values(featured.shops)
+        const featuredShopDetail = []
+        featuredShop.forEach((fs) => featuredShopDetail.push({ ...fs.shopData, products: fs.products }))
+
+        const featuredProduct = []
+
+        featuredShopDetail.forEach(fsd => {
+          const prod = fsd.products
+          prod.forEach(pr => {
+            featuredProduct.push({ ...fsd, ...pr })
+          })
+        })
+
+
+        dispatch({ type: 'GET_HOME_ITEMS', payload: { currencySymbol, unread_notifications, cart_count, fav_count, unread_messages, slides, newCollection, newCollectionItems, collections, featuredShopDetail, featuredProduct } })
+      })
+      .catch((error) => {
+        console.log('Error initiating home : ' + error);
       });
   }
 }
@@ -60,7 +128,7 @@ export const profileInfoApi = (token) => {
         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
         const { name,email,username } = data
 
-        dispatch({ type: 'GET_PROFILE', payload: { name,email,username } })
+        dispatch({ type: 'GET_PROFILE', payload: { name,email,username,cart_count,unread_notifications } })
       })
       .catch((error) => {
         console.log('Error initiating profile : ' + error);
@@ -80,11 +148,11 @@ export const notificationApi = (token) => {
  
     }).then((response) => response.json())
       .then((responseJson) => {
-
+console.log(`noti : ${JSON.stringify(responseJson)}`)
         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
         const { records } = data
 
-        dispatch({ type: 'GET_NOTIFICATIONS', payload: { records } })
+        dispatch({ type: 'GET_NOTIFICATIONS', payload: { records,cart_count,unread_notifications } })
       })
       .catch((error) => {
         console.log('Error initiating profile : ' + error);
@@ -184,12 +252,7 @@ export const getProductDetailApi = (token,product_id) => {
   return async (dispatch, getState) => {
     fetch(`${apiUrl}product_details/${product_id}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-TOKEN': token,
-        'X-USER-TYPE': '1',
-      }
+    
     }).then((response) => response.json())
       .then((responseJson) => {
 
@@ -219,10 +282,10 @@ export const getCartDetailAPI = (token) => {
     }).then((response) => response.json())
       .then( (responseJson) => {
     
-       const {data}=responseJson
+       const {data,cart_count,unread_notifications}=responseJson
        const {products,cartSummary,}=data
       
-        dispatch({type:'GET_CART_DETAIL',payload:{products,cartSummary}})
+        dispatch({type:'GET_CART_DETAIL',payload:{products,cartSummary,cart_count,unread_notifications}})
        })
       .catch((error) => {
         console.log('Error initiating cart detail : ' + error); 
@@ -303,3 +366,6 @@ export const getBuyerOrderApi = (token) => {
       });
   }
 }
+
+//////////////////////////////////////////////////
+

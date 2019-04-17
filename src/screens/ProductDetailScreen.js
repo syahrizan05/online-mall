@@ -94,7 +94,8 @@ class ProductDetailScreen extends React.PureComponent {
               </Card>
               <WebView source={{ html: this.props.product_description }} style={{ height: Layout.window.height - Layout.window.height / 5 }} />
             </Content>
-            <Footer style={{marginTop:0,marginBottom:0,paddingTop:0,paddingBottom:0}}>
+            
+            <View style={{position:'absolute',bottom:0,left:0,right:0}}>
             <View style={{flex:1,flexDirection:'row'}}>
               <View style={{flex:1}}>
                <Button full info iconRight onPress={() => this.setModalVisible()} >
@@ -108,8 +109,9 @@ class ProductDetailScreen extends React.PureComponent {
                 <Icon name="cart" />
               </Button>
               </View>
+              </View>
             </View>          
-            </Footer>
+            
           </Container>
         );
     }
