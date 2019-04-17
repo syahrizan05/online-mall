@@ -56,11 +56,12 @@ export const profileInfoApi = (token) => {
  
     }).then((response) => response.json())
       .then((responseJson) => {
-
+        console.log(`profile api : ${JSON.stringify(responseJson)}`)
         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
-        const { name,email,username } = data
+        const { name,email,username, user_image, phone, dob, city, address_1, address_2 } = data
 
-        dispatch({ type: 'GET_PROFILE', payload: { name,email,username } })
+        dispatch({ type: 'GET_PROFILE', payload: { name,email,username,user_image, phone, dob, city, address_1, address_2 } })
+        dispatch({ type: 'GET_PROFILE_INFO', payload: { unread_messages, unread_notifications, cart_count, fav_count } })
       })
       .catch((error) => {
         console.log('Error initiating profile : ' + error);
@@ -171,7 +172,7 @@ export const addToCartApi = (token,selprod_id) => {
       body: formData,   
     }).then((response) => response.json())
       .then( (responseJson) => {
-    console.log(JSON.stringify(responseJson))
+
       })
       .catch((error) => {
         console.log('Error adding : ' + error + selprod_id); 
@@ -218,11 +219,12 @@ export const getCartDetailAPI = (token) => {
       }
     }).then((response) => response.json())
       .then( (responseJson) => {
-    
+        console.log(`cart api : ${JSON.stringify(responseJson)}`)
        const {data}=responseJson
-       const {products,cartSummary,}=data
+       const {products,cartSummary,cart_selected_billing_address, cart_selected_shipping_address}=data
+       const {cartTotal, cartTaxTotal, orderNetAmount, orderPaymentGatewayCharges}=cartSummary
       
-        dispatch({type:'GET_CART_DETAIL',payload:{products,cartSummary}})
+        dispatch({type:'GET_CART_DETAIL',payload:{products, cart_selected_shipping_address, cart_selected_billing_address, cartTotal, cartTaxTotal, orderNetAmount, orderPaymentGatewayCharges}})
        })
       .catch((error) => {
         console.log('Error initiating cart detail : ' + error); 

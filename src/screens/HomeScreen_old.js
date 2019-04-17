@@ -22,7 +22,7 @@ import * as actionCreator from '../store/actions/action'
 import { bold } from 'ansi-colors';
 
 
-class HomeScreen extends React.PureComponent {
+class HomeOldScreen extends React.PureComponent {
 
   constructor(props) {
     super(props)
@@ -300,4 +300,4 @@ function mapDispatchToProps(dispatch) {
     clearResult: () => dispatch({ type: 'CLEAR_RESULT' })
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeOldScreen)

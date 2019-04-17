@@ -11,6 +11,7 @@ import OrderScreen from '../screens/OrderScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import CheckOutScreen from '../screens/CheckoutScreen';
+import CheckoutScreenNew from '../screens/CheckoutScreenNew';
 import SearchScreen from '../screens/SearchScreen';
 import AddToCartScreen from '../screens/AddToCartScreen';
 import CartScreen from '../screens/CartScreen';
@@ -43,7 +44,7 @@ const RootStack = createStackNavigator(
       screen:AddToCartScreen,
     },
     Checkout: {
-      screen:CheckOutScreen,
+      screen:CheckoutScreenNew,
     },
     Search: {
       screen:SearchScreen,

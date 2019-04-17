@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-const userReducer = (state ={token:'593046ed2eeae7fe934a35e9e024e2b6'}, action) => {
+const userReducer = (state ={token:'4a94adf1cd6a297f0097306d06f92c91'}, action) => {
     switch (action.type) {
         case 'GET_USER':
             return { ...state, ...action.payload }      
@@ -83,7 +83,8 @@ const accountScreenReducer = (state =[], action) => {
     switch (action.type) {
         case 'GET_PROFILE':
             return { ...state, ...action.payload }      
-
+        case 'GET_PROFILE_INFO':
+            return { ...state, ...action.payload }      
         default:
             return state
     }
