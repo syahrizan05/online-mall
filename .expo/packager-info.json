@@ -1,8 +1,8 @@
 {
   "expoServerPort": null,
-  "expoServerNgrokUrl": "https://p7-jt8.adlanshahjehan.mayamall-mobile.exp.direct",
-  "packagerNgrokUrl": "https://packager.p7-jt8.adlanshahjehan.mayamall-mobile.exp.direct",
-  "ngrokPid": 37382,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null
