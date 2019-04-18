@@ -188,6 +188,33 @@ export const getProductsApi = (token) => {
 }
 
 
+export const getFavoriteProductsApi = (token) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}/favorite_products`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+console.log(`inilah screen favorite : ${JSON.stringify(responseJson)}`)
+         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
+         //const { products, total_pages, page, total_records } = data
+
+        dispatch({ type: 'GET_FAVORITE', payload: { products:data } })
+      })
+      .catch((error) => {
+        console.log('Error initiating all products : ' + error);
+      });
+  }
+}
+
+
 export const searchProductsApi = (token, val) => {
   return async (dispatch, getState) => {
 
@@ -216,12 +243,12 @@ export const searchProductsApi = (token, val) => {
   }
 }
 
-export const addToCartApi = (token, selprod_id) => {
+export const addToCartApi = (token, selprod_id,quantity) => {
   return async (dispatch, getState) => {
     const currency = 1
     const language = 1
     //const selprod_id=test
-    const quantity = 1
+    //const quantity = 1
 
     console.log(`inilah barisan kita : ${currency}  ${language}  ${selprod_id} ${quantity}`)
 
@@ -229,7 +256,7 @@ export const addToCartApi = (token, selprod_id) => {
     formData.append('currency', currency);
     formData.append('language', language);
     formData.append('selprod_id', selprod_id);
-    formData.append('quantity', quantity);
+    formData.append('quantity', quantity||1);
 
     fetch(`${apiUrl}add_to_cart`, {
       method: 'POST',
@@ -240,6 +267,7 @@ export const addToCartApi = (token, selprod_id) => {
       body: formData,
     }).then((response) => response.json())
       .then((responseJson) => {
+       
 
       })
       .catch((error) => {
@@ -257,14 +285,44 @@ export const getProductDetailApi = (token, product_id) => {
     }).then((response) => response.json())
       .then((responseJson) => {
 
-        const { data } = responseJson
-        const { product } = data
-        const { product_description, product_image, product_name } = product
+        const { data,cart_count } = responseJson
 
-        dispatch({ type: 'GET_PRODUCT_DETAIL', payload: { product, product_description, product_image, product_name } })
+        console.log(`product responseJson : ${JSON.stringify(responseJson)}`)
+        const { product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop } = data
+       
+
+        dispatch({ type: 'GET_PRODUCT_DETAIL', payload: {cart_count, product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop  } })
       })
       .catch((error) => {
         console.log('Error initiating product detail : ' + error);
+      });
+  }
+}
+
+export const toggleFavoriteApi = (token, product_id) => {
+  console.log(`token ialah ${token} dan product id ialah ${product_id}`)
+  return async (dispatch, getState) => {
+    fetch(`${apiUrl}toggleProductFavorite/${product_id}`, {
+      method: 'POST', headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+
+    }).then((response) => response.json())
+      .then((responseJson) => {
+
+        console.log(`toggle Favorite : ${JSON.stringify(responseJson)}`)
+
+        // const { data,cart_count } = responseJson
+
+        // console.log(`product responseJson : ${JSON.stringify(responseJson)}`)
+        // const { product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop } = data
+       
+
+        // dispatch({ type: 'GET_PRODUCT_DETAIL', payload: {cart_count, product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop  } })
+      })
+      .catch((error) => {
+        console.log('Error toggle favorite : ' + error);
       });
   }
 }

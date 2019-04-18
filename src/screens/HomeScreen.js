@@ -59,6 +59,13 @@ class HomeScreen extends React.PureComponent {
     this.props.clearResult()
   }
 
+  async setFavorite(selprod_id){
+
+    await this.props.setFavorite(selprod_id)
+    await this.props.initiateHomeScreen() 
+    await this.props.getProducts()
+  }
+
   render() {
     const images = []
     this.props.slides && this.props.slides.map(image => images.push({
@@ -66,8 +73,6 @@ class HomeScreen extends React.PureComponent {
       title: image.slide_title,
       screenshotUri: image.image_url
     }))
-
-    this.props.user && console.log(`this user :  ${JSON.stringify(this.props.user)}`)
 
     return (
       <Drawer side='right' ref={(ref) => { this.drawer = ref; }} content={<Sidebar navigator={this.navigator} />} onClose={() => this.closeDrawer()} >
@@ -147,14 +152,20 @@ class HomeScreen extends React.PureComponent {
                     renderItem={({ item }) => (
                       <View style={{ width: Layout.window.width / 2 }}>
                         <Card transparent>
-                          <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
+
+                          <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                             <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
                             <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
                           </CardItem>
                           <CardItem footer>
-                            <Left>
+                            <Body>
                               <Text note>{item.product_name}</Text>
-                            </Left>
+                            </Body>
+                            {this.props.token && <Right>
+                              <Button transparent onPress={() => this.setFavorite(item.selprod_id)}>
+                                <Icon name='heart' style={{ paddingRight: 10,color:item.isfavorite==1?'red':'lightgrey' }} />
+                              </Button>
+                            </Right>}
                           </CardItem>
                         </Card>
                       </View>
@@ -183,15 +194,20 @@ class HomeScreen extends React.PureComponent {
                             <Text note>{item.shop_name}</Text>
                           </Left>
                         </CardItem>
-                        <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
+                        <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
                           <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
                         </CardItem>
                         <CardItem footer>
-                          <Left>
+                          <Body>
                             <Text note>{item.product_name}</Text>
-                          </Left>
+                          </Body>
+                          {this.props.token && <Right>
+                              <Button transparent onPress={() => this.setFavorite(item.selprod_id)}>
+                                <Icon name='heart' style={{ paddingRight: 10,color:item.isfavorite==1?'red':'lightgrey' }} />
+                              </Button>
+                            </Right>}
                         </CardItem>
                       </Card>
                     )}
@@ -215,19 +231,22 @@ class HomeScreen extends React.PureComponent {
                     renderItem={({ item }) => (
                       <Card transparent style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
                         <CardItem>
-
                           <Left><Text note>{item.prodcat_name}</Text></Left>
-
                         </CardItem>
-                        <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
+                        <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.product_image }} />
                           <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
                         </CardItem>
                         <CardItem footer>
-                          <Left>
+                          <Body>
                             <Text note>{item.product_name}</Text>
-                          </Left>
+                          </Body>
+                          {this.props.token && <Right>
+                              <Button transparent onPress={() => this.setFavorite(item.selprod_id)}>
+                                <Icon name='heart' style={{ paddingRight: 10,color:item.isfavorite==1?'red':'lightgrey' }} />
+                              </Button>
+                            </Right>}
                         </CardItem>
                       </Card>
                     )}
@@ -307,6 +326,8 @@ function mapDispatchToProps(dispatch) {
     clearResult: () => dispatch({ type: 'CLEAR_RESULT' }),
 
     checkLogin: () => dispatch(actionCreator.checkLogin()),
+
+    setFavorite: (selprod_id) => dispatch(actionCreator.setFavorite(selprod_id)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

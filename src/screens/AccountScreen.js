@@ -9,6 +9,7 @@ import {
   View,
   FlatList
 } from 'react-native';
+import moment from 'moment'
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge } from 'native-base';
 import styles from '../styles/styles'
@@ -74,7 +75,7 @@ class AccountScreen extends React.PureComponent {
             </CardItem>
             <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="calendar" />
-              <Text> Date of Birth : {this.props.dob}</Text>
+              <Text> Date of Birth : {moment(this.props.dob).format('L')}</Text>
               <Right>
               </Right>
             </CardItem>
@@ -93,7 +94,7 @@ class AccountScreen extends React.PureComponent {
           </Card>
 
           <Card transparent style={{ backgroundColor: 'white' }}>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={()=>this.props.navigation.navigate('Favorite')}>
               <Left>
                 <Icon active name="heart" />
                 <Text> My Favourite Item : {this.props.fav_count}</Text>
@@ -102,7 +103,7 @@ class AccountScreen extends React.PureComponent {
                 <Icon name="arrow-forward" />
               </Right>
             </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}  button onPress={()=>this.props.navigation.navigate('Cart')}>
               <Left>
                 <Icon active name="cart" />
                 <Text> My Cart : {this.props.cart_count}</Text>
@@ -111,7 +112,7 @@ class AccountScreen extends React.PureComponent {
                 <Icon name="arrow-forward" />
               </Right>
             </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}  button onPress={()=>this.props.navigation.navigate('Notification')}>
               <Left>
                 <Icon active name="notifications" />
                 <Text> Notification : {this.props.unread_notifications}</Text>

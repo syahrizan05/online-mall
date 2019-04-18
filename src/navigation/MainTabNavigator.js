@@ -19,6 +19,7 @@ import NotificationScreen from '../screens/NotificationScreen';
 import AccountScreen from '../screens/AccountScreen';
 import EditAccountScreen from '../screens/EditAccountScreen';
 import NotificationDetailsScreen from '../screens/NotificationDetailsScreen'
+import FavoriteScreen from '../screens/FavoriteScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -109,7 +110,25 @@ const AccountStack = createStackNavigator({
   EditAccount :EditAccountScreen,
 });
 
-AccountStack.navigationOptions = {
+
+
+const AcountWithModalStack = createStackNavigator(
+  {
+    Account: {
+      screen: AccountStack,
+    },
+    Favorite: {
+      screen: FavoriteScreen,
+    },
+   
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
+);
+
+AcountWithModalStack.navigationOptions = {
   tabBarVisible:false,
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
@@ -120,9 +139,10 @@ AccountStack.navigationOptions = {
   ),
 };
 
+
 export default createBottomTabNavigator({
   RootStack,
   CartStack,
   NotificationStack,
-  AccountStack
+  AcountWithModalStack
 });
