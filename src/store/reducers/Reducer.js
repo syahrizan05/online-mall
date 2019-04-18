@@ -47,7 +47,10 @@ const cartDetailScreenReducer = (state = [], action) => {
     switch (action.type) {
         case 'GET_CART_DETAIL':
             return { ...state, ...action.payload }
-
+        case 'REMOVE_CART_ITEM':
+            return { ...state, ...action.payload }
+        case 'UPDATE_CART_QTY':
+            return { ...state, ...action.payload }
         default:
             return state
     }
@@ -98,6 +101,10 @@ const accountScreenReducer = (state = [], action) => {
             return { ...state, ...action.payload }
         case 'GET_PROFILE_INFO':
             return { ...state, ...action.payload }
+        case 'SET_PROFILE_INFO':
+            return { ...state, ...action.payload }
+        case 'UPDATE_PROFILE_INFO':
+            return { ...state, ...action.payload }
         default:
             return state
     }
@@ -107,7 +114,10 @@ const notificationScreenReducer = (state = [], action) => {
     switch (action.type) {
         case 'GET_NOTIFICATIONS':
             return { ...state, ...action.payload }
-
+        case 'READ_NOTIFICATIONS':
+            return { ...state, ...action.payload }
+        case 'SET_NOTIFICATIONS':
+            return { ...state, ...action.payload }
         default:
             return state
     }

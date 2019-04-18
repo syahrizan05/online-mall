@@ -17,6 +17,8 @@ import AddToCartScreen from '../screens/AddToCartScreen';
 import CartScreen from '../screens/CartScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import AccountScreen from '../screens/AccountScreen';
+import EditAccountScreen from '../screens/EditAccountScreen';
+import NotificationDetailsScreen from '../screens/NotificationDetailsScreen'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -88,6 +90,7 @@ CartStack.navigationOptions = {
 
 const NotificationStack = createStackNavigator({
   Notification: NotificationScreen,
+  NotificationDetail: NotificationDetailsScreen,
 });
 
 NotificationStack.navigationOptions = {
@@ -103,6 +106,7 @@ NotificationStack.navigationOptions = {
 
 const AccountStack = createStackNavigator({
   Account: AccountScreen,
+  EditAccount :EditAccountScreen,
 });
 
 AccountStack.navigationOptions = {

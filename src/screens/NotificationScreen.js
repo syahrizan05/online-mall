@@ -28,6 +28,11 @@ class NotificationScreen extends React.PureComponent {
     this.props.initiateNotificationScreen()
   }
 
+  readNotifications(unotification_id, unotification_body, unotification_date){
+    this.props.navigation.navigate('NotificationDetail', { unotification_id: unotification_id,})
+    this.props.setNoti({unotification_body, unotification_date})
+  }
+
   render() {
     this.props.records && console.log(`cart summary : ${JSON.stringify(this.props.records)}`)
     return (
@@ -41,7 +46,7 @@ class NotificationScreen extends React.PureComponent {
           <Body>
             <Title>Notification</Title>
           </Body>
-          <Right><Text>{this.props.cart_count}</Text></Right>
+          <Right></Right>
         </Header>
         <Content>
           <Card transparent style={{ marginTop: 0 }}>
@@ -52,7 +57,7 @@ class NotificationScreen extends React.PureComponent {
                 numColumns={1}
                 renderItem={({ item }) => (
                   <List style={{ margin: 1 }}>
-                    <ListItem>
+                    <ListItem onPress={() => this.readNotifications(item.unotification_id, item.unotification_body, item.unotification_date)}>
                       <Body>
                         <Text style={{ fontWeight: 'bold' }}>App Notification</Text>
                         <Text note style={{ color: 'cornflowerblue' }}>{item.unotification_body.replace('App Notification', '')}</Text>
@@ -104,6 +109,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     initiateNotificationScreen: () => dispatch(actionCreator.initiateNotificationScreen()),
+    setNoti: (value) => dispatch({ type: 'SET_NOTIFICATIONS', payload: { ...value } }),
 
   }
 }

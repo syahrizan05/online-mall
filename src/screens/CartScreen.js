@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   View,
-  FlatList
+  FlatList,
+  Alert
 } from 'react-native';
 
 import { Constants, Facebook, GoogleSignIn, Google } from 'expo';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, Form, Item as FormItem, Input, Label } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, Form, Item as FormItem, Input, Label, SwipeRow, Toast } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
@@ -56,8 +57,39 @@ class CartScreen extends React.PureComponent {
 
   //   return await userInfoResponse.json();
   // }
+  removeItem(key) {
+    Alert.alert(
+      'Delete item',
+      'Are you sure want to delete ?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
+        {
+          text: 'Delete',
+          onPress: () => { this.removeItems(key) },
+          style: 'delete',
+        },
+      ],
+      { cancelable: false },
+    );
+  }
 
+  removeItems(key) {
+    this.props.removeCartItem(key)
+    this.props.initiateCartDetailScreen()
+  }
 
+  async updateQuantity(key, quantity) {
+    await this.props.updateCartQty(key, quantity)
+    await this.props.initiateCartDetailScreen()
+  }
+
+  removeMessage() {
+    if (this.props.removeStatus == 1) {
+      alert(this.props.removeMessage)
+    } else {
+      alert(this.props.removeMessage)
+    }
+  }
 
   render() {
     this.props.cartSummary && console.log(`cart summary : ${JSON.stringify(this.props.cartSummary)}`)
@@ -65,7 +97,6 @@ class CartScreen extends React.PureComponent {
 
     return (
       <Container style={styles.container}>
-
         <Header>
           <Left>
             <Button transparent>
@@ -79,38 +110,57 @@ class CartScreen extends React.PureComponent {
         </Header>
 
         {this.props.token ?
-          <Content>
-            <FlatList
-              data={this.props.products}
-              keyExtractor={(item, index) => index.toString()}
-              numColumns={1}
-              renderItem={({ item }) => (
-                <Card transparent style={{ margin: 1, marginTop: 0 }}>
-                  <CardItem>
-                    <Thumbnail small source={require('../assets/images/shop.png')} />
-                    <Body style={{ margin: 3 }}>
-                      <Text note>{item.shop_name}</Text>
-                      <Text note>{item.brand_name}</Text>
-                    </Body>
-                  </CardItem>
-                  <CardItem button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
-                    <Image style={{ height: Layout.window.height / 10, width: null, flex: 1, margin: 10 }} source={{ uri: item.image_url }} />
-                    <Body>
-                      <Text note style={{ fontSize: 11 }}>{item.product_name}</Text>
-                      <Text note style={{ fontStyle: 'italic', color: 'cornflowerblue', fontSize: 9 }}>Only {item.selprod_stock} items(s) in stock</Text>
-                      <Text note style={{ color: 'royalblue', fontWeight: 'bold' }}>RM{item.currency_theprice}</Text>
-                      {/* <Text note style={{color: 'dodgerblue'}}>RM{item.currency_tax}</Text> */}
-                    </Body>
-                    <Left>
-                      <Body>
-                        <Text note style={{ fontSize: 10 }}>Quantity : {item.quantity}</Text>
-                        <Text note style={{ fontWeight: 'bold' }}>RM{item.currency_total}</Text>
+          <View style={{ flex: 1 }}>
+            <Content>
+              <FlatList
+                data={this.props.products}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={1}
+                renderItem={({ item }) => (
+                  <Card transparent style={{ margin: 1, marginTop: 0 }}>
+                    <CardItem>
+                      <Thumbnail small source={require('../assets/images/shop.png')} />
+                      <Body style={{ margin: 3 }}>
+                        <Text note>{item.shop_name}</Text>
+                        <Text note>{item.brand_name}</Text>
                       </Body>
-                    </Left>
-                  </CardItem>
-                </Card>
-              )}
-            />
+                    </CardItem>
+                    <SwipeRow
+                      rightOpenValue={-65}
+                      body={
+                        <CardItem >
+                          <TouchableOpacity style={{ flex:1}}  onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                            <Image style={{ height: Layout.window.height / 10, width: null, flex: 1, margin: 10 }} source={{ uri: item.image_url }} />
+                          </TouchableOpacity>
+                          <Body>
+                            <Text note style={{ fontSize: 11 }}>{item.product_name}</Text>
+                            <Text note style={{ fontStyle: 'italic', color: 'cornflowerblue', fontSize: 9 }}>Only {item.selprod_stock} items(s) in stock</Text>
+                            <Text note style={{ color: 'royalblue', fontWeight: 'bold' }}>RM{item.currency_theprice}</Text>
+                          </Body>
+                          <Left>
+                            <Body>
+                              <Button small style={{ margin: 5, backgroundColor: 'cornflowerblue' }} onPress={()=>this.updateQuantity(item.key,item.quantity+1)}>
+                                <Icon name="add" style={{ fontSize: 15 }} />
+                              </Button>
+                              <Text note style={{ fontSize: 10 }}>Quantity : {item.quantity}</Text>
+                              <Button small style={{ margin: 5, backgroundColor: 'cornflowerblue' }} onPress={()=>this.updateQuantity(item.key,item.quantity-1)}>
+                                <Icon name="remove" style={{ fontSize: 15 }} />
+                              </Button>
+                              <Text note style={{ fontWeight: 'bold' }}>RM{item.currency_total}</Text>
+                            </Body>
+                          </Left>
+                        </CardItem>
+                      }
+                      right={
+                        <Button danger onPress={() => this.removeItem(item.key)}>
+                          <Icon active name="trash" />
+                        </Button>
+                      }
+                    />
+                  </Card>
+                )}
+              />
+            </Content>
             <View style={{ flexDirection: 'row', bottom: 0, left: 0, right: 0, backgroundColor: 'white' }}>
               <View style={{ flex: 1, margin: 5 }}>
                 <Text note>Total : RM {this.props.cartTotal}</Text>
@@ -123,7 +173,7 @@ class CartScreen extends React.PureComponent {
                 </Button>
               </View>
             </View>
-          </Content>
+          </View>
 
           :
           <Content padder scrollEnabled={false}>
@@ -201,9 +251,10 @@ function mapStateToProps(state) {
     password: state.loginReducer.password,
     msg: state.loginReducer.msg,
     cartSummary: state.cartDetailScreenReducer.cartSummary,
+    removeMessage: state.cartDetailScreenReducer.msg,
+    removeStatus: state.cartDetailScreenReducer.status,
     unread_notifications: state.cartDetailScreenReducer.unread_notifications || 0,
     cart_count: state.cartDetailScreenReducer.cart_count || 0,
-
   }
 }
 
@@ -213,7 +264,9 @@ function mapDispatchToProps(dispatch) {
     setLogin: (value) => dispatch({ type: 'SET_LOGIN', payload: { ...value } }),
     login: () => dispatch(actionCreator.login()),
     logout: () => dispatch(actionCreator.logout()),
-    fbLogin: () => dispatch(actionCreator.fbLogin())
+    fbLogin: () => dispatch(actionCreator.fbLogin()),
+    removeCartItem: (key) => dispatch(actionCreator.removeCartItem(key)),
+    updateCartQty: (key,quantity) => dispatch(actionCreator.updateCartQty(key,quantity))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartScreen)

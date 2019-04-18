@@ -153,7 +153,7 @@ export const notificationApi = (token) => {
         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
         const { records } = data
 
-        dispatch({ type: 'GET_NOTIFICATIONS', payload: { records, cart_count, unread_notifications } })
+        dispatch({ type: 'GET_NOTIFICATIONS', payload: { records, cart_count, unread_notifications} })
       })
       .catch((error) => {
         console.log('Error initiating profile : ' + error);
@@ -283,7 +283,7 @@ export const getCartDetailAPI = (token) => {
     }).then((response) => response.json())
       .then((responseJson) => {
         console.log(`cart api : ${JSON.stringify(responseJson)}`)
-        const { data,  cart_count, unread_notifications } = responseJson
+        const { data, cart_count, unread_notifications } = responseJson
         const { products, cartSummary, cart_selected_billing_address, cart_selected_shipping_address } = data
         const { cartTotal, cartTaxTotal, orderNetAmount, orderPaymentGatewayCharges } = cartSummary
 
@@ -369,5 +369,115 @@ export const getBuyerOrderApi = (token) => {
   }
 }
 
-//////////////////////////////////////////////////
+export const removeCartItemAPI = (token, key) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('key', key);
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}remove_cart_item`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg, cart_count } = responseJson
 
+        dispatch({ type: 'REMOVE_CART_ITEM', payload: { status, msg, cart_count } })
+      })
+      .catch((error) => {
+        console.log('Unable to remove : ' + error);
+      });
+  }
+}
+
+export const updateCartQtyAPI = (token, key, quantity) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('key', key);
+    formData.append('quantity', quantity);
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}update_cart_qty`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg, cart_count } = responseJson
+
+        dispatch({ type: 'UPDATE_CART_QTY', payload: { status, msg, cart_count } })
+      })
+      .catch((error) => {
+        console.log('Unable to remove : ' + error);
+      });
+  }
+}
+
+export const updateUserInfoAPI = (token, phone, dob, city, name) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('user_phone', phone);
+    formData.append('user_profile_info', "");
+    formData.append('user_dob', dob);
+    formData.append('user_country_id', "");
+    formData.append('user_state_id', "");
+    formData.append('user_products_services', "");
+    formData.append('user_city', city);
+    formData.append('user_company', "");
+    formData.append('currency', 1);
+    formData.append('user_name', name);
+    formData.append('language', 1);
+    fetch(`${apiUrl}update_profile_info`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+        dispatch({ type: 'UPDATE_PROFILE_INFO', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Unable to update : ' + error);
+      });
+  }
+}
+
+export const readNotifications = (token, unotification_id) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}markNotificationRead/${unotification_id}`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+
+        dispatch({ type: 'READ_NOTIFICATIONS', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+//////////////////////////////////////////////////
