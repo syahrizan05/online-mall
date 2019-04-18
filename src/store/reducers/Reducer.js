@@ -137,4 +137,16 @@ const searchReducer = (state = [], action) => {
     }
 }
 
-export default reducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer });
+const favoriteScreenReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'GET_FAVORITE':
+            return { ...state, ...action.payload }
+
+     
+
+        default:
+            return state
+    }
+}
+
+export default reducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer,favoriteScreenReducer });

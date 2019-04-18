@@ -1,5 +1,5 @@
 import {SecureStore, Facebook, GoogleSignIn} from 'expo'
-import { homeApi,getProductsApi,addToCartApi,getCartDetailAPI,getBuyerOrderApi,getProductDetailApi,getBuyerOrdersApi,searchProductsApi,profileInfoApi,notificationApi, registerApi,loginApi,fbLoginApi } from './api'
+import { homeApi,getProductsApi,addToCartApi,getCartDetailAPI,getBuyerOrderApi,getProductDetailApi,getBuyerOrdersApi,searchProductsApi,profileInfoApi,notificationApi, registerApi,loginApi,fbLoginApi,toggleFavoriteApi,getFavoriteProductsApi } from './api'
 
 
 
@@ -39,10 +39,10 @@ export const searchProducts = (val) => {
     }
 }
 
-export const addToCart = (selprod_id) => {
+export const addToCart = (selprod_id,quantity) => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
-        dispatch(addToCartApi(token,selprod_id))
+        dispatch(addToCartApi(token,selprod_id,quantity))
     }
 }
 
@@ -130,5 +130,21 @@ export const initiateApp = () => {
         dispatch(checkLogin())
         dispatch(initiateHomeScreen())
         dispatch(getProducts())
+    }
+}
+
+
+export const setFavorite = (selprod_id) => {
+    return (dispatch, getState) => {        
+        const { token } = getState().userReducer
+        dispatch(toggleFavoriteApi(token,selprod_id))
+      
+    }
+}
+
+export const initiateFavoriteScreen = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getFavoriteProductsApi(token))
     }
 }

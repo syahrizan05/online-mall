@@ -10,6 +10,8 @@ import {
   FlatList
 } from 'react-native';
 
+import moment from 'moment'
+
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, List, ListItem } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
@@ -41,7 +43,7 @@ class NotificationScreen extends React.PureComponent {
           <Body>
             <Title>Notification</Title>
           </Body>
-          <Right><Text>{this.props.cart_count}</Text></Right>
+          <Right />
         </Header>
         <Content>
           <Card transparent style={{ marginTop: 0 }}>
@@ -58,7 +60,7 @@ class NotificationScreen extends React.PureComponent {
                         <Text note style={{ color: 'cornflowerblue' }}>{item.unotification_body.replace('App Notification', '')}</Text>
                       </Body>
                       <Right>
-                        <Text note style={{ fontStyle: 'italic' }}>{item.unotification_date}</Text>
+                        <Text note style={{ fontStyle: 'italic' }}>{moment(item.unotification_date).format('LL')}</Text>
                       </Right>
                     </ListItem>
                   </List>
