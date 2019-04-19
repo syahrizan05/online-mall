@@ -78,7 +78,22 @@ const CartStack = createStackNavigator({
   Cart: CartScreen,
 });
 
-CartStack.navigationOptions = {
+const CartStackWithModal = createStackNavigator(
+  {
+    Cart: {
+      screen: CartStack,
+    },
+    CheckOutScreen: {
+      screen: CheckoutScreenNew,
+    },    
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
+);
+
+CartStackWithModal.navigationOptions = {
   tabBarLabel: 'Links',
   tabBarVisible:false,
   tabBarIcon: ({ focused }) => (
@@ -142,7 +157,7 @@ AcountWithModalStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   RootStack,
-  CartStack,
+  CartStackWithModal,
   NotificationStack,
   AcountWithModalStack
 });

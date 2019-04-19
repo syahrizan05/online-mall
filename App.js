@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View,AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
@@ -13,6 +13,7 @@ import platform from './native-base-theme/variables/platform';
 import minimal from './native-base-theme/variables/minimal';
 
 import AppNavigator from './src/navigation/AppNavigator';
+import { Main, Intro } from './src/navigation/AppNavigator';
 
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
@@ -24,20 +25,24 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 export default class App extends React.PureComponent {
   state = {
     isLoadingComplete: false,
+    notFirstTime:false
   };
 
-  // function onAppInit(dispatch) {
-  //   return (nextState, replace, callback) => {
-  //     dispatch(performTokenRequest())
-  //       .then(() => {
-  //         // callback is like a "next" function, app initialization is stopped until it is called.
-  //         callback();
-  //       });
-  //   };
-  // }
+  checkFirstTime = async () => {
+    try {
+      //const personalToken = await AsyncStorage.getItem('personalToken');
+      const notFirstTime = await AsyncStorage.getItem('notFirstTime')
+      if (notFirstTime !== null) {
+        this.setState({ notFirstTime: true })
+      }
+    } catch (error) {
+      console.log(`personalToken error ${error}`)
+      return 'takde'
+    }
+  }
 
   componentDidMount(){
-    
+    this.checkFirstTime()
     //store.dispatch(initiateApp())
   }
 
@@ -56,7 +61,8 @@ export default class App extends React.PureComponent {
         <StyleProvider  style={getTheme(minimal)}> 
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          
+          {this.state.notFirstTime ? <Main /> : <Intro />}
         </View>
         </StyleProvider>
         </Provider>
@@ -72,6 +78,12 @@ export default class App extends React.PureComponent {
         require('./src/assets/images/robot-prod.png'),
         require('./src/assets/images/mm_white.png'),
         require('./src/assets/images/icon.png'),
+
+        require('./src/assets/images/intro/Home.png'),
+        require('./src/assets/images/intro/Cart.png'),
+        require('./src/assets/images/intro/Notifications.png'),
+        require('./src/assets/images/intro/ProductDetail.png'),
+        require('./src/assets/images/intro/Profile.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

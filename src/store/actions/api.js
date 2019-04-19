@@ -153,7 +153,7 @@ export const notificationApi = (token) => {
         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
         const { records } = data
 
-        dispatch({ type: 'GET_NOTIFICATIONS', payload: { records, cart_count, unread_notifications} })
+        dispatch({ type: 'GET_NOTIFICATIONS', payload: { records, cart_count, unread_notifications } })
       })
       .catch((error) => {
         console.log('Error initiating profile : ' + error);
@@ -202,11 +202,11 @@ export const getFavoriteProductsApi = (token) => {
       body: formData,
     }).then((response) => response.json())
       .then((responseJson) => {
-console.log(`inilah screen favorite : ${JSON.stringify(responseJson)}`)
-         const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
-         //const { products, total_pages, page, total_records } = data
+        console.log(`inilah screen favorite : ${JSON.stringify(responseJson)}`)
+        const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
+        //const { products, total_pages, page, total_records } = data
 
-        dispatch({ type: 'GET_FAVORITE', payload: { products:data } })
+        dispatch({ type: 'GET_FAVORITE', payload: { products: data } })
       })
       .catch((error) => {
         console.log('Error initiating all products : ' + error);
@@ -243,20 +243,17 @@ export const searchProductsApi = (token, val) => {
   }
 }
 
-export const addToCartApi = (token, selprod_id,quantity) => {
+export const addToCartApi = (token, selprod_id, quantity) => {
   return async (dispatch, getState) => {
     const currency = 1
     const language = 1
-    //const selprod_id=test
-    //const quantity = 1
 
-    console.log(`inilah barisan kita : ${currency}  ${language}  ${selprod_id} ${quantity}`)
 
     var formData = new FormData();
     formData.append('currency', currency);
     formData.append('language', language);
     formData.append('selprod_id', selprod_id);
-    formData.append('quantity', quantity||1);
+    formData.append('quantity', quantity || 1);
 
     fetch(`${apiUrl}add_to_cart`, {
       method: 'POST',
@@ -267,7 +264,8 @@ export const addToCartApi = (token, selprod_id,quantity) => {
       body: formData,
     }).then((response) => response.json())
       .then((responseJson) => {
-       
+        console.log(JSON.stringify(responseJson))
+
 
       })
       .catch((error) => {
@@ -285,13 +283,13 @@ export const getProductDetailApi = (token, product_id) => {
     }).then((response) => response.json())
       .then((responseJson) => {
 
-        const { data,cart_count } = responseJson
+        const { data, cart_count } = responseJson
 
         console.log(`product responseJson : ${JSON.stringify(responseJson)}`)
-        const { product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop } = data
-       
+        const { product, productSpecifications, shippingRates, shippingDetails, recommendedProducts, relatedProductsRs, productImagesArr, shop_rating, shop } = data
 
-        dispatch({ type: 'GET_PRODUCT_DETAIL', payload: {cart_count, product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop  } })
+
+        dispatch({ type: 'GET_PRODUCT_DETAIL', payload: { cart_count, product, productSpecifications, shippingRates, shippingDetails, recommendedProducts, relatedProductsRs, productImagesArr, shop_rating, shop } })
       })
       .catch((error) => {
         console.log('Error initiating product detail : ' + error);
@@ -317,7 +315,7 @@ export const toggleFavoriteApi = (token, product_id) => {
 
         // console.log(`product responseJson : ${JSON.stringify(responseJson)}`)
         // const { product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop } = data
-       
+
 
         // dispatch({ type: 'GET_PRODUCT_DETAIL', payload: {cart_count, product,productSpecifications,shippingRates,shippingDetails,  recommendedProducts,relatedProductsRs,   productImagesArr,  shop_rating,shop  } })
       })

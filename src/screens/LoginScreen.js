@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Constants, Facebook, GoogleSignIn} from 'expo';
 import styles from '../styles/styles';
 import Layout from '../constants/Layout';
-import {Image} from 'react-native';
+import {Image,View} from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Badge,Form,Item as FormItem,Input,Label } from 'native-base';
 
 
@@ -44,21 +44,14 @@ class LoginScreen extends Component {
   render() {
 
     return (
-      <Container style={styles.authContainer}>
-        <Content scrollEnabled={false}>
-         
-          <Button info style={{ height: 30, width: 70 }} onPress={() => this.props.navigation.navigate('Orders')}>
-            <Text style={{ fontSize: 9 }}>View Order</Text>
-          </Button>
-          <Button onPress={() => this.props.logout()}><Text>Logout</Text></Button>
-        </Content>:
+      <Container style={styles.authContainer}>     
         <Content padder scrollEnabled={false}>
           <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
             <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
           </View>
           <Form>
             <FormItem floatingLabel >
-              <Label>Email</Label>
+              <Label>Username</Label>
               <Input value={this.props.email} onChangeText={(email) => this.props.setLogin({ email })} />
             </FormItem>
             <FormItem floatingLabel>
@@ -83,7 +76,11 @@ class LoginScreen extends Component {
           </View>
           <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
             <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
-          </Button></Content>
+          </Button>
+          <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Home')}>
+            <Text style={{ fontSize: 12 }}> Skip</Text>
+          </Button>
+          </Content>
       </Container>
     );
   }
