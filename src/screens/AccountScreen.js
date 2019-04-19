@@ -29,6 +29,12 @@ class AccountScreen extends React.PureComponent {
     this.props.initiateAccountScreen()
   }
 
+ async Logout(){
+   await this.props.logout()
+   await this.props.initiateAccountScreen()
+    this.props.navigation.navigate('Home')
+  }
+
   render() {
 
     return (
@@ -133,7 +139,7 @@ class AccountScreen extends React.PureComponent {
           </Card>
           <Card transparent>
             <CardItem>
-              <Button full danger style={{ flex: 1 }}><Text>Logout</Text></Button>
+              <Button full danger style={{ flex: 1 }} onPress={() => this.Logout()}><Text>Logout</Text></Button>
             </CardItem>
           </Card>
         </Content>
@@ -174,7 +180,7 @@ function mapStateToProps(state) {
     address_1: state.accountScreenReducer.address_1,
     address_2: state.accountScreenReducer.address_2,
     unread_messages: state.accountScreenReducer.unread_messages,
-    unread_notifications: state.accountScreenReducer.unread_notifications,
+    unread_notifications: state.notificationScreenReducer.unread_notifications,
     cart_count: state.accountScreenReducer.cart_count,
     fav_count: state.accountScreenReducer.fav_count
   }
@@ -183,6 +189,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     initiateAccountScreen: () => dispatch(actionCreator.initiateAccountScreen()),
+    logout: () => dispatch(actionCreator.logout())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AccountScreen)

@@ -1,5 +1,5 @@
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications,toggleFavoriteApi,getFavoriteProductsApi } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI } from './api'
 
 
 
@@ -39,10 +39,10 @@ export const searchProducts = (val) => {
     }
 }
 
-export const addToCart = (selprod_id,quantity) => {
+export const addToCart = (selprod_id, quantity) => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
-        dispatch(addToCartApi(token,selprod_id,quantity))
+        dispatch(addToCartApi(token, selprod_id, quantity))
     }
 }
 
@@ -150,7 +150,7 @@ export const updateCartQty = (key, quantity) => {
 export const updateProfileInfo = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
-        const {phone, dob, city, name } = getState().accountScreenReducer
+        const { phone, dob, city, name } = getState().accountScreenReducer
         dispatch(updateUserInfoAPI(token, phone, dob, city, name))
     }
 }
@@ -162,10 +162,10 @@ export const readNotificationScreen = (unotification_id) => {
     }
 }
 export const setFavorite = (selprod_id) => {
-    return (dispatch, getState) => {        
+    return (dispatch, getState) => {
         const { token } = getState().userReducer
-        dispatch(toggleFavoriteApi(token,selprod_id))
-      
+        dispatch(toggleFavoriteApi(token, selprod_id))
+
     }
 }
 
@@ -173,5 +173,19 @@ export const initiateFavoriteScreen = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(getFavoriteProductsApi(token))
+    }
+}
+
+export const forgotPassword = () => {
+    return (dispatch, getState) => {
+        const { email } = getState().loginReducer
+        dispatch(forgotPasswordAPI(email))
+    }
+}
+
+export const updateAddress = () => {
+    return (dispatch, getState) => {
+        const { zip, name, city, address_2, address_1, phone } = getState().accountScreenReducer
+        dispatch(updateAddressAPI(zip, name, city, address_2, address_1, phone ))
     }
 }

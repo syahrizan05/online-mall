@@ -538,4 +538,57 @@ export const readNotifications = (token, unotification_id) => {
   }
 }
 
+export const forgotPasswordAPI = (email) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('user_email_username', email);
+    fetch(`${apiUrl}forgot_password`, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+        dispatch({ type: 'FORGOT_PASSWORD', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const updateAddressAPI = (token, zip, name, city, address_2, address_1, phone) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('ua_zip', zip);
+    formData.append('ua_name', name);
+    formData.append('ua_identifier', "");
+    formData.append('ua_id', );
+    formData.append('ua_country_id', 99);
+    formData.append('ua_state_id', 1294);
+    formData.append('ua_city', city);
+    formData.append('language', 1);
+    formData.append('ua_address2', address_2);
+    formData.append('ua_address1', address_1);
+    formData.append('ua_phone', phone);
+    formData.append('currency', 1);
+    fetch(`${apiUrl}save_address`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+        dispatch({ type: 'UPDATE_ADDRESS', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Unable to update : ' + error);
+      });
+  }
+}
+
 //////////////////////////////////////////////////

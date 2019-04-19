@@ -4,7 +4,10 @@ const loginReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_LOGIN':
             return { ...state, ...action.payload }
-
+        case 'SET_FORGOT':
+            return { ...state, ...action.payload }
+        case 'FORGOT_PASSWORD':
+            return { ...state, ...action.payload }
         default:
             return state
     }
@@ -14,10 +17,8 @@ const userReducer = (state = [], action) => {
     switch (action.type) {
         case 'GET_USER':
             return { ...state, ...action.payload }
-
         case 'LOGOUT':
             return { state: null }
-
         default:
             return state
     }
@@ -27,7 +28,6 @@ const homeScreenReducer = (state = [], action) => {
     switch (action.type) {
         case 'GET_HOME_ITEMS':
             return { ...state, ...action.payload }
-
         default:
             return state
     }
@@ -104,6 +104,8 @@ const accountScreenReducer = (state = [], action) => {
         case 'SET_PROFILE_INFO':
             return { ...state, ...action.payload }
         case 'UPDATE_PROFILE_INFO':
+            return { ...state, ...action.payload }
+        case 'UPDATE_ADDRESS':
             return { ...state, ...action.payload }
         default:
             return state

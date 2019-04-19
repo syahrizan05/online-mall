@@ -45,11 +45,11 @@ class EditAccountScreen extends React.PureComponent {
         this.props.navigation.goBack()
     }
 
-    pickImage(){
+    pickImage() {
 
     }
 
-    
+
 
     render() {
 
@@ -73,7 +73,7 @@ class EditAccountScreen extends React.PureComponent {
                         <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
                             <Left></Left>
                             <Body>
-                                <TouchableHighlight style={{ flex:1}}  >
+                                <TouchableHighlight style={{ flex: 1 }}  >
                                     <Thumbnail large source={{ uri: this.props.user_image }} />
                                 </TouchableHighlight>
                                 <Text>{this.props.username}</Text>
@@ -141,11 +141,16 @@ class EditAccountScreen extends React.PureComponent {
                             <Right />
                         </CardItem>
                     </Card>
+                    <Card transparent>
+                        <CardItem>
+                            <Button full primary rounded style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('EditEmail')}><Text>Change Email Address</Text></Button>
+                        </CardItem>
+                    </Card>
                 </Content>
             </Container>
         );
     }
-    
+
 }
 
 

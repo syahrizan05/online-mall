@@ -129,7 +129,7 @@ class CartScreen extends React.PureComponent {
                       rightOpenValue={-65}
                       body={
                         <CardItem >
-                          <TouchableOpacity style={{ flex:1}}  onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                          <TouchableOpacity style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                             <Image style={{ height: Layout.window.height / 10, width: null, flex: 1, margin: 10 }} source={{ uri: item.image_url }} />
                           </TouchableOpacity>
                           <Body>
@@ -139,11 +139,11 @@ class CartScreen extends React.PureComponent {
                           </Body>
                           <Left>
                             <Body>
-                              <Button small style={{ margin: 5, backgroundColor: 'cornflowerblue' }} onPress={()=>this.updateQuantity(item.key,item.quantity+1)}>
+                              <Button small style={{ margin: 5, backgroundColor: 'cornflowerblue' }} onPress={() => this.updateQuantity(item.key, item.quantity + 1)}>
                                 <Icon name="add" style={{ fontSize: 15 }} />
                               </Button>
                               <Text note style={{ fontSize: 10 }}>Quantity : {item.quantity}</Text>
-                              <Button small style={{ margin: 5, backgroundColor: 'cornflowerblue' }} onPress={()=>this.updateQuantity(item.key,item.quantity-1)}>
+                              <Button small style={{ margin: 5, backgroundColor: 'cornflowerblue' }} onPress={() => this.updateQuantity(item.key, item.quantity - 1)}>
                                 <Icon name="remove" style={{ fontSize: 15 }} />
                               </Button>
                               <Text note style={{ fontWeight: 'bold' }}>RM{item.currency_total}</Text>
@@ -181,7 +181,6 @@ class CartScreen extends React.PureComponent {
               <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
             </View>
             <Form>
-
               <FormItem floatingLabel >
                 <Label>Email</Label>
                 <Input value={this.props.email} onChangeText={(email) => this.props.setLogin({ email })} />
@@ -193,10 +192,10 @@ class CartScreen extends React.PureComponent {
               <View style={{ margin: 10 }} />
               <Text note danger>{this.props.msg}</Text>
               <Button info full onPress={() => this.props.login()}>
-                <Text> Login </Text>
+                <Text>Login</Text>
               </Button>
               <Button transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Forgot')}>
-                <Text note> Forgot Password ?</Text>
+                <Text note>Forgot Password ?</Text>
               </Button>
             </Form>
 
@@ -204,12 +203,12 @@ class CartScreen extends React.PureComponent {
             <View style={{ flexDirection: 'row', marginTop: 5, alignSelf: 'center' }}>
               <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.fbLogin()}>
                 <Icon name='logo-facebook' />
-                <Text> Facebook</Text>
+                <Text>Facebook</Text>
               </Button>
 
             </View>
             <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
-              <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
+              <Text style={{ fontSize: 12 }}>Sign Up Now</Text>
             </Button></Content>}
         <Footer>
           <FooterTab>
@@ -266,7 +265,7 @@ function mapDispatchToProps(dispatch) {
     logout: () => dispatch(actionCreator.logout()),
     fbLogin: () => dispatch(actionCreator.fbLogin()),
     removeCartItem: (key) => dispatch(actionCreator.removeCartItem(key)),
-    updateCartQty: (key,quantity) => dispatch(actionCreator.updateCartQty(key,quantity))
+    updateCartQty: (key, quantity) => dispatch(actionCreator.updateCartQty(key, quantity))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartScreen)

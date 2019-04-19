@@ -1,57 +1,49 @@
 import React, { Component } from 'react';
-import {Constants, Facebook, GoogleSignIn} from 'expo';
+import { Constants, Facebook, GoogleSignIn } from 'expo';
 import styles from '../styles/styles';
 import Layout from '../constants/Layout';
-import {Image} from 'react-native';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Badge,Form,Item as FormItem,Input,Label } from 'native-base';
+import { Image, View } from 'react-native';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, Form, Item as FormItem, Input, Label } from 'native-base';
 
 
 import { connect } from 'react-redux'
 import * as actionCreator from '../store/actions/action'
 
 class LoginScreen extends Component {
-    static navigationOptions = {
-        header: null 
-        
-      };
+  static navigationOptions = {
+    header: null
+  };
 
-      state = { user: null };
+  state = { user: null };
 
-      async fbLogIn() {
-        try {
-          const {
-            type,
-            token,
-            expires,
-            permissions,
-            declinedPermissions,
-          } = await Facebook.logInWithReadPermissionsAsync('1985454545081156', {
-            permissions: ['public_profile'],
-          });
-          if (type === 'success') {
-            // Get the user's name using Facebook's Graph API
-            const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-            alert('Logged in!', `Hi ${(await response.json()).name}!`);
-            console.log('token FB'+token)
-          } else {
-            // type === 'cancel'
-          }
-        } catch ({ message }) {
-          alert(`Facebook Login Error: ${message}`);
-        }
+  async fbLogIn() {
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync('1985454545081156', {
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        alert('Logged in!', `Hi ${(await response.json()).name}!`);
+        console.log('token FB' + token)
+      } else {
+        // type === 'cancel'
       }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
 
   render() {
 
     return (
       <Container style={styles.authContainer}>
-        <Content scrollEnabled={false}>
-         
-          <Button info style={{ height: 30, width: 70 }} onPress={() => this.props.navigation.navigate('Orders')}>
-            <Text style={{ fontSize: 9 }}>View Order</Text>
-          </Button>
-          <Button onPress={() => this.props.logout()}><Text>Logout</Text></Button>
-        </Content>:
         <Content padder scrollEnabled={false}>
           <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
             <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
@@ -68,22 +60,23 @@ class LoginScreen extends Component {
             <View style={{ margin: 10 }} />
             <Text note danger>{this.props.msg}</Text>
             <Button info full onPress={() => this.props.login()}>
-              <Text> Login </Text>
+              <Text>Login</Text>
             </Button>
             <Button transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Forgot')}>
-              <Text note> Forgot Password ?</Text>
+              <Text note>Forgot Password ?</Text>
             </Button>
           </Form>
           <Text style={{ alignSelf: 'center', marginTop: 5, fontSize: 12 }}>Connect with other ways</Text>
           <View style={{ flexDirection: 'row', marginTop: 5, alignSelf: 'center' }}>
             <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.fbLogin()}>
               <Icon name='logo-facebook' />
-              <Text> Facebook</Text>
+              <Text>Facebook</Text>
             </Button>
           </View>
           <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
-            <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
-          </Button></Content>
+            <Text style={{ fontSize: 12 }}>Sign Up Now</Text>
+          </Button>
+        </Content>
       </Container>
     );
   }
@@ -92,35 +85,25 @@ class LoginScreen extends Component {
 
 function mapStateToProps(state) {
   return {
-      user:state.userReducer, 
-      
-      token:state.userReducer.token, 
-      
-      email:state.loginReducer.email,
-      password:state.loginReducer.password,
-      msg:state.loginReducer.msg,
-      
-      cartSummary:state.cartDetailScreenReducer.cartSummary,
-      products:state.cartDetailScreenReducer.products, 
-
-      unread_notifications:state.cartDetailScreenReducer.unread_notifications||0,
-      cart_count:state.cartDetailScreenReducer.cart_count||0,
-  
+    user: state.userReducer,
+    token: state.userReducer.token,
+    email: state.loginReducer.email,
+    password: state.loginReducer.password,
+    msg: state.loginReducer.msg,
+    cartSummary: state.cartDetailScreenReducer.cartSummary,
+    products: state.cartDetailScreenReducer.products,
+    unread_notifications: state.cartDetailScreenReducer.unread_notifications || 0,
+    cart_count: state.cartDetailScreenReducer.cart_count || 0,
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {     
+  return {
     initiateCartDetailScreen: () => dispatch(actionCreator.initiateCartDetailScreen()),
-    setLogin: (value) => dispatch({type:'SET_LOGIN',payload:{...value}}),
+    setLogin: (value) => dispatch({ type: 'SET_LOGIN', payload: { ...value } }),
     login: () => dispatch(actionCreator.login()),
     logout: () => dispatch(actionCreator.logout()),
-    fbLogin:()=>dispatch(actionCreator.fbLogin())
-
-    
-
-  
-
+    fbLogin: () => dispatch(actionCreator.fbLogin())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

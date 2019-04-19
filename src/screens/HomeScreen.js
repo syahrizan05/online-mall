@@ -298,7 +298,7 @@ function mapStateToProps(state) {
 
     cart_count: state.homeScreenReducer.cart_count,
     currencySymbol: state.homeScreenReducer.currencySymbol,
-    unread_notifications: state.homeScreenReducer.unread_notifications || 0,
+    unread_notifications: state.notificationScreenReducer.unread_notifications || 0,
     unread_messages: state.homeScreenReducer.unread_messages || 0,
     fav_count: state.homeScreenReducer.fav_count,
 

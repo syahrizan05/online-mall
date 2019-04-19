@@ -20,6 +20,7 @@ import AccountScreen from '../screens/AccountScreen';
 import EditAccountScreen from '../screens/EditAccountScreen';
 import NotificationDetailsScreen from '../screens/NotificationDetailsScreen'
 import FavoriteScreen from '../screens/FavoriteScreen';
+import EditEmailScreen from '../screens/EditEmailScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -120,7 +121,9 @@ const AcountWithModalStack = createStackNavigator(
     Favorite: {
       screen: FavoriteScreen,
     },
-   
+    EditEmail:{
+      screen: EditEmailScreen
+    }
   },
   {
     mode: 'modal',
