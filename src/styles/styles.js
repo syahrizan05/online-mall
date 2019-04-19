@@ -70,8 +70,27 @@ export default StyleSheet.create({
             height: 5,
         },
         shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        
-        elevation: 10,},lowOpac:{opacity:0.5},normalOpac:{opacity:1}     
+        shadowRadius: 6.27,        
+        elevation: 10,},lowOpac:{opacity:0.5},normalOpac:{opacity:1}  ,
+        buttons: {
+            height: 15,
+            marginTop: -25,
+            marginBottom: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          },
+          button: {
+            margin: 3,
+            width: 8,
+            height: 8,
+            borderRadius: 8 / 2,
+            backgroundColor: '#ccc',
+            opacity: 0.9,
+          },
+          buttonSelected: {
+            opacity: 1,
+            backgroundColor: '#fff',
+          },   
 });
 

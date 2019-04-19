@@ -35,8 +35,8 @@ class CheckoutScreenNew extends React.PureComponent {
             <Container style={styles.container}>
                 <Header>
                     <Left>
-                        <Button transparent>
-                            <Icon name='menu' />
+                        <Button transparent onPress={()=>this.props.navigation.goBack()} >
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
                     <Body>

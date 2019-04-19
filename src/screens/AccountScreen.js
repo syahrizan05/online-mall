@@ -25,6 +25,12 @@ class AccountScreen extends React.PureComponent {
     header: null
   };
 
+  async rootLogout(){
+    await this.props.rootLogout()
+    await this.props.initiateHomeScreen()
+    await this.props.navigation.navigate('Home')
+  }
+
   componentDidMount() {
     this.props.initiateAccountScreen()
   }
@@ -42,7 +48,7 @@ class AccountScreen extends React.PureComponent {
         <Header>
           <Left>
             <Button transparent>
-              <Icon name='menu' />
+              <Icon name='person' style={{color:'dimgrey'}} />
             </Button>
           </Left>
           <Body>
@@ -139,7 +145,7 @@ class AccountScreen extends React.PureComponent {
           </Card>
           <Card transparent>
             <CardItem>
-              <Button full danger style={{ flex: 1 }} onPress={() => this.Logout()}><Text>Logout</Text></Button>
+              <Button full danger style={{ flex: 1 }} onPress={()=>this.rootLogout()}><Text>Logout</Text></Button>
             </CardItem>
           </Card>
         </Content>
@@ -189,7 +195,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     initiateAccountScreen: () => dispatch(actionCreator.initiateAccountScreen()),
-    logout: () => dispatch(actionCreator.logout())
+    initiateHomeScreen: () => dispatch(actionCreator.initiateHomeScreen()),
+    logout:()=>dispatch(actionCreator.logout()),
+    rootLogout:()=>dispatch({type:'ROOT_LOG_OUT'})
+
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AccountScreen)

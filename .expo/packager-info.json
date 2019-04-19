@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "packagerPort": null,
   "packagerPid": null,
   "expoServerNgrokUrl": "https://p7-jt8.adlanshahjehan.mayamall-mobile.exp.direct",
@@ -6,4 +7,13 @@
   "ngrokPid": 53940,
   "devToolsPort": 19002,
   "expoServerPort": null
+=======
+  "packagerPort": 19001,
+  "packagerPid": 17584,
+  "devToolsPort": 19003,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://p7-jt8.syahrizan05.mayamall-mobile.exp.direct",
+  "packagerNgrokUrl": "https://packager.p7-jt8.syahrizan05.mayamall-mobile.exp.direct",
+  "ngrokPid": 18912
+>>>>>>> 88cba75cb9e89f624b3449ec2f9b214f56210c55
 }

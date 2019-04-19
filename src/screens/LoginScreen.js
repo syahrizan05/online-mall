@@ -50,7 +50,7 @@ class LoginScreen extends Component {
           </View>
           <Form>
             <FormItem floatingLabel >
-              <Label>Email</Label>
+              <Label>Username</Label>
               <Input value={this.props.email} onChangeText={(email) => this.props.setLogin({ email })} />
             </FormItem>
             <FormItem floatingLabel>
@@ -74,7 +74,10 @@ class LoginScreen extends Component {
             </Button>
           </View>
           <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
-            <Text style={{ fontSize: 12 }}>Sign Up Now</Text>
+            <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
+          </Button>
+          <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Home')}>
+            <Text style={{ fontSize: 12 }}> Skip</Text>
           </Button>
         </Content>
       </Container>

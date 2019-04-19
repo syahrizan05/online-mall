@@ -42,7 +42,7 @@ class NotificationScreen extends React.PureComponent {
         <Header>
           <Left>
             <Button transparent>
-              <Icon name='menu' />
+              <Icon name='text' style={{color:'dimgrey'}} />
             </Button>
           </Left>
           <Body>

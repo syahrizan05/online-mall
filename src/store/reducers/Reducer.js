@@ -161,4 +161,16 @@ const favoriteScreenReducer = (state = [], action) => {
     }
 }
 
-export default reducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer,favoriteScreenReducer });
+const appReducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer,favoriteScreenReducer });
+
+const rootReducer = (state, action) => {
+    switch (action.type) {
+        case 'ROOT_LOG_OUT':
+            return {state: null}
+        default:
+            return appReducer(state, action)
+    }
+}
+
+
+export default appReducer

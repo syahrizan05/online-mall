@@ -100,13 +100,13 @@ class CartScreen extends React.PureComponent {
         <Header>
           <Left>
             <Button transparent>
-              <Icon name='menu' />
+              <Icon name='cart' style={{color:'dimgrey'}} />
             </Button>
           </Left>
           <Body>
             <Title>Cart</Title>
           </Body>
-          <Right><Text>{this.props.cart_count}</Text></Right>
+          <Right />
         </Header>
 
         {this.props.token ?

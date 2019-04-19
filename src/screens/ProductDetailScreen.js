@@ -63,7 +63,7 @@ class ProductDetailScreen extends React.PureComponent {
     const quantity = await this.state.quantity
     this.setModalVisible(!this.state.addToCartView)
     await this.props.addToCart(this.props.product.selprod_id, quantity)
-    
+
     await this.props.initiateHomeScreen()
     await this.props.initiateProductDetailScreen(this.props.product.selprod_id)
 
@@ -107,14 +107,14 @@ class ProductDetailScreen extends React.PureComponent {
                 <Left><H3>Quantity</H3></Left>
                 <Right>
                   <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'blue', backgroundColor: 'blue', justifyContent: 'center' }} onPress={() => this.add()}>
-                      <Icon name='add' style={{ textAlign: 'center', color: '#fff', }} />
+                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'blue', backgroundColor: 'blue', justifyContent: 'center' }} onPress={() => this.minus()}>
+                      <Icon name='remove' style={{ textAlign: 'center', color: '#fff', }} />
                     </TouchableOpacity>
                     <View style={{ flex: 1, borderColor: 'blue', borderTopWidth: 1, borderBottomWidth: 1, justifyContent: 'center' }}>
                       <H2 style={{ textAlign: 'center' }}>{this.state.quantity}</H2>
                     </View>
-                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'blue', backgroundColor: 'blue', justifyContent: 'center' }} onPress={() => this.minus()}>
-                      <Icon name='remove' style={{ textAlign: 'center', color: '#fff', }} />
+                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'blue', backgroundColor: 'blue', justifyContent: 'center' }} onPress={() => this.add()}>
+                      <Icon name='add' style={{ textAlign: 'center', color: '#fff', }} />
                     </TouchableOpacity>
                   </View>
                 </Right>
@@ -307,26 +307,23 @@ class ProductDetailScreen extends React.PureComponent {
             </CardItem>
           </Card>}
           <View style={{ margin: 15 }} />
-
         </Content>
-
-        <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}>
-              <Button full info iconRight onPress={() => this.setModalVisible()} >
-                <Text>Add To Cart</Text>
-                <Icon name="cart" />
-              </Button>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Button full danger iconRight >
-                <Text>Buy now</Text>
-                <Icon name="cart" />
-              </Button>
-            </View>
-          </View>
-        </View>
-
+        <Footer>
+          <FooterTab>
+            <Button vertical >
+              <Icon name="text" />
+              <Text>Message Seller</Text>
+            </Button>
+            <Button vertical onPress={() => this.props.navigation.navigate('Cart')} >
+              <Icon name="cart" />
+              <Text>Buy Now</Text>
+            </Button>
+            <Button active vertical onPress={() => this.setModalVisible()} >
+              <Icon name="cart" active />
+              <Text>Add to Cart</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </Container>
     );
   }
