@@ -62,7 +62,7 @@ export default class App extends React.PureComponent {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           
-          {this.state.notFirstTime ? <Main /> : <Intro />}
+          {this.state.notFirstTime ? <Intro /> : <Intro />}
         </View>
         </StyleProvider>
         </Provider>

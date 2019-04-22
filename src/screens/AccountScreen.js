@@ -145,7 +145,7 @@ class AccountScreen extends React.PureComponent {
           </Card>
           <Card transparent>
             <CardItem>
-              <Button full danger style={{ flex: 1 }} onPress={()=>this.rootLogout()}><Text>Logout</Text></Button>
+              <Button full danger style={{ flex: 1 }} onPress={()=>this.Logout()}><Text>Logout</Text></Button>
             </CardItem>
           </Card>
         </Content>

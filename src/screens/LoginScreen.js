@@ -16,6 +16,12 @@ class LoginScreen extends Component {
 
   state = { user: null };
 
+  async login(){
+    this.props.login()
+    this.props.navigation.navigate('Home')
+  }
+
+
   async fbLogIn() {
     try {
       const {
@@ -32,6 +38,7 @@ class LoginScreen extends Component {
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
         alert('Logged in!', `Hi ${(await response.json()).name}!`);
         console.log('token FB' + token)
+        this.props.navigation.navigate('Home')
       } else {
         // type === 'cancel'
       }
@@ -59,7 +66,7 @@ class LoginScreen extends Component {
             </FormItem>
             <View style={{ margin: 10 }} />
             <Text note danger>{this.props.msg}</Text>
-            <Button info full onPress={() => this.props.login()}>
+            <Button info full onPress={() => this.login()}>
               <Text>Login</Text>
             </Button>
             <Button transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Forgot')}>

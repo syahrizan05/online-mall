@@ -38,7 +38,7 @@ class RegisterScreen extends React.Component {
 
   register() {
     this.props.register(this.state.name, this.state.username, this.state.email, this.state.password)
-    alert(this.props.status)
+    alert("Please Check Your Email for Activation")
   }
 
   render() {
