@@ -555,13 +555,38 @@ export const forgotPasswordAPI = (email) => {
   }
 }
 
-export const updateAddressAPI = (token, zip, name, city, address_2, address_1, phone) => {
+export const getAddressAPI = (token) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}addresses`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, data } = responseJson
+        console.log(JSON.stringify(data))
+        dispatch({ type: 'GET_USER_ADDRESS', payload: { status, data } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const updateAddressAPI = (token, zip, name, city, address_2, address_1, phone, uid) => {
   return async (dispatch, getState) => {
     var formData = new FormData();
     formData.append('ua_zip', zip);
     formData.append('ua_name', name);
     formData.append('ua_identifier', "");
-    formData.append('ua_id', );
+    formData.append('ua_id',uid);
     formData.append('ua_country_id', 99);
     formData.append('ua_state_id', 1294);
     formData.append('ua_city', city);
@@ -585,6 +610,32 @@ export const updateAddressAPI = (token, zip, name, city, address_2, address_1, p
       })
       .catch((error) => {
         console.log('Unable to update : ' + error);
+      });
+  }
+}
+
+export const deleteAddressAPI = (token, ua_id) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('id', ua_id);
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}delete_address`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+
+        dispatch({ type: 'DELETE_USER_ADDRESS', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
       });
   }
 }

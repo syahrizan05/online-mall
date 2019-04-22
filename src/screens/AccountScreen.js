@@ -20,12 +20,13 @@ import { connect } from 'react-redux'
 import * as actionCreator from '../store/actions/action'
 
 
+
 class AccountScreen extends React.PureComponent {
   static navigationOptions = {
     header: null
   };
 
-  async rootLogout(){
+  async rootLogout() {
     await this.props.rootLogout()
     await this.props.initiateHomeScreen()
     await this.props.navigation.navigate('Home')
@@ -33,11 +34,12 @@ class AccountScreen extends React.PureComponent {
 
   componentDidMount() {
     this.props.initiateAccountScreen()
+    this.props.initiateUserAddress()
   }
 
- async Logout(){
-   await this.props.logout()
-   await this.props.initiateAccountScreen()
+  async Logout() {
+    await this.props.logout()
+    await this.props.initiateAccountScreen()
     this.props.navigation.navigate('Home')
   }
 
@@ -48,7 +50,7 @@ class AccountScreen extends React.PureComponent {
         <Header>
           <Left>
             <Button transparent>
-              <Icon name='person' style={{color:'dimgrey'}} />
+              <Icon name='person' style={{ color: 'dimgrey' }} />
             </Button>
           </Left>
           <Body>
@@ -106,7 +108,36 @@ class AccountScreen extends React.PureComponent {
           </Card>
 
           <Card transparent style={{ backgroundColor: 'white' }}>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={()=>this.props.navigation.navigate('Favorite')}>
+            <CardItem style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }}>
+              <Text> Shipping Address</Text>
+              <Body />
+              <Right>
+                <Button transparent onPress={() => this.props.navigation.navigate('ViewAddress')}>
+                  <Text style={{ color: 'cornflowerblue', fontSize: 13 }}>View</Text>
+                </Button>
+              </Right>
+            </CardItem>
+            <FlatList
+              data={this.props.address}
+              keyExtractor={(item, index) => index.toString()}
+              numColumns={1}
+              renderItem={({ item }) => (
+                <Card transparent style={{ backgroundColor: 'white' }}>
+                  <CardItem style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }}>
+                    <Body>
+                      <Text>{item.ua_identifier}</Text>
+                      <Text>{item.ua_name}</Text>
+                      <Text>{item.ua_address1} {item.ua_address2}</Text>
+                      <Text>{item.ua_zip} {item.ua_city} {item.state_name} {item.country_name}</Text>
+                      <Text>{item.ua_phone}</Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              )} />
+          </Card>
+
+          <Card transparent style={{ backgroundColor: 'white' }}>
+            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Favorite')}>
               <Left>
                 <Icon active name="heart" />
                 <Text> My Favourite Item : {this.props.fav_count}</Text>
@@ -115,7 +146,7 @@ class AccountScreen extends React.PureComponent {
                 <Icon name="arrow-forward" />
               </Right>
             </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}  button onPress={()=>this.props.navigation.navigate('Cart')}>
+            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Cart')}>
               <Left>
                 <Icon active name="cart" />
                 <Text> My Cart : {this.props.cart_count}</Text>
@@ -124,7 +155,7 @@ class AccountScreen extends React.PureComponent {
                 <Icon name="arrow-forward" />
               </Right>
             </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}  button onPress={()=>this.props.navigation.navigate('Notification')}>
+            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Notification')}>
               <Left>
                 <Icon active name="notifications" />
                 <Text> Notification : {this.props.unread_notifications}</Text>
@@ -145,7 +176,7 @@ class AccountScreen extends React.PureComponent {
           </Card>
           <Card transparent>
             <CardItem>
-              <Button full danger style={{ flex: 1 }} onPress={()=>this.Logout()}><Text>Logout</Text></Button>
+              <Button full danger style={{ flex: 1 }} onPress={() => this.Logout()}><Text>Logout</Text></Button>
             </CardItem>
           </Card>
         </Content>
@@ -188,7 +219,8 @@ function mapStateToProps(state) {
     unread_messages: state.accountScreenReducer.unread_messages,
     unread_notifications: state.notificationScreenReducer.unread_notifications,
     cart_count: state.accountScreenReducer.cart_count,
-    fav_count: state.accountScreenReducer.fav_count
+    fav_count: state.accountScreenReducer.fav_count,
+    address: state.addressScreenReducer.data
   }
 }
 
@@ -196,9 +228,9 @@ function mapDispatchToProps(dispatch) {
   return {
     initiateAccountScreen: () => dispatch(actionCreator.initiateAccountScreen()),
     initiateHomeScreen: () => dispatch(actionCreator.initiateHomeScreen()),
-    logout:()=>dispatch(actionCreator.logout()),
-    rootLogout:()=>dispatch({type:'ROOT_LOG_OUT'})
-
+    logout: () => dispatch(actionCreator.logout()),
+    rootLogout: () => dispatch({ type: 'ROOT_LOG_OUT' }),
+    initiateUserAddress: () => dispatch(actionCreator.getAddress()),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AccountScreen)

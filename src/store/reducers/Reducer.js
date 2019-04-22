@@ -105,7 +105,20 @@ const accountScreenReducer = (state = [], action) => {
             return { ...state, ...action.payload }
         case 'UPDATE_PROFILE_INFO':
             return { ...state, ...action.payload }
+        default:
+            return state
+    }
+}
+
+const addressScreenReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_ADDRESS':
+            return { ...state, ...action.payload }
         case 'UPDATE_ADDRESS':
+            return { ...state, ...action.payload }
+        case 'GET_USER_ADDRESS':
+            return { ...state, ...action.payload }
+        case 'DELETE_USER_ADDRESS':
             return { ...state, ...action.payload }
         default:
             return state
@@ -154,19 +167,19 @@ const favoriteScreenReducer = (state = [], action) => {
         case 'GET_FAVORITE':
             return { ...state, ...action.payload }
 
-     
+
 
         default:
             return state
     }
 }
 
-const appReducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer,favoriteScreenReducer });
+const appReducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer, favoriteScreenReducer, addressScreenReducer });
 
 const rootReducer = (state, action) => {
     switch (action.type) {
         case 'ROOT_LOG_OUT':
-            return {state: null}
+            return { state: null }
         default:
             return appReducer(state, action)
     }

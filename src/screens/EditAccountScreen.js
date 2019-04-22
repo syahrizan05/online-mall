@@ -141,9 +141,12 @@ class EditAccountScreen extends React.PureComponent {
                             <Right />
                         </CardItem>
                     </Card>
-                    <Card transparent>
-                        <CardItem>
+                    <Card transparent style={{backgroundColor:'white'}}>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
                             <Button full primary rounded style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('EditEmail')}><Text>Change Email Address</Text></Button>
+                        </CardItem>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+                            <Button full primary rounded style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('EditEmail')}><Text>Change Password</Text></Button>
                         </CardItem>
                     </Card>
                 </Content>

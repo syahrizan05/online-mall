@@ -1,5 +1,5 @@
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI } from './api'
 
 
 
@@ -183,9 +183,32 @@ export const forgotPassword = () => {
     }
 }
 
+export const getAddress = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getAddressAPI(token))
+    }
+}
+
+export const addAddress = () => {
+    return (dispatch, getState) => {
+        const { uid } = ""
+        const { token } = getState().userReducer
+        const { zip, name, city, address_2, address_1, phone } = getState().addressScreenReducer
+        dispatch(updateAddressAPI(token, zip, name, city, address_2, address_1, phone, uid))
+    }
+}
+
 export const updateAddress = () => {
     return (dispatch, getState) => {
-        const { zip, name, city, address_2, address_1, phone } = getState().accountScreenReducer
-        dispatch(updateAddressAPI(zip, name, city, address_2, address_1, phone ))
+        const { zip, name, city, address_2, address_1, phone, uid } = getState().addressScreenReducer
+        dispatch(updateAddressAPI(zip, name, city, address_2, address_1, phone, uid))
+    }
+}
+
+export const deleteAddress = (ua_id) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(deleteAddressAPI(token, ua_id))
     }
 }
