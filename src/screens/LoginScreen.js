@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Constants, Facebook, GoogleSignIn } from 'expo';
 import styles from '../styles/styles';
 import Layout from '../constants/Layout';
-import { Image, View } from 'react-native';
+import { Image, View, Alert } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, Form, Item as FormItem, Input, Label } from 'native-base';
 
 
@@ -45,7 +45,10 @@ class LoginScreen extends Component {
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
     }
-  }
+  };
+
+  state = { user: null, googleError: null };
+
 
   render() {
 
@@ -55,6 +58,8 @@ class LoginScreen extends Component {
           <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
             <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
           </View>
+          <Text>Betul 8</Text>
+          <Text>{this.state.googleError}</Text>
           <Form>
             <FormItem floatingLabel >
               <Label>Username</Label>
@@ -79,7 +84,15 @@ class LoginScreen extends Component {
               <Icon name='logo-facebook' />
               <Text>Facebook</Text>
             </Button>
+            <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.handleGoogleSignIn()}>
+              <Icon name='logo-google' />
+              <Text> Google</Text>
+            </Button>
           </View>
+          <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.beforeAnything()}>
+            <Icon name='logo-google' />
+            <Text> Before Anything</Text>
+          </Button>
           <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
             <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
           </Button>
@@ -104,6 +117,7 @@ function mapStateToProps(state) {
     products: state.cartDetailScreenReducer.products,
     unread_notifications: state.cartDetailScreenReducer.unread_notifications || 0,
     cart_count: state.cartDetailScreenReducer.cart_count || 0,
+
   }
 }
 
@@ -113,7 +127,8 @@ function mapDispatchToProps(dispatch) {
     setLogin: (value) => dispatch({ type: 'SET_LOGIN', payload: { ...value } }),
     login: () => dispatch(actionCreator.login()),
     logout: () => dispatch(actionCreator.logout()),
-    fbLogin: () => dispatch(actionCreator.fbLogin())
+    fbLogin: () => dispatch(actionCreator.fbLogin()),
+    handleGoogleSignIn: () => dispatch(actionCreator.handleGoogleSignIn())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

@@ -26,10 +26,11 @@ class AccountScreen extends React.PureComponent {
     header: null
   };
 
-  async rootLogout() {
+  async rootLogout(){
+    await this.props.logout()
     await this.props.rootLogout()
-    await this.props.initiateHomeScreen()
-    await this.props.navigation.navigate('Home')
+     await this.props.initiateHomeScreen()
+    // await this.props.navigation.navigate('Home')
   }
 
   componentDidMount() {
