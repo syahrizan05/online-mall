@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import moment from 'moment'
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, SwipeRow, Item, Input } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, SwipeRow, Item, Input, Picker, Form } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
@@ -20,7 +20,7 @@ import * as actionCreator from '../store/actions/action'
 
 
 
-class EditAddressScreen extends React.PureComponent {
+class AddAddressScreen extends React.PureComponent {
     static navigationOptions = {
         header: null
     };
@@ -28,24 +28,21 @@ class EditAddressScreen extends React.PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            uid: null,
+            selected2: undefined,
         }
     }
-
-    componentDidMount() {
-        const { navigation } = this.props;
-        const ua_id = navigation.getParam('ua_id', 'NO-ID');
-        this.setState({ uid: ua_id })
+    onValueChange2(value) {
+        this.setState({
+            selected2: value
+        });
     }
 
-    async saveAddress() {
-        const uid = this.state.uid
-        await this.props.updateAddress(uid)
+    async addAddress() {
+        await this.props.addAddress()
         await this.props.initiateUserAddress()
-        alert("Successfully Updated")
+        alert("Address Successfully Added")
         this.props.navigation.goBack()
     }
-
 
     render() {
 
@@ -58,10 +55,10 @@ class EditAddressScreen extends React.PureComponent {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Edit Address</Title>
+                        <Title>Add Address</Title>
                     </Body>
                     <Right>
-                        <Button transparent><Text style={{ color: 'cornflowerblue', fontSize: 14 }} onPress={() => this.saveAddress()}>Save</Text></Button>
+                        <Button transparent><Text style={{ color: 'cornflowerblue', fontSize: 14 }} onPress={() => this.addAddress()}>Save</Text></Button>
                     </Right>
                 </Header>
                 <Content>
@@ -70,7 +67,7 @@ class EditAddressScreen extends React.PureComponent {
                             <Body>
                                 <Text> Name :</Text>
                                 <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10 }}>
-                                    <Input value={this.props.name} onChangeText={(ua_name) => this.props.setAddress({ ua_name })} />
+                                    <Input value={this.props.name} onChangeText={(name) => this.props.setAddress({ name })} />
                                 </Item>
                             </Body>
                         </CardItem>
@@ -78,26 +75,24 @@ class EditAddressScreen extends React.PureComponent {
                             <Body>
                                 <Text> Address :</Text>
                                 <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10, marginBottom: 5 }}>
-                                    <Input value={this.props.address_1} onChangeText={(ua_address1) => this.props.setAddress({ ua_address1 })} />
+                                    <Input value={this.props.address_1} onChangeText={(address_1) => this.props.setAddress({ address_1 })} />
                                 </Item>
                                 <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10, marginTop: 5 }}>
-                                    <Input value={this.props.address_2} onChangeText={(ua_address2) => this.props.setAddress({ ua_address2 })} />
-                                </Item>
-                            </Body>
-                        </CardItem>
-                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} >
-                            <Body>
-                                <Text> Country :</Text>
-                                <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10, marginTop: 5 }} onPress={() => this.props.navigation.navigate('Country')}>
-                                    <Input disabled value={this.props.country}/>
+                                    <Input value={this.props.address_2} onChangeText={(address_2) => this.props.setAddress({ address_2 })} />
                                 </Item>
                             </Body>
                         </CardItem>
                         <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
                             <Body>
+                                <Text> Country :</Text>
+                                
+                            </Body>
+                        </CardItem>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+                            <Body>
                                 <Text> States :</Text>
-                                <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10, marginTop: 5 }} onPress={() => this.props.navigation.navigate('States')}>
-                                    <Input disabled value={this.props.states}/>
+                                <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10 }}>
+                                    <Input value={this.props.states} onChangeText={(states) => this.props.setAddress({ states })} />
                                 </Item>
                             </Body>
                         </CardItem>
@@ -105,7 +100,7 @@ class EditAddressScreen extends React.PureComponent {
                             <Body>
                                 <Text> City :</Text>
                                 <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10 }}>
-                                    <Input value={this.props.city} onChangeText={(ua_city) => this.props.setAddress({ ua_city })} />
+                                    <Input value={this.props.city} onChangeText={(city) => this.props.setAddress({ city })} />
                                 </Item>
                             </Body>
                         </CardItem>
@@ -113,7 +108,7 @@ class EditAddressScreen extends React.PureComponent {
                             <Body>
                                 <Text> Postal Code :</Text>
                                 <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10 }}>
-                                    <Input value={this.props.zip} onChangeText={(ua_zip) => this.props.setAddress({ ua_zip })} />
+                                    <Input value={this.props.zip} onChangeText={(zip) => this.props.setAddress({ zip })} />
                                 </Item>
                             </Body>
                         </CardItem>
@@ -121,7 +116,7 @@ class EditAddressScreen extends React.PureComponent {
                             <Body>
                                 <Text> Phone Number :</Text>
                                 <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10 }}>
-                                    <Input value={this.props.phone} onChangeText={(ua_phone) => this.props.setAddress({ ua_phone })} />
+                                    <Input value={this.props.phone} onChangeText={(phone) => this.props.setAddress({ phone })} />
                                 </Item>
                             </Body>
                         </CardItem>
@@ -136,22 +131,15 @@ class EditAddressScreen extends React.PureComponent {
 
 function mapStateToProps(state) {
     return {
-        name: state.addressScreenReducer.ua_name,
-        address_1: state.addressScreenReducer.ua_address1,
-        address_2: state.addressScreenReducer.ua_address2,
-        zip: state.addressScreenReducer.ua_zip,
-        city: state.addressScreenReducer.ua_city,
-        phone: state.addressScreenReducer.ua_phone,
-        country: state.addressScreenReducer.country_name,
-        states: state.addressScreenReducer.state_name
+
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         setAddress: (value) => dispatch({ type: 'SET_ADDRESS', payload: { ...value } }),
-        updateAddress: (uid) => dispatch(actionCreator.updateAddress(uid)),
+        addAddress: () => dispatch(actionCreator.addAddress()),
         initiateUserAddress: () => dispatch(actionCreator.getAddress()),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(EditAddressScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(AddAddressScreen)

@@ -24,6 +24,9 @@ import EditEmailScreen from '../screens/EditEmailScreen';
 import ViewAddressScreen from '../screens/ViewAddressScreen';
 import AddAddressScreen from '../screens/AddAddressScreen';
 import EditAddressScreen from '../screens/EditAddressScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import CountryScreen from '../screens/CountryScreen';
+import StateScreen from '../screens/StateScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -148,8 +151,17 @@ const AcountWithModalStack = createStackNavigator(
     AddAddress:{
       screen: AddAddressScreen,
     },
+    Country:{
+      screen: CountryScreen,
+    },
+    States:{
+      screen: StateScreen,
+    },
     EditAddress:{
       screen: EditAddressScreen,
+    },
+    ChangePass:{
+      screen: ChangePasswordScreen,
     },
   },
   {

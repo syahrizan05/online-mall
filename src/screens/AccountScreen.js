@@ -99,12 +99,12 @@ class AccountScreen extends React.PureComponent {
               <Right>
               </Right>
             </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            {/* <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="home" />
               <Text> Address : {this.props.address_1} {this.props.address_2}</Text>
               <Right>
               </Right>
-            </CardItem>
+            </CardItem> */}
           </Card>
 
           <Card transparent style={{ backgroundColor: 'white' }}>

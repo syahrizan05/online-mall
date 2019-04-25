@@ -54,9 +54,9 @@ class ViewAddressScreen extends React.PureComponent {
         await this.props.initiateUserAddress()
     }
 
-    editAddress(ua_id, ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone) {
+    editAddress(ua_id, ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone, state_name, country_name) {
         this.props.navigation.navigate('EditAddress', { ua_id: ua_id })
-        this.props.editAddress({ ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone })
+        this.props.editAddress({ ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone, state_name, country_name })
     }
 
     render() {
@@ -83,12 +83,12 @@ class ViewAddressScreen extends React.PureComponent {
                         keyExtractor={(item, index) => index.toString()}
                         numColumns={1}
                         renderItem={({ item }) => (
-                            <Card  transparent style={{ marginTop: 0, backgroundColor: 'white' }}>
+                            <Card transparent style={{ marginTop: 0, backgroundColor: 'white' }}>
 
                                 <SwipeRow
                                     rightOpenValue={-65}
                                     body={
-                                        <CardItem button style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }} onPress={() => this.editAddress(item.ua_id, item.ua_name, item.ua_address1, item.ua_address2, item.ua_zip, item.ua_city, item.ua_phone)}>
+                                        <CardItem button style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }} onPress={() => this.editAddress(item.ua_id, item.ua_name, item.ua_address1, item.ua_address2, item.ua_zip, item.ua_city, item.ua_phone, item.state_name, item.country_name)}>
                                             <Body>
                                                 <Text>{item.ua_identifier}</Text>
                                                 <Text>{item.ua_name}</Text>
@@ -138,7 +138,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         initiateAccountScreen: () => dispatch(actionCreator.initiateAccountScreen()),
-        initiateHomeScreen: () => dispatch(actionCreator.initiateHomeScreen()),
         initiateUserAddress: () => dispatch(actionCreator.getAddress()),
         deleteAddress: (ua_id) => dispatch(actionCreator.deleteAddress(ua_id)),
         editAddress: (value) => dispatch({ type: 'EDIT_ADDRESS', payload: { ...value } }),

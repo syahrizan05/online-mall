@@ -105,6 +105,10 @@ const accountScreenReducer = (state = [], action) => {
             return { ...state, ...action.payload }
         case 'UPDATE_PROFILE_INFO':
             return { ...state, ...action.payload }
+        case 'SET_PASSWORD':
+            return { ...state, ...action.payload }
+        case 'CHANGE_PASSWORD':
+            return { ...state, ...action.payload }
         default:
             return state
     }
@@ -119,6 +123,16 @@ const addressScreenReducer = (state = [], action) => {
         case 'GET_USER_ADDRESS':
             return { ...state, ...action.payload }
         case 'DELETE_USER_ADDRESS':
+            return { ...state, ...action.payload }
+        case 'EDIT_ADDRESS':
+            return { ...state, ...action.payload }
+        case 'GET_COUNTRIES':
+            return { ...state, ...action.payload }
+        case 'GET_STATES':
+            return { ...state, ...action.payload }
+        case 'SET_COUNTRY':
+            return { ...state, ...action.payload }
+        case 'SET_STATES':
             return { ...state, ...action.payload }
         default:
             return state

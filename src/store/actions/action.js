@@ -1,5 +1,5 @@
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI } from './api'
 
 
 
@@ -194,15 +194,16 @@ export const addAddress = () => {
     return (dispatch, getState) => {
         const { uid } = ""
         const { token } = getState().userReducer
-        const { zip, name, city, address_2, address_1, phone } = getState().addressScreenReducer
-        dispatch(updateAddressAPI(token, zip, name, city, address_2, address_1, phone, uid))
+        const { zip, name, city, address_2, address_1, phone , country_id, states_id} = getState().addressScreenReducer
+        dispatch(updateAddressAPI(token, zip, name, city, address_2, address_1, phone, uid, country_id, states_id))
     }
 }
 
-export const updateAddress = () => {
+export const updateAddress = (uid) => {
     return (dispatch, getState) => {
-        const { zip, name, city, address_2, address_1, phone, uid } = getState().addressScreenReducer
-        dispatch(updateAddressAPI(zip, name, city, address_2, address_1, phone, uid))
+        const { token } = getState().userReducer
+        const { ua_zip, ua_name, ua_city, ua_address2, ua_address1, ua_phone, country_id, states_id } = getState().addressScreenReducer
+        dispatch(updateAddressAPI(token, ua_zip, ua_name, ua_city, ua_address2, ua_address1, ua_phone, uid, country_id, states_id))
     }
 }
 
@@ -210,5 +211,27 @@ export const deleteAddress = (ua_id) => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(deleteAddressAPI(token, ua_id))
+    }
+}
+
+export const getCountries = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getCountriesAPI(token))
+    }
+}
+
+export const getStates = (country_id) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getStatesAPI(token, country_id))
+    }
+}
+
+export const changePassword = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        const { newPassword, confirmPassword, oldPassword } = getState().accountScreenReducer
+        dispatch(changePasswordAPI(token, newPassword, confirmPassword, oldPassword))
     }
 }

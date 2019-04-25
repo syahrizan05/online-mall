@@ -130,7 +130,7 @@ class EditAccountScreen extends React.PureComponent {
                             </Body>
                             <Right />
                         </CardItem>
-                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+                        {/* <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
                             <Icon active name="home" />
                             <Body>
                                 <Text> Address :</Text>
@@ -139,14 +139,14 @@ class EditAccountScreen extends React.PureComponent {
                                 </Item>
                             </Body>
                             <Right />
-                        </CardItem>
+                        </CardItem> */}
                     </Card>
-                    <Card transparent style={{backgroundColor:'white'}}>
-                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+                    <Card transparent style={{ backgroundColor: 'transparent' }}>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3, backgroundColor: 'transparent' }}>
                             <Button full primary rounded style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('EditEmail')}><Text>Change Email Address</Text></Button>
                         </CardItem>
-                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
-                            <Button full primary rounded style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('EditEmail')}><Text>Change Password</Text></Button>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3, backgroundColor: 'transparent' }}>
+                            <Button full primary rounded style={{ flex: 1 }} onPress={() => this.props.navigation.navigate('ChangePass')}><Text>Change Password</Text></Button>
                         </CardItem>
                     </Card>
                 </Content>

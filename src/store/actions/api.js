@@ -580,15 +580,15 @@ export const getAddressAPI = (token) => {
   }
 }
 
-export const updateAddressAPI = (token, zip, name, city, address_2, address_1, phone, uid) => {
+export const updateAddressAPI = (token, zip, name, city, address_2, address_1, phone, uid, country_id, states_id) => {
   return async (dispatch, getState) => {
     var formData = new FormData();
     formData.append('ua_zip', zip);
     formData.append('ua_name', name);
     formData.append('ua_identifier', "");
-    formData.append('ua_id',uid);
-    formData.append('ua_country_id', 99);
-    formData.append('ua_state_id', 1294);
+    formData.append('ua_id', uid);
+    formData.append('ua_country_id', country_id);
+    formData.append('ua_state_id', states_id);
     formData.append('ua_city', city);
     formData.append('language', 1);
     formData.append('ua_address2', address_2);
@@ -636,6 +636,108 @@ export const deleteAddressAPI = (token, ua_id) => {
       })
       .catch((error) => {
         console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const getCountriesAPI = (token) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}countries`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, countries } = responseJson
+        dispatch({ type: 'GET_COUNTRIES', payload: { status, countries } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const getStatesAPI = (token, country_id) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}get_states/${country_id}`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, states } = responseJson
+        dispatch({ type: 'GET_STATES', payload: { status, states } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const changePasswordAPI = (token, newPassword, confirmPassword, oldPassword) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    formData.append('new_password', newPassword);
+    formData.append('confirm_new_password', confirmPassword);
+    formData.append('current_password', oldPassword);
+    fetch(`${apiUrl}change_password`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+        dispatch({ type: 'CHANGE_PASSWORD', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const googleLoginApi = (token) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('gp_token', token);
+    fetch(`${apiUrl}login_gplus`, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => response.json())
+      .then(async (responseJson) => {
+        console.log(`google login Response : ${JSON.stringify(responseJson)}`)
+        const authentication = responseJson
+        const { status } = authentication
+        if (status == 1) {
+          const stringifyAuthentication = await JSON.stringify(authentication)
+          await SecureStore.setItemAsync('authentication', stringifyAuthentication);
+          dispatch({ type: 'SET_LOGIN', payload: { msg: '' } })
+          dispatch({ type: 'GET_USER', payload: { ...authentication } })
+        } else {
+          dispatch({ type: 'SET_LOGIN', payload: { msg } })
+        }
+      })
+      .catch((error) => {
+        console.log('Error initiating login : ' + error);
       });
   }
 }

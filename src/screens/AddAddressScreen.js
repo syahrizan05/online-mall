@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import moment from 'moment'
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, SwipeRow, Item, Input } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, SwipeRow, Item, Input, Picker, Form, List, ListItem } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
@@ -24,6 +24,9 @@ class AddAddressScreen extends React.PureComponent {
     static navigationOptions = {
         header: null
     };
+
+    componentDidMount() {
+    }
 
     async addAddress() {
         await this.props.addAddress()
@@ -70,6 +73,22 @@ class AddAddressScreen extends React.PureComponent {
                                 </Item>
                             </Body>
                         </CardItem>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} >
+                            <Body>
+                                <Text> Country :</Text>
+                                <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10, marginTop: 5 }} onPress={() => this.props.navigation.navigate('Country')}>
+                                    <Input disabled value={this.props.country}/>
+                                </Item>
+                            </Body>
+                        </CardItem>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+                            <Body>
+                                <Text> States :</Text>
+                                <Item rounded style={{ width: Layout.window.width / 1.2, height: Layout.window.height / 20, padding: 10, marginTop: 5 }} onPress={() => this.props.navigation.navigate('States')}>
+                                    <Input disabled value={this.props.states}/>
+                                </Item>
+                            </Body>
+                        </CardItem>
                         <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
                             <Body>
                                 <Text> City :</Text>
@@ -105,7 +124,8 @@ class AddAddressScreen extends React.PureComponent {
 
 function mapStateToProps(state) {
     return {
-
+        country: state.addressScreenReducer.country_name,
+        states: state.addressScreenReducer.states_name
     }
 }
 
