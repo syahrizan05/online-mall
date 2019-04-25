@@ -1,3 +1,4 @@
+import {Alert} from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
 import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications,toggleFavoriteApi,getFavoriteProductsApi } from './api'
 
@@ -69,9 +70,17 @@ export const login = () => {
 
 export const logout = () => {
     return async (dispatch, getState) => {
-
         await SecureStore.deleteItemAsync('authentication')
         dispatch({ type: 'LOGOUT' })
+    }
+}
+
+
+export const rootLogout = () => {
+    return async (dispatch, getState) => {
+        await SecureStore.deleteItemAsync('authentication')
+        dispatch({type:'ROOT_LOG_OUT'})
+        dispatch(initiateHomeScreen())
     }
 }
 
@@ -85,14 +94,33 @@ export const fbLogin = () => {
                 permissions,
                 declinedPermissions,
             } = await Facebook.logInWithReadPermissionsAsync('1985454545081156', { permissions: ['public_profile'], });
+            Alert.alert(`Facebook Login Betul: ${token}`);
             dispatch(fbLoginApi(token))
         } catch ({ message }) {
-            console.log(`Facebook Login Error: ${message}`);
+            Alert.alert(`Facebook Login Error: ${message}`);
         }
     }
 }
 
+export const handleGoogleSignIn = async () => {
+    
 
+    try {
+        await GoogleSignIn.initAsync({ clientId: '258457727479-3iml03e9t3e5um9bvr81h8j9idabjsjq.apps.googleusercontent.com' });
+        try {
+            await GoogleSignIn.askForPlayServicesAsync();
+            const { type, user } = await GoogleSignIn.signInAsync();
+            if (type === 'success') {
+                Alert.alert({ googleError: `user : ${JSON.stringify(user)}` })
+            }
+        } catch ({ message }) {
+            // Alert.alert('login: Error:' + message);
+            Alert.alert({ googleError: `error masa login ialah : ${message}` })
+        }
+    } catch ({ message }) {
+        Alert.alert('GoogleSignIn.initAsync(): ' + message);
+    }
+};
 
 export const checkLogin = () => {
     return async (dispatch, getState) => {

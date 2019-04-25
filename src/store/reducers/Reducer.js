@@ -164,11 +164,11 @@ const appReducer = combineReducers({ userReducer, homeScreenReducer, productsRed
 const rootReducer = (state, action) => {
     switch (action.type) {
         case 'ROOT_LOG_OUT':
-            return {state: null}
+            return {state: undefined}
         default:
             return appReducer(state, action)
     }
 }
 
 
-export default appReducer
+export default rootReducer

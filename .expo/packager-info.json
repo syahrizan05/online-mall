@@ -1,9 +1,10 @@
 {
-  "packagerPort": 19001,
-  "packagerPid": 17584,
+  "packagerPort": null,
+  "packagerPid": null,
   "devToolsPort": 19003,
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://p7-jt8.syahrizan05.mayamall-mobile.exp.direct",
-  "packagerNgrokUrl": "https://packager.p7-jt8.syahrizan05.mayamall-mobile.exp.direct",
-  "ngrokPid": 18912
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "webpackServerPort": null
 }

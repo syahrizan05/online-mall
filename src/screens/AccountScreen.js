@@ -26,9 +26,10 @@ class AccountScreen extends React.PureComponent {
   };
 
   async rootLogout(){
+    await this.props.logout()
     await this.props.rootLogout()
-    await this.props.initiateHomeScreen()
-    await this.props.navigation.navigate('Home')
+     await this.props.initiateHomeScreen()
+    // await this.props.navigation.navigate('Home')
   }
 
   componentDidMount() {
@@ -191,7 +192,7 @@ function mapDispatchToProps(dispatch) {
     initiateAccountScreen: () => dispatch(actionCreator.initiateAccountScreen()),
     initiateHomeScreen: () => dispatch(actionCreator.initiateHomeScreen()),
     logout:()=>dispatch(actionCreator.logout()),
-    rootLogout:()=>dispatch({type:'ROOT_LOG_OUT'})
+    rootLogout:()=>dispatch(actionCreator.rootLogout())
 
   }
 }
