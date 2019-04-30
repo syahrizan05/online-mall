@@ -46,6 +46,13 @@ class EditAddressScreen extends React.PureComponent {
         this.props.navigation.goBack()
     }
 
+   async makeDefault(){
+        const uid = this.state.uid
+        await this.props.makeAddressPrimary(uid)
+        await this.props.initiateUserAddress()
+        this.props.navigation.goBack()
+    }
+
 
     render() {
 
@@ -125,6 +132,9 @@ class EditAddressScreen extends React.PureComponent {
                                 </Item>
                             </Body>
                         </CardItem>
+                        <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3, backgroundColor: 'transparent' }}>
+                            <Button full primary rounded style={{ flex: 1 }} onPress={() => this.makeDefault()}><Text>Make Default</Text></Button>
+                        </CardItem>
                     </Card>
                 </Content>
             </Container>
@@ -143,7 +153,7 @@ function mapStateToProps(state) {
         city: state.addressScreenReducer.ua_city,
         phone: state.addressScreenReducer.ua_phone,
         country: state.addressScreenReducer.country_name,
-        states: state.addressScreenReducer.state_name
+        states: state.addressScreenReducer.states_name
     }
 }
 
@@ -151,6 +161,7 @@ function mapDispatchToProps(dispatch) {
     return {
         setAddress: (value) => dispatch({ type: 'SET_ADDRESS', payload: { ...value } }),
         updateAddress: (uid) => dispatch(actionCreator.updateAddress(uid)),
+        makeAddressPrimary: (uid) => dispatch(actionCreator.makeAddressPrimary(uid)),
         initiateUserAddress: () => dispatch(actionCreator.getAddress()),
     }
 }

@@ -30,9 +30,9 @@ class NotificationScreen extends React.PureComponent {
     this.props.initiateNotificationScreen()
   }
 
-  readNotifications(unotification_id, unotification_body, unotification_date){
-    this.props.navigation.navigate('NotificationDetail', { unotification_id: unotification_id,})
-    this.props.setNoti({unotification_body, unotification_date})
+  readNotifications(unotification_id, unotification_body, unotification_date) {
+    this.props.navigation.navigate('NotificationDetail', { unotification_id: unotification_id, })
+    this.props.setNoti({ unotification_body, unotification_date })
   }
 
   render() {
@@ -42,7 +42,7 @@ class NotificationScreen extends React.PureComponent {
         <Header>
           <Left>
             <Button transparent>
-              <Icon name='text' style={{color:'dimgrey'}} />
+              <Icon name='text' style={{ color: 'dimgrey' }} />
             </Button>
           </Left>
           <Body>
@@ -58,8 +58,8 @@ class NotificationScreen extends React.PureComponent {
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={1}
                 renderItem={({ item }) => (
-                  <List style={{ margin: 1 }}>
-                    <ListItem onPress={() => this.readNotifications(item.unotification_id, item.unotification_body, item.unotification_date)}>
+                  <List style={{ margin: 0.5, backgroundColor: item.unotification_is_read === 1 ? 'rgba(255,255,255, 0.8)' : 'rgba(135, 206, 235, 0.5)' }}>
+                    <ListItem style={{ backgroundColor: item.unotification_is_read === 1 ? 'rgba(255,255,255, 0.8)' : 'rgba(255, 255, 255, 1)' }} onPress={() => this.readNotifications(item.unotification_id, item.unotification_body, item.unotification_date)}>
                       <Body>
                         <Text style={{ fontWeight: 'bold' }}>App Notification</Text>
                         <Text note style={{ color: 'cornflowerblue' }}>{item.unotification_body.replace('App Notification', '')}</Text>

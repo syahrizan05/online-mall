@@ -98,7 +98,7 @@ class ProductDetailScreen extends React.PureComponent {
                 <Left />
                 <Body><H2>Add To Cart</H2></Body>
                 <Right>
-                  <Button transparent onPress={() => this.setModalVisible(!this.state.addToCartView)}>
+                  <Button transparent onPress={() => this.setModalVisible(!this.state.addToCartView)} style={{ marginRight: 10 }}>
                     <Icon name='close' />
                   </Button>
                 </Right>
@@ -106,14 +106,14 @@ class ProductDetailScreen extends React.PureComponent {
               <CardItem style={{ paddingTop: 10, paddingBottom: 10 }} >
                 <Left><H3>Quantity</H3></Left>
                 <Right>
-                  <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'blue', backgroundColor: 'blue', justifyContent: 'center' }} onPress={() => this.minus()}>
+                  <View style={{ flexDirection: 'row', width: Layout.window.width / 4, height: Layout.window.width / 12, marginRight: 10 }}>
+                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'cornflowerblue', backgroundColor: 'cornflowerblue', justifyContent: 'center' }} onPress={() => this.minus()}>
                       <Icon name='remove' style={{ textAlign: 'center', color: '#fff', }} />
                     </TouchableOpacity>
-                    <View style={{ flex: 1, borderColor: 'blue', borderTopWidth: 1, borderBottomWidth: 1, justifyContent: 'center' }}>
+                    <View style={{ flex: 1, borderColor: 'cornflowerblue', borderTopWidth: 1, borderBottomWidth: 1, justifyContent: 'center' }}>
                       <H2 style={{ textAlign: 'center' }}>{this.state.quantity}</H2>
                     </View>
-                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'blue', backgroundColor: 'blue', justifyContent: 'center' }} onPress={() => this.add()}>
+                    <TouchableOpacity style={{ flex: 1, borderWidth: 1, borderColor: 'cornflowerblue', backgroundColor: 'cornflowerblue', justifyContent: 'center' }} onPress={() => this.add()}>
                       <Icon name='add' style={{ textAlign: 'center', color: '#fff', }} />
                     </TouchableOpacity>
                   </View>
@@ -122,10 +122,9 @@ class ProductDetailScreen extends React.PureComponent {
               <CardItem>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                   <View style={{ flex: 1 }}>
-                    <Button info full onPress={() => this.addToCart()}>
+                    <Button rounded info full onPress={() => this.addToCart()}>
                       <Text>Confirm</Text>
                     </Button></View>
-
                 </View>
               </CardItem>
             </Card>
@@ -164,50 +163,65 @@ class ProductDetailScreen extends React.PureComponent {
         <Content>
           {this.props.product &&
             <List style={{ backgroundColor: '#ffffff' }} >
-              <ListItem itemHeader first>
-                <Text>Product Info</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Name : {this.props.product.product_name}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Model : {this.props.product.product_model}</Text>
-              </ListItem>
-
-              <ListItem>
-                <Text> Category : {this.props.product.prodcat_name}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Type : {this.props.product.product_type}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Description : {this.props.product.product_short_description}</Text>
-              </ListItem>
-              <ListItem>
-                <Text>Condition : {this.props.product.selprod_condition == 0 ? 'New' : this.props.product.selprod_condition == 1 ? 'Refurbished' : 'Used'}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Product Rating : {this.props.product.prod_rating}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Review : {this.props.product.totReviews}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Favorite : {this.props.product.isfavorite}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> Price : {this.props.product.theprice}</Text>
-              </ListItem>
-              <ListItem>
-                <Text> In Stock : {this.props.product.selprod_stock}</Text>
+              <ListItem >
+                <Body>
+                  <Text style={{ marginLeft: -15, color: 'cornflowerblue', fontSize: 20 }}> RM {this.props.product.theprice}</Text>
+                  <Text style={{ marginLeft: -15, color: 'black', fontSize: 16 }}> {this.props.product.product_name}</Text>
+                </Body>
               </ListItem>
             </List>
           }
+          {this.props.product && <Card transparent style={{ flex: 0, backgroundColor: '#ffffff' }}>
+            <CardItem >
+              <Body>
+                <Text style={{ margin: 5, fontSize: 14, color: 'black' }}>Product Details</Text>
+              </Body>
+            </CardItem>
+            <CardItem style={{ marginTop: 15 }}>
+              <Body>
+                <Text> Model : {this.props.product.product_model}</Text>
+              </Body>
+              <Left>
+                <Text> Category : {this.props.product.prodcat_name}</Text>
+              </Left>
+            </CardItem>
+            <CardItem style={{ marginTop: 10 }}>
+              <Body>
+                <Text> Type : {this.props.product.product_type}</Text>
+              </Body>
+              <Left>
+                <Text> Condition : {this.props.product.selprod_condition == 0 ? 'New' : this.props.product.selprod_condition == 1 ? 'Refurbished' : 'Used'}</Text>
+              </Left>
+            </CardItem>
+            <CardItem style={{ marginTop: 10 }}>
+              <Body>
+                <Text> In Stock : {this.props.product.selprod_stock}</Text>
+              </Body>
+              <Left>
+                <Text> Product Rating : {this.props.product.prod_rating}</Text>
+              </Left>
+            </CardItem>
+            <CardItem style={{ marginTop: 10 }}>
+              <Body>
+                <Text> Favorite : {this.props.product.isfavorite}</Text>
+              </Body>
+              <Left>
+                <Text> Review : {this.props.product.totReviews}</Text>
+              </Left>
+            </CardItem>
+            <CardItem style={{ marginTop: 10 }}>
+              <Body>
+                <Text> Description : {this.props.product.product_short_description}</Text>
+              </Body>
+            </CardItem>
+          </Card>
+          }
+
 
           {this.props.shop && <Card transparent style={{ flex: 0 }}>
             <CardItem>
               <Left>
-                <Thumbnail source={{ uri: this.props.shop.shop_logo }} />
+                <Thumbnail style={{ margin: 5 }} source={{ uri: this.props.shop.shop_logo }} />
                 <Body>
                   <Text>{this.props.shop.shop_name}</Text>
                   <Text note>Open since {moment(this.props.shop.shop_created_on).format('L')}</Text>
@@ -216,21 +230,17 @@ class ProductDetailScreen extends React.PureComponent {
             </CardItem>
             <CardItem>
               <Body>
-
-                <Text>
+                <Text style={{ margin: 5 }}>
                   {this.props.shop.shop_description}
                 </Text>
-                <Text note>
+                <Text note style={{ margin: 5 }}>
                   {this.props.shop.shop_state_name}, {this.props.shop.shop_country_name}
                 </Text>
               </Body>
             </CardItem>
             <CardItem>
               <Left>
-
-
-                <Text>Rating : {this.props.shop_rating}</Text>
-
+                <Text style={{ margin: 5 }}>Rating : {this.props.shop_rating}</Text>
               </Left>
             </CardItem>
           </Card>
@@ -309,18 +319,17 @@ class ProductDetailScreen extends React.PureComponent {
           <View style={{ margin: 15 }} />
         </Content>
         <Footer>
-          <FooterTab>
-            <Button vertical >
-              <Icon name="text" />
-              <Text>Message Seller</Text>
+          <FooterTab style={{ backgroundColor: 'cornflowerblue' }}>
+            <Button active vertical style={{ borderRightWidth: 1, backgroundColor: 'cornflowerblue' }} >
+              <Icon name="text" active style={{ color: 'white' }} />
+              <Text style={{ color: 'white' }}>Message Seller</Text>
             </Button>
-            <Button vertical onPress={() => this.props.navigation.navigate('Cart')} >
-              <Icon name="cart" />
-              <Text>Buy Now</Text>
+            <Button active vertical onPress={() => this.setModalVisible()} style={{ borderRightWidth: 1, backgroundColor: 'cornflowerblue' }}>
+              <Icon name="cart" active style={{ color: 'white' }} />
+              <Text style={{ color: 'white' }}>Add to Cart</Text>
             </Button>
-            <Button active vertical onPress={() => this.setModalVisible()} >
-              <Icon name="cart" active />
-              <Text>Add to Cart</Text>
+            <Button active vertical onPress={() => this.props.navigation.navigate('Cart')} style={{ backgroundColor: 'cornflowerblue' }}>
+              <Text style={{ fontSize: 16, color: 'white' }} >Buy Now</Text>
             </Button>
           </FooterTab>
         </Footer>

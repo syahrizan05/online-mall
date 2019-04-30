@@ -8,6 +8,8 @@ const loginReducer = (state = [], action) => {
             return { ...state, ...action.payload }
         case 'FORGOT_PASSWORD':
             return { ...state, ...action.payload }
+        case 'GOOGLE_SIGNIN':
+            return { ...state, ...action.payload }
         default:
             return state
     }
@@ -134,6 +136,10 @@ const addressScreenReducer = (state = [], action) => {
             return { ...state, ...action.payload }
         case 'SET_STATES':
             return { ...state, ...action.payload }
+        case 'PRIMARY_ADDRESS':
+            return { ...state, ...action.payload }
+        case 'GET_ADDRESS':
+            return { ...state, ...action.payload }
         default:
             return state
     }
@@ -193,7 +199,7 @@ const appReducer = combineReducers({ userReducer, homeScreenReducer, productsRed
 const rootReducer = (state, action) => {
     switch (action.type) {
         case 'ROOT_LOG_OUT':
-            return {state: undefined}
+            return { state: undefined }
         default:
             return appReducer(state, action)
     }

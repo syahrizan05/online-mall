@@ -16,42 +16,15 @@ class LoginScreen extends Component {
 
   state = { user: null };
 
-  async login(){
+  async login() {
     this.props.login()
     this.props.navigation.navigate('Home')
   }
 
-
-  async fbLogIn() {
-    try {
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync('1985454545081156', {
-        permissions: ['public_profile'],
-      });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        alert('Logged in!', `Hi ${(await response.json()).name}!`);
-        console.log('token FB' + token)
-        this.props.navigation.navigate('Home')
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  };
-
   state = { user: null, googleError: null };
 
-
   render() {
-
+    this.props.status === 1 ? this.props.navigation.navigate('Home') : null
     return (
       <Container style={styles.authContainer}>
         <Content padder scrollEnabled={false}>
@@ -84,15 +57,11 @@ class LoginScreen extends Component {
               <Icon name='logo-facebook' />
               <Text>Facebook</Text>
             </Button>
-            <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.handleGoogleSignIn()}>
+            <Button info iconLeft style={{ margin: 10, borderRadius: 10, backgroundColor: "#db3236" }} onPress={() => this.props.handleGoogleSignIn()}>
               <Icon name='logo-google' />
               <Text> Google</Text>
             </Button>
           </View>
-          <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.beforeAnything()}>
-            <Icon name='logo-google' />
-            <Text> Before Anything</Text>
-          </Button>
           <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
             <Text style={{ fontSize: 12 }}> Sign Up Now </Text>
           </Button>
@@ -117,6 +86,8 @@ function mapStateToProps(state) {
     products: state.cartDetailScreenReducer.products,
     unread_notifications: state.cartDetailScreenReducer.unread_notifications || 0,
     cart_count: state.cartDetailScreenReducer.cart_count || 0,
+    google: state.loginReducer,
+    status: state.userReducer.status
 
   }
 }

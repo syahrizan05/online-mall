@@ -118,6 +118,7 @@ class HomeScreen extends React.PureComponent {
             </Content>
             :
             <Content>
+
               <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
                 <ImageSlider
                   loopBothSides
@@ -292,8 +293,6 @@ function mapStateToProps(state) {
     newCollectionItems: state.homeScreenReducer.newCollectionItems,
 
     products: state.productsReducer.products,
-
-
     cart_count: state.homeScreenReducer.cart_count,
     currencySymbol: state.homeScreenReducer.currencySymbol,
     unread_notifications: state.notificationScreenReducer.unread_notifications || 0,

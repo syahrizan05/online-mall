@@ -54,9 +54,9 @@ class ViewAddressScreen extends React.PureComponent {
         await this.props.initiateUserAddress()
     }
 
-    editAddress(ua_id, ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone, state_name, country_name) {
+    editAddress(ua_id, ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone, states_name, country_name) {
         this.props.navigation.navigate('EditAddress', { ua_id: ua_id })
-        this.props.editAddress({ ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone, state_name, country_name })
+        this.props.editAddress({ ua_name, ua_address1, ua_address2, ua_zip, ua_city, ua_phone, states_name, country_name })
     }
 
     render() {

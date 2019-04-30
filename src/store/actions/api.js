@@ -56,12 +56,9 @@ export const fbLoginApi = (token) => {
 
           dispatch({ type: 'SET_LOGIN', payload: { msg: '' } })
           dispatch({ type: 'GET_USER', payload: { ...authentication } })
-
         } else {
           dispatch({ type: 'SET_LOGIN', payload: { msg } })
         }
-
-
       })
       .catch((error) => {
         console.log('Error initiating login : ' + error);
@@ -569,10 +566,17 @@ export const getAddressAPI = (token) => {
       body: formData,
     }).then((response) => response.json())
       .then((responseJson) => {
+
         console.log(JSON.stringify(responseJson))
         const { status, data } = responseJson
         console.log(JSON.stringify(data))
-        dispatch({ type: 'GET_USER_ADDRESS', payload: { status, data } })
+
+        const dataAddress = data.find(d => d.ua_is_default === 1)
+        console.log(JSON.stringify(dataAddress))
+        const { ua_name, ua_address1, ua_address2, ua_zip, ua_city, state_name, country_name, ua_phone } = dataAddress
+
+        dispatch({ type: 'GET_USER_ADDRESS', payload: { status, data, dataAddress } })
+        dispatch({ type: 'GET_ADDRESS', payload: { ua_name, ua_address1, ua_address2, ua_zip, ua_city, state_name, country_name, ua_phone } })
       })
       .catch((error) => {
         console.log('Erorr: ' + error);
@@ -738,6 +742,31 @@ export const googleLoginApi = (token) => {
       })
       .catch((error) => {
         console.log('Error initiating login : ' + error);
+      });
+  }
+}
+
+export const primaryAddressAPI = (token, uid) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('id', uid);
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}primary_address`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, msg } = responseJson
+        dispatch({ type: 'PRIMARY_ADDRESS', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
       });
   }
 }

@@ -1,6 +1,6 @@
-import {Alert} from 'react-native'
+import { Alert } from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI, googleLoginApi, primaryAddressAPI } from './api'
 
 
 
@@ -79,7 +79,7 @@ export const logout = () => {
 export const rootLogout = () => {
     return async (dispatch, getState) => {
         await SecureStore.deleteItemAsync('authentication')
-        dispatch({type:'ROOT_LOG_OUT'})
+        dispatch({ type: 'ROOT_LOG_OUT' })
         dispatch(initiateHomeScreen())
     }
 }
@@ -94,7 +94,6 @@ export const fbLogin = () => {
                 permissions,
                 declinedPermissions,
             } = await Facebook.logInWithReadPermissionsAsync('1985454545081156', { permissions: ['public_profile'], });
-            Alert.alert(`Facebook Login Betul: ${token}`);
             dispatch(fbLoginApi(token))
         } catch ({ message }) {
             Alert.alert(`Facebook Login Error: ${message}`);
@@ -102,8 +101,15 @@ export const fbLogin = () => {
     }
 }
 
+export const _syncUserWithStateAsync = async () => {
+    const user = await GoogleSignIn.signInSilentlyAsync();
+    this.setState({ user });
+    dispatch(googleLoginApi(user))
+    dispatch({ type: 'GOOGLE_SIGNIN', payload: { user } })
+};
+
 export const handleGoogleSignIn = async () => {
-    
+
 
     try {
         await GoogleSignIn.initAsync({ clientId: '258457727479-3iml03e9t3e5um9bvr81h8j9idabjsjq.apps.googleusercontent.com' });
@@ -112,6 +118,7 @@ export const handleGoogleSignIn = async () => {
             const { type, user } = await GoogleSignIn.signInAsync();
             if (type === 'success') {
                 Alert.alert({ googleError: `user : ${JSON.stringify(user)}` })
+                this._syncUserWithStateAsync();
             }
         } catch ({ message }) {
             // Alert.alert('login: Error:' + message);
@@ -215,6 +222,7 @@ export const getAddress = () => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(getAddressAPI(token))
+        // const { data } = await getState().addressScreenReducer
     }
 }
 
@@ -222,7 +230,7 @@ export const addAddress = () => {
     return (dispatch, getState) => {
         const { uid } = ""
         const { token } = getState().userReducer
-        const { zip, name, city, address_2, address_1, phone , country_id, states_id} = getState().addressScreenReducer
+        const { zip, name, city, address_2, address_1, phone, country_id, states_id } = getState().addressScreenReducer
         dispatch(updateAddressAPI(token, zip, name, city, address_2, address_1, phone, uid, country_id, states_id))
     }
 }
@@ -261,5 +269,12 @@ export const changePassword = () => {
         const { token } = getState().userReducer
         const { newPassword, confirmPassword, oldPassword } = getState().accountScreenReducer
         dispatch(changePasswordAPI(token, newPassword, confirmPassword, oldPassword))
+    }
+}
+
+export const makeAddressPrimary = (uid) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(primaryAddressAPI(token, uid))
     }
 }
