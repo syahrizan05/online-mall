@@ -1,3 +1,4 @@
+import {Alert} from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
 // import {Constants, Facebook, GoogleSignIn} from 'expo';
 import _ from 'lodash'
@@ -48,6 +49,40 @@ export const fbLoginApi = (token) => {
     }).then((response) => response.json())
       .then(async (responseJson) => {
         console.log(`fb login Response : ${JSON.stringify(responseJson)}`)
+        const authentication = responseJson
+        const { status } = authentication
+        if (status == 1) {
+          const stringifyAuthentication = await JSON.stringify(authentication)
+          await SecureStore.setItemAsync('authentication', stringifyAuthentication);
+
+          dispatch({ type: 'SET_LOGIN', payload: { msg: '' } })
+          dispatch({ type: 'GET_USER', payload: { ...authentication } })
+
+        } else {
+          dispatch({ type: 'SET_LOGIN', payload: { msg } })
+        }
+
+
+      })
+      .catch((error) => {
+        console.log('Error initiating login : ' + error);
+      });
+  }
+}
+
+export const googleLoginApi = (token) => {
+
+  return async (dispatch, getState) => {
+    Alert.alert(`google token : ${token}`)
+    var formData = new FormData();
+    formData.append('gp_token', token);
+
+    fetch(`${apiUrl}login_gplus`, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => response.json())
+      .then(async (responseJson) => {
+       
         const authentication = responseJson
         const { status } = authentication
         if (status == 1) {

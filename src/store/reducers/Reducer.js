@@ -4,6 +4,9 @@ const loginReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_LOGIN':
             return { ...state, ...action.payload }
+        case 'DATA_FROM_GOOGLE':
+            return { ...state, ...action.payload }
+
 
         default:
             return state

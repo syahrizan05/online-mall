@@ -10,7 +10,7 @@ import {
   FlatList, Transforms, AsyncStorage, ActivityIndicator
 } from 'react-native';
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Item, Input, Subtitle, Badge, Drawer, H1, H2, H3 } from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Item, Input, Subtitle, Badge, Drawer, H1, H2, H3, Picker } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
@@ -20,6 +20,7 @@ import Sidebar from './Sidebar'
 import { connect } from 'react-redux'
 import * as actionCreator from '../store/actions/action'
 import { bold } from 'ansi-colors';
+
 
 
 class HomeScreen extends React.PureComponent {
@@ -73,6 +74,15 @@ class HomeScreen extends React.PureComponent {
     await this.props.getProducts()
   }
 
+  onValueChange(value) {
+    console.log(`value is ${value}`)
+    if (value == "1") {
+      this.props.navigation.navigate('Home1')
+    } else if (value == "2") {
+      this.props.navigation.navigate('Home2')
+    }
+  }
+
   render() {
     const images = []
     this.props.slides && this.props.slides.map(image => images.push({
@@ -85,13 +95,29 @@ class HomeScreen extends React.PureComponent {
       <Drawer side='right' ref={(ref) => { this.drawer = ref; }} content={<Sidebar navigator={this.navigator} />} onClose={() => this.closeDrawer()} >
         <Container style={styles.container}>
           <Header searchBar rounded>
+            <View style={{ width: 20 }}>
+              <Picker
+                note
+                mode="dropdown"
+                style={{ width: 20 }}
+selectedValue='0'
+                onValueChange={(value) => this.onValueChange(value)}
+              >
+              <Picker.Item label="0" value="0" />
+                <Picker.Item label="1" value="2" />
+                <Picker.Item label="2" value="1" />
+              </Picker>
+            </View>
+
             <Item style={{ borderBottomWidth: 2, borderColor: 'dimgrey' }}>
               <Input placeholder="Search MayaMall" value={this.state.keyword} onChangeText={(val) => this.handleSearch(val)} />
             </Item>
             {this.state.keyword ? <View style={{ flexDirection: 'row' }}><Button transparent onPress={() => this.clearKeyword()}><Icon name="close" /></Button><Button transparent onPress={() => this.openDrawer('search')}><Icon name="options" /></Button></View> : <Button transparent><Icon name="ios-search" /></Button>}
           </Header>
+
           {this.props.result ?
             <Content>
+
               <FlatList
                 data={this.props.result}
                 keyExtractor={(item, index) => index.toString()}
@@ -118,6 +144,7 @@ class HomeScreen extends React.PureComponent {
             </Content>
             :
             <Content>
+
               <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
                 <ImageSlider
                   loopBothSides
@@ -305,7 +332,9 @@ function mapStateToProps(state) {
 
     result: state.searchReducer.result,
 
-    token: state.userReducer.token
+    token: state.userReducer.token,
+
+    cacat: state.loginReducer.cacat
 
   }
 }

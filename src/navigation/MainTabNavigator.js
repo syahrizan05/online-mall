@@ -20,6 +20,8 @@ import AccountScreen from '../screens/AccountScreen';
 import EditAccountScreen from '../screens/EditAccountScreen';
 import NotificationDetailsScreen from '../screens/NotificationDetailsScreen'
 import FavoriteScreen from '../screens/FavoriteScreen';
+import HomeScreen1 from '../screens/HomeScreen1';
+import HomeScreen2 from '../screens/HomeScreen2';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -51,6 +53,12 @@ const RootStack = createStackNavigator(
     },
     Search: {
       screen:SearchScreen,
+    },
+    Home1: {
+      screen:HomeScreen1,
+    },
+    Home2: {
+      screen:HomeScreen2,
     },
   },
   {

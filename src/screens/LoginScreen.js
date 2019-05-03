@@ -17,16 +17,62 @@ class LoginScreen extends Component {
 
   state = { user: null, googleError: null };
 
+  async handleGoogleSignIn(){
+ 
+         //Alert.alert('wow')
+
+          try {
+                 await GoogleSignIn.askForPlayServicesAsync();
+                const { type, user }=cacat =  await GoogleSignIn.signInAsync();
+                const {auth}=user
+                const {idToken}=auth
+                 //dispatch({ type: 'DATA_FROM_GOOGLE', payload: { cacat } })
+                if (type === 'success') {
+                     Alert.alert('success')
+                     this.props.setGoogleData(idToken)
+                     this.props.processGoogleToken(idToken)
+                }
+            } catch ({ message }) {
+                 Alert.alert('tak success');
+                 //Alert.alert({ googleError: `error masa login ialah : ${message}` })
+            }
+ 
+     
+};
+
+
+  async componentDidMount(){
+    
+        try {
+            await GoogleSignIn.initAsync({ clientId: '258457727479-3iml03e9t3e5um9bvr81h8j9idabjsjq.apps.googleusercontent.com' });
+            // try {
+            //     await GoogleSignIn.askForPlayServicesAsync();
+            //     const { type, user }=cacat = await GoogleSignIn.signInAsync();
+            //     dispatch({ type: 'DATA_FROM_GOOGLE', payload: { cacat } })
+            //     if (type === 'success') {
+            //         Alert.alert({ googleError: `user : ${JSON.stringify(user)}` })
+            //     }
+            // } catch ({ message }) {
+            //     // Alert.alert('login: Error:' + message);
+            //     Alert.alert({ googleError: `error masa login ialah : ${message}` })
+            // }
+        } catch ({ message }) {
+          
+            Alert.alert('GoogleSignIn.initAsync(): ' + message);
+        }
+  }
+
 
   render() {
 
     return (
       <Container style={styles.authContainer}>
-        <Content padder scrollEnabled={false}>
+        <Content padder scrollEnabled={true}>
+        <Text>test</Text>
           <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
             <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
           </View>
-          <Text>Betul 8</Text>
+          <Text>Cacat ialah : {JSON.stringify(this.props.cacat)}</Text>
           <Text>{this.state.googleError}</Text>
           <Form>
             <FormItem floatingLabel >
@@ -52,7 +98,7 @@ class LoginScreen extends Component {
               <Icon name='logo-facebook' />
               <Text> Facebook</Text>
             </Button>
-            <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.handleGoogleSignIn()}>
+            <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.handleGoogleSignIn()}>
               <Icon name='logo-google' />
               <Text> Google</Text>
             </Button>
@@ -90,6 +136,8 @@ function mapStateToProps(state) {
     unread_notifications: state.cartDetailScreenReducer.unread_notifications || 0,
     cart_count: state.cartDetailScreenReducer.cart_count || 0,
 
+    cacat:state.loginReducer.wow
+
   }
 }
 
@@ -100,7 +148,12 @@ function mapDispatchToProps(dispatch) {
     login: () => dispatch(actionCreator.login()),
     logout: () => dispatch(actionCreator.logout()),
     fbLogin: () => dispatch(actionCreator.fbLogin()),
-    handleGoogleSignIn: () => dispatch(actionCreator.handleGoogleSignIn())
+    handleGoogleSignIn: () => dispatch(actionCreator.handleGoogleSignIn()),
+
+    setGoogleData:(wow)=>dispatch({type:'DATA_FROM_GOOGLE',payload:{wow}}),
+
+    
+    processGoogleToken: (token) => dispatch(actionCreator.processGoogleToken(token)),
 
 
 

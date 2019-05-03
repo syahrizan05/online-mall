@@ -1,6 +1,6 @@
 import {Alert} from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications,toggleFavoriteApi,getFavoriteProductsApi } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications,toggleFavoriteApi,getFavoriteProductsApi,googleLoginApi } from './api'
 
 
 
@@ -102,24 +102,31 @@ export const fbLogin = () => {
     }
 }
 
-export const handleGoogleSignIn = async () => {
-    
+export const handleGoogleSignIn =  () => {
+    return async (dispatch, getState) => {
+        await Alert.alert('wow')
 
-    try {
-        await GoogleSignIn.initAsync({ clientId: '258457727479-3iml03e9t3e5um9bvr81h8j9idabjsjq.apps.googleusercontent.com' });
-        try {
-            await GoogleSignIn.askForPlayServicesAsync();
-            const { type, user } = await GoogleSignIn.signInAsync();
-            if (type === 'success') {
-                Alert.alert({ googleError: `user : ${JSON.stringify(user)}` })
+          try {
+                await GoogleSignIn.askForPlayServicesAsync();
+                const { type, user }=cacat = await GoogleSignIn.signInAsync();
+                const {auth}=user
+                const {idToken}=auth
+                await dispatch({ type: 'DATA_FROM_GOOGLE', payload: { cacat:idToken } })
+                if (type === 'success') {
+                    await Alert.alert({ googleError: `user : ${JSON.stringify(user)}` })
+                }
+            } catch ({ message }) {
+                await Alert.alert('login: Error:' + message);
+                await Alert.alert({ googleError: `error masa login ialah : ${message}` })
             }
-        } catch ({ message }) {
-            // Alert.alert('login: Error:' + message);
-            Alert.alert({ googleError: `error masa login ialah : ${message}` })
-        }
-    } catch ({ message }) {
-        Alert.alert('GoogleSignIn.initAsync(): ' + message);
-    }
+ 
+     }
+};
+
+export const processGoogleToken =  (token) => {
+    return  (dispatch, getState) => {
+         dispatch(googleLoginApi(token))
+     }
 };
 
 export const checkLogin = () => {
