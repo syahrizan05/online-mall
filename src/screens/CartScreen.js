@@ -49,14 +49,6 @@ class CartScreen extends React.PureComponent {
     }
   }
 
-  //   // Example of using the Google REST API
-  // async  getUserInfo(accessToken) {
-  //   let userInfoResponse = await fetch('https://www.googleapis.com/userinfo/v2/me', {
-  //     headers: { Authorization: `Bearer ${accessToken}` },
-  //   });
-
-  //   return await userInfoResponse.json();
-  // }
   removeItem(key) {
     Alert.alert(
       'Delete item',
@@ -100,7 +92,7 @@ class CartScreen extends React.PureComponent {
         <Header>
           <Left>
             <Button transparent>
-              <Icon name='cart' style={{color:'dimgrey'}} />
+              <Icon name='cart' style={{ color: 'dimgrey' }} />
             </Button>
           </Left>
           <Body>

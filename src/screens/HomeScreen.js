@@ -192,7 +192,9 @@ class HomeScreen extends React.PureComponent {
                       <Card transparent style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
                         <CardItem>
                           <Left>
-                            <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)' }} small source={{ uri: item.shop_logo }} />
+                            <TouchableHighlight onPress={() => this.props.navigation.navigate('ShopDetail', { shop_id: item.shop_id })} >
+                              <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)' }} small source={{ uri: item.shop_logo }} />
+                            </TouchableHighlight>
                             <Text note>{item.shop_name}</Text>
                           </Left>
                         </CardItem>

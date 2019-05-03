@@ -66,9 +66,6 @@ class ProductDetailScreen extends React.PureComponent {
 
     await this.props.initiateHomeScreen()
     await this.props.initiateProductDetailScreen(this.props.product.selprod_id)
-
-
-
   }
 
   render() {
@@ -221,7 +218,9 @@ class ProductDetailScreen extends React.PureComponent {
           {this.props.shop && <Card transparent style={{ flex: 0 }}>
             <CardItem>
               <Left>
-                <Thumbnail style={{ margin: 5 }} source={{ uri: this.props.shop.shop_logo }} />
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('ShopDetail', { shop_id: this.props.shop.shop_id })} >
+                  <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)', margin:5 }}  source={{ uri: this.props.shop.shop_logo }} />
+                </TouchableHighlight>
                 <Body>
                   <Text>{this.props.shop.shop_name}</Text>
                   <Text note>Open since {moment(this.props.shop.shop_created_on).format('L')}</Text>
@@ -353,7 +352,6 @@ function mapStateToProps(state) {
     productImagesArr: state.productDetailScreenReducer.productImagesArr,
     shop_rating: state.productDetailScreenReducer.shop_rating,
     shop: state.productDetailScreenReducer.shop,
-
     cart_count: state.homeScreenReducer.cart_count
 
   }

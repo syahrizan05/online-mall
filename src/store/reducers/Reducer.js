@@ -194,7 +194,20 @@ const favoriteScreenReducer = (state = [], action) => {
     }
 }
 
-const appReducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer, favoriteScreenReducer, addressScreenReducer });
+const shopDetailScreenReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'GET_SHOP_DETAIL':
+            return { ...state, ...action.payload }
+        case 'GET_PRODUCTS_SHOP': 
+            return { ...state, ...action.payload }
+        case 'GET_SHOP_MESSAGE':
+            return { ...state, ...action.payload }
+        default:
+            return state
+    }
+}
+
+const appReducer = combineReducers({ userReducer, homeScreenReducer, productsReducer, cartDetailScreenReducer, orderScreenReducer, productDetailScreenReducer, ordersScreenReducer, sidebarReducer, searchReducer, accountScreenReducer, notificationScreenReducer, registerReducer, loginReducer, favoriteScreenReducer, addressScreenReducer, shopDetailScreenReducer });
 
 const rootReducer = (state, action) => {
     switch (action.type) {

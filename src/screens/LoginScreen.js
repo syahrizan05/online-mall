@@ -31,8 +31,6 @@ class LoginScreen extends Component {
           <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
             <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
           </View>
-          <Text>Betul 8</Text>
-          <Text>{this.state.googleError}</Text>
           <Form>
             <FormItem floatingLabel >
               <Label>Username</Label>

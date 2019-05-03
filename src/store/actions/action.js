@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI, googleLoginApi, primaryAddressAPI } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI, googleLoginApi, primaryAddressAPI, getShopDetailAPI, getProductShopApi, sendTextShopApi } from './api'
 
 
 
@@ -276,5 +276,26 @@ export const makeAddressPrimary = (uid) => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(primaryAddressAPI(token, uid))
+    }
+}
+
+export const getShopDetail = (shop_id) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getShopDetailAPI(token, shop_id))
+    }
+}
+
+export const getProductShop = (shop_id) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getProductShopApi(token, shop_id))
+    }
+}
+
+export const sendTextShop = (subject, shop_id, message) => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(sendTextShopApi(token, subject, shop_id, message))
     }
 }

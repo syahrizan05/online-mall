@@ -27,6 +27,7 @@ import EditAddressScreen from '../screens/EditAddressScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CountryScreen from '../screens/CountryScreen';
 import StateScreen from '../screens/StateScreen';
+import ShopDetailScreen from '../screens/ShopDetailScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -49,6 +50,9 @@ const RootStack = createStackNavigator(
     },
     ProductDetail: {
       screen: ProductDetailScreen,
+    },
+    ShopDetail: {
+      screen: ShopDetailScreen,
     },
     AddToCart: {
       screen:AddToCartScreen,

@@ -771,4 +771,83 @@ export const primaryAddressAPI = (token, uid) => {
   }
 }
 
+export const getShopDetailAPI = (token, shop_id) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('currency', 1);
+    formData.append('language', 1);
+    fetch(`${apiUrl}shop_detail/${shop_id}`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(JSON.stringify(responseJson))
+        const { status, data } = responseJson
+        const { shop } = data
+        dispatch({ type: 'GET_SHOP_DETAIL', payload: { status, data, shop } })
+      })
+      .catch((error) => {
+        console.log('Erorr: ' + error);
+      });
+  }
+}
+
+export const getProductShopApi = (token, shop_id) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('page', 1);
+    formData.append('pagesize', 1000);
+    formData.append('shop_id', shop_id)
+    fetch(`${apiUrl}get_products`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(`PRODUCT SHOP API : ${JSON.stringify(responseJson)}`)
+        const { status, currencySymbol, unread_notifications, data, cart_count, fav_count, unread_messages } = responseJson
+        const { products, total_pages, page, total_records } = data
+
+        dispatch({ type: 'GET_PRODUCTS_SHOP', payload: { products, total_pages, page, total_records, cart_count, currencySymbol } })
+      })
+      .catch((error) => {
+        console.log('Error initiating all products : ' + error);
+      });
+  }
+}
+
+export const sendTextShopApi = (token, subject, shop_id, message) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('language', 1);
+    formData.append('thread_subject', subject);
+    formData.append('shop_id', shop_id)
+    formData.append('currency', 1)
+    formData.append('message_text', message)
+    fetch(`${apiUrl}shop_send_message`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(`PRODUCT SHOP MESSAGE : ${JSON.stringify(responseJson)}`)
+        const { status, msg } = responseJson
+        dispatch({ type: 'GET_SHOP_MESSAGE', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Error to send message : ' + error);
+      });
+  }
+}
+
 //////////////////////////////////////////////////
