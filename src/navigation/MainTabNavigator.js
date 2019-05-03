@@ -28,6 +28,8 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CountryScreen from '../screens/CountryScreen';
 import StateScreen from '../screens/StateScreen';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
+import HomeScreen1 from '../screens/HomeScreen1';
+import HomeScreen2 from '../screens/HomeScreen2';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -62,6 +64,12 @@ const RootStack = createStackNavigator(
     },
     Search: {
       screen:SearchScreen,
+    },
+    Home1: {
+      screen:HomeScreen1,
+    },
+    Home2: {
+      screen:HomeScreen2,
     },
   },
   {

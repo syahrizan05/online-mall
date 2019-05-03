@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View,AsyncStorage } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View,AsyncStorage,Alert } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
@@ -41,7 +41,32 @@ export default class App extends React.PureComponent {
     }
   }
 
+  async checkUpdate(){
+    try {
+      const update = await Expo.Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Expo.Updates.fetchUpdateAsync();
+        Alert.alert(
+          //title
+          'Hello',
+          //body
+          'I am two option alert. Do you want to cancel me ?',
+          [
+            {text: 'Yes', onPress: () => console.log('Yes Pressed')},
+            {text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel'},
+          ],
+          { cancelable: false }
+          //clicking out side of alert will not cancel
+        );
+        Expo.Updates.reloadFromCache();
+      }
+    } catch (e) {
+      // handle or log error
+    }
+  }
+
   componentDidMount(){
+    this.checkUpdate()
     this.checkFirstTime()
     //store.dispatch(initiateApp())
   }
@@ -84,6 +109,26 @@ export default class App extends React.PureComponent {
         require('./src/assets/images/intro/Notifications.png'),
         require('./src/assets/images/intro/ProductDetail.png'),
         require('./src/assets/images/intro/Profile.png'),
+
+        require('./src/assets/images/homeTop/topRated.png'),
+
+        require('./src/assets/images/homeTop/beauty.png'),
+        require('./src/assets/images/homeTop/bestSelling.png'),
+        require('./src/assets/images/homeTop/freeShipping.png'),
+        require('./src/assets/images/homeTop/furniture.png'),
+        require('./src/assets/images/homeTop/gadgets.png'),
+        require('./src/assets/images/homeTop/homeAppliances.png'),
+        require('./src/assets/images/homeTop/men.png'),
+        require('./src/assets/images/homeTop/new.png'),
+        require('./src/assets/images/homeTop/others.png'),
+        require('./src/assets/images/homeTop/sales.png'),
+        require('./src/assets/images/homeTop/sports.png'),
+        require('./src/assets/images/homeTop/woman.png'),
+
+        require('./src/assets/images/adBiru.png'),
+        require('./src/assets/images/adOren.png'),
+        require('./src/assets/images/bannerOren.png'),
+        require('./src/assets/images/rfqBgOren.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

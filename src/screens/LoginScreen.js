@@ -27,7 +27,8 @@ class LoginScreen extends Component {
     this.props.status === 1 ? this.props.navigation.navigate('Home') : null
     return (
       <Container style={styles.authContainer}>
-        <Content padder scrollEnabled={false}>
+        <Content padder scrollEnabled={true}>
+        <Text>test</Text>
           <View style={{ width: Layout.window.width, height: Layout.window.height / 4 }}>
             <Image source={require('../assets/images/icon.png')} resizeMode={'contain'} style={{ flex: 1, width: undefined, height: undefined }} />
           </View>
@@ -54,10 +55,6 @@ class LoginScreen extends Component {
             <Button info iconLeft style={{ margin: 10, borderRadius: 10 }} onPress={() => this.props.fbLogin()}>
               <Icon name='logo-facebook' />
               <Text>Facebook</Text>
-            </Button>
-            <Button info iconLeft style={{ margin: 10, borderRadius: 10, backgroundColor: "#db3236" }} onPress={() => this.props.handleGoogleSignIn()}>
-              <Icon name='logo-google' />
-              <Text> Google</Text>
             </Button>
           </View>
           <Button full transparent style={{ margin: 13, height: Layout.window.width / 14, width: Layout.window.width / 2, alignSelf: 'center' }} onPress={() => this.props.navigation.navigate('Register')}>
@@ -86,7 +83,6 @@ function mapStateToProps(state) {
     cart_count: state.cartDetailScreenReducer.cart_count || 0,
     google: state.loginReducer,
     status: state.userReducer.status
-
   }
 }
 
@@ -97,7 +93,6 @@ function mapDispatchToProps(dispatch) {
     login: () => dispatch(actionCreator.login()),
     logout: () => dispatch(actionCreator.logout()),
     fbLogin: () => dispatch(actionCreator.fbLogin()),
-    handleGoogleSignIn: () => dispatch(actionCreator.handleGoogleSignIn())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

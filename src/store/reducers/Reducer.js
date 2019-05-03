@@ -10,6 +10,10 @@ const loginReducer = (state = [], action) => {
             return { ...state, ...action.payload }
         case 'GOOGLE_SIGNIN':
             return { ...state, ...action.payload }
+        case 'DATA_FROM_GOOGLE':
+            return { ...state, ...action.payload }
+
+
         default:
             return state
     }

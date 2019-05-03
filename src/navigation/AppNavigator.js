@@ -14,7 +14,7 @@ export const Intro= createAppContainer(createSwitchNavigator({
 }, 
 
 {
-  initialRouteName:'Main'   
+  initialRouteName:'Intro'   
 }));
 
 export const Main= createAppContainer(createSwitchNavigator({

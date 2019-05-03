@@ -1,3 +1,4 @@
+import {Alert} from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
 // import {Constants, Facebook, GoogleSignIn} from 'expo';
 import _ from 'lodash'
