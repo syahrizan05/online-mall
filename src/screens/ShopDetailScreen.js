@@ -77,7 +77,7 @@ class ShopDetailScreen extends React.PureComponent {
                             </CardItem>
                             <CardItem>
                                 <Left>
-                                    <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)', margin:5 }} source={{ uri: this.props.shop.logo }} />
+                                    <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)', margin: 5 }} source={{ uri: this.props.shop.logo }} />
                                     <Body>
                                         <Text>{this.props.shop.shop_name}</Text>
                                         <Text note>Open since {moment(this.props.shop.shop_created_on).format('L')}</Text>
@@ -149,7 +149,7 @@ class ShopDetailScreen extends React.PureComponent {
                             <Icon name="basket" active style={{ color: 'white' }} />
                             <Text style={{ color: 'white' }}>Profile</Text>
                         </Button>
-                        <Button active vertical onPress={() => this.props.navigation.navigate('Cart')} style={{ backgroundColor: 'cornflowerblue' }}>
+                        <Button active vertical onPress={() => this.props.navigation.navigate('ChatShop', { shop_id: this.state.shopID })} style={{ backgroundColor: 'cornflowerblue' }}>
                             <Icon name="chatbubbles" active style={{ color: 'white' }} />
                             <Text style={{ color: 'white' }} >Chat Now</Text>
                         </Button>

@@ -202,9 +202,11 @@ const shopDetailScreenReducer = (state = [], action) => {
     switch (action.type) {
         case 'GET_SHOP_DETAIL':
             return { ...state, ...action.payload }
-        case 'GET_PRODUCTS_SHOP': 
+        case 'GET_PRODUCTS_SHOP':
             return { ...state, ...action.payload }
         case 'GET_SHOP_MESSAGE':
+            return { ...state, ...action.payload }
+        case 'GET_MESSAGE':
             return { ...state, ...action.payload }
         default:
             return state

@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
-import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI, primaryAddressAPI, getShopDetailAPI, getProductShopApi, sendTextShopApi } from './api'
+import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI, primaryAddressAPI, getShopDetailAPI, getProductShopApi, sendTextShopApi, getMessageApi } from './api'
 
 
 
@@ -269,5 +269,12 @@ export const sendTextShop = (subject, shop_id, message) => {
     return (dispatch, getState) => {
         const { token } = getState().userReducer
         dispatch(sendTextShopApi(token, subject, shop_id, message))
+    }
+}
+
+export const getMessage = () => {
+    return (dispatch, getState) => {
+        const { token } = getState().userReducer
+        dispatch(getMessageApi(token))
     }
 }

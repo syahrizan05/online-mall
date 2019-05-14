@@ -11,15 +11,12 @@ import {
 } from 'react-native';
 
 import moment from 'moment'
-
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, List, ListItem } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import ImageSlider from 'react-native-image-slider';
-
 import { connect } from 'react-redux'
 import * as actionCreator from '../store/actions/action'
-
 
 class NotificationScreen extends React.PureComponent {
   static navigationOptions = {
@@ -48,7 +45,11 @@ class NotificationScreen extends React.PureComponent {
           <Body>
             <Title>Notification</Title>
           </Body>
-          <Right />
+          <Right>
+            <Button transparent onPress={() => this.props.navigation.navigate('Message')}>
+              <Icon name='chatbubbles' style={{ color: 'cornflowerblue' }} />
+            </Button>
+          </Right>
         </Header>
         <Content>
           <Card transparent style={{ marginTop: 0 }}>

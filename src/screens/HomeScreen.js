@@ -100,7 +100,7 @@ class HomeScreen extends React.PureComponent {
                 note
                 mode="dropdown"
                 style={{ width: 20 }}
-selectedValue='0'
+                selectedValue='0'
                 onValueChange={(value) => this.onValueChange(value)}
               >
               <Picker.Item label="0" value="0" />

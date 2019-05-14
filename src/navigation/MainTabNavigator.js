@@ -30,6 +30,8 @@ import StateScreen from '../screens/StateScreen';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
 import HomeScreen1 from '../screens/HomeScreen1';
 import HomeScreen2 from '../screens/HomeScreen2';
+import ChatShopScreen from '../screens/ChatShopScreen';
+import MessageScreen from '../screens/MessageScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -55,6 +57,9 @@ const RootStack = createStackNavigator(
     },
     ShopDetail: {
       screen: ShopDetailScreen,
+    },
+    ChatShop: {
+      screen: ChatShopScreen,
     },
     AddToCart: {
       screen:AddToCartScreen,
@@ -126,6 +131,7 @@ CartStackWithModal.navigationOptions = {
 const NotificationStack = createStackNavigator({
   Notification: NotificationScreen,
   NotificationDetail: NotificationDetailsScreen,
+  Message: MessageScreen
 });
 
 NotificationStack.navigationOptions = {

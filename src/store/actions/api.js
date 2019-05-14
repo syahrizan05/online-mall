@@ -1,4 +1,4 @@
-import {Alert} from 'react-native'
+import { Alert } from 'react-native'
 import { SecureStore, Facebook, GoogleSignIn } from 'expo'
 // import {Constants, Facebook, GoogleSignIn} from 'expo';
 import _ from 'lodash'
@@ -844,6 +844,33 @@ export const sendTextShopApi = (token, subject, shop_id, message) => {
         console.log(`PRODUCT SHOP MESSAGE : ${JSON.stringify(responseJson)}`)
         const { status, msg } = responseJson
         dispatch({ type: 'GET_SHOP_MESSAGE', payload: { status, msg } })
+      })
+      .catch((error) => {
+        console.log('Error to send message : ' + error);
+      });
+  }
+}
+
+export const getMessageApi = (token) => {
+  return async (dispatch, getState) => {
+    var formData = new FormData();
+    formData.append('language', 1);
+    formData.append('page', 1);
+    formData.append('pagesize', 20)
+    formData.append('currency', 1)
+    fetch(`${apiUrl}messages`, {
+      method: 'POST',
+      headers: {
+        'X-TOKEN': token,
+        'X-USER-TYPE': '1',
+      },
+      body: formData,
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log(`MESSAGE API: ${JSON.stringify(responseJson)}`)
+        const { status, msg, data } = responseJson
+        const { messages } = data
+        dispatch({ type: 'GET_MESSAGE', payload: { status, msg, messages } })
       })
       .catch((error) => {
         console.log('Error to send message : ' + error);
