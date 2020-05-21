@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Constants } from 'expo'
+import Constants from 'expo-constants';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'
 import { Image, Linking } from 'react-native'

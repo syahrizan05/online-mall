@@ -3,7 +3,6 @@
     "name": "MayaMall",
     "slug": "MayaMallV2",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.fintech.mayamall",
@@ -31,11 +30,10 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "checkAutomatically":"ON_ERROR_RECOVERY"
+      "checkAutomatically": "ON_ERROR_RECOVERY"
     },
     "assetBundlePatterns": [
       "**/*"
     ]
-  
   }
 }

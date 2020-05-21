@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 import Layout from '../constants/Layout'
-import {Constants} from 'expo'
+import Constants from 'expo-constants';
 export default StyleSheet.create({
     container: {
    

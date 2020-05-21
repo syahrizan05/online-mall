@@ -1,6 +1,10 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View,AsyncStorage,Alert } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
+import { Ionicons } from '@expo/vector-icons';
+
 import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
 
@@ -132,7 +136,7 @@ export default class App extends React.PureComponent {
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
+        ...Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./src/assets/fonts/SpaceMono-Regular.ttf'),

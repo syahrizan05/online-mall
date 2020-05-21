@@ -13,7 +13,8 @@ import {
     ActivityIndicator,
     TextInput
 } from 'react-native';
-import { Constants, LinearGradient } from 'expo'
+import { LinearGradient } from 'expo-linear-gradient';
+import Constants from 'expo-constants';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Item, Input, Subtitle, Badge, Drawer, H1, H2, H3 } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'

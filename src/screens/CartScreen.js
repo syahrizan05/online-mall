@@ -12,7 +12,10 @@ import {
   Alert
 } from 'react-native';
 
-import { Constants, Facebook, GoogleSignIn, Google } from 'expo';
+import { Google } from 'expo';
+import * as GoogleSignIn from 'expo-google-sign-in';
+import * as Facebook from 'expo-facebook';
+import Constants from 'expo-constants';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, DeckSwiper, Card, CardItem, Thumbnail, Badge, Form, Item as FormItem, Input, Label, SwipeRow, Toast } from 'native-base';
 import styles from '../styles/styles'
 import Layout from '../constants/Layout'

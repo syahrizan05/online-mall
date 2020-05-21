@@ -1,5 +1,7 @@
 import { Alert } from 'react-native'
-import { SecureStore, Facebook, GoogleSignIn } from 'expo'
+import * as GoogleSignIn from 'expo-google-sign-in';
+import * as Facebook from 'expo-facebook';
+import * as SecureStore from 'expo-secure-store';
 import { homeApi, getProductsApi, addToCartApi, getCartDetailAPI, getBuyerOrderApi, getProductDetailApi, getBuyerOrdersApi, searchProductsApi, profileInfoApi, notificationApi, registerApi, loginApi, fbLoginApi, removeCartItemAPI, updateCartQtyAPI, updateUserInfoAPI, readNotifications, toggleFavoriteApi, getFavoriteProductsApi, forgotPasswordAPI, updateAddressAPI, getAddressAPI, deleteAddressAPI, getCountriesAPI, getStatesAPI, changePasswordAPI, primaryAddressAPI, getShopDetailAPI, getProductShopApi, sendTextShopApi, getMessageApi } from './api'
 
 

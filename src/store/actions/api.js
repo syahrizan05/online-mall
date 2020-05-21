@@ -1,5 +1,7 @@
 import { Alert } from 'react-native'
-import { SecureStore, Facebook, GoogleSignIn } from 'expo'
+import * as GoogleSignIn from 'expo-google-sign-in';
+import * as Facebook from 'expo-facebook';
+import * as SecureStore from 'expo-secure-store';
 // import {Constants, Facebook, GoogleSignIn} from 'expo';
 import _ from 'lodash'
 const apiUrl = 'https://www.mayamall.com/mobile-app-api/'

@@ -16,7 +16,8 @@ import {
 import _ from 'lodash'
 
 import Layout from '../constants/Layout'
-import { Constants, LinearGradient } from 'expo'
+import { LinearGradient } from 'expo-linear-gradient';
+import Constants from 'expo-constants';
 import styles from '../styles/styles'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Card, CardItem, List, ListItem } from 'native-base';
 

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Constants, Facebook, GoogleSignIn, LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as GoogleSignIn from 'expo-google-sign-in';
+import * as Facebook from 'expo-facebook';
+import Constants from 'expo-constants';
 import styles from '../styles/styles';
 import Layout from '../constants/Layout';
 import { Image, View, TouchableHighlight, TouchableOpacity } from 'react-native';

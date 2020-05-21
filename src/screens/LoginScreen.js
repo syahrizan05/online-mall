@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Constants, Facebook, GoogleSignIn } from 'expo';
+import * as GoogleSignIn from 'expo-google-sign-in';
+import * as Facebook from 'expo-facebook';
+import Constants from 'expo-constants';
 import styles from '../styles/styles';
 import Layout from '../constants/Layout';
 import { Image, View, Alert } from 'react-native';

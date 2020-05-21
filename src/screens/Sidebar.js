@@ -9,7 +9,7 @@ import {
   View,
   FlatList
 } from 'react-native';
-import {Constants} from 'expo'
+import Constants from 'expo-constants';
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,DeckSwiper,Card,CardItem,Thumbnail,Form,Item,Label,Input,Picker } from 'native-base';
 import styles from '../styles/styles'
