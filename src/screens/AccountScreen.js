@@ -65,53 +65,53 @@ class AccountScreen extends React.PureComponent {
         </Header>
         <Content>
           <Card transparent style={{ marginTop: 0, backgroundColor: 'white' }}>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Left></Left>
               <Body><Thumbnail large source={{ uri: this.props.user_image }} />
                 {/* <Text>{this.props.username}</Text> */}
               </Body>
               <Right />
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="contact" style={{ color: 'cornflowerblue' }} />
               <Text> Name : {this.props.name}</Text>
               <Right>
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="mail" style={{ color: 'cornflowerblue' }} />
               <Text> Email : {this.props.email}</Text>
               <Right>
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="phone-portrait" style={{ color: 'cornflowerblue' }} />
               <Text> Phone No : {this.props.phone}</Text>
               <Right>
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="calendar" style={{ color: 'cornflowerblue' }} />
               <Text> Date of Birth : {moment(this.props.dob).format('L')}</Text>
               <Right>
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="business" style={{ color: 'cornflowerblue' }} />
               <Text> City : {this.props.city}</Text>
               <Right>
               </Right>
-            </CardItem>
-            {/* <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            {/* <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Icon active name="home" />
               <Text> Address : {this.props.address_1} {this.props.address_2}</Text>
               <Right>
               </Right>
-            </CardItem> */}
+            </View> */}
           </Card>
 
           <Card transparent style={{ backgroundColor: 'white' }}>
-            <CardItem style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }}>
+            <View style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }}>
               <Text> Shipping Address</Text>
               <Body />
               <Right>
@@ -119,21 +119,21 @@ class AccountScreen extends React.PureComponent {
                   <Text style={{ color: 'cornflowerblue', fontSize: 13 }}>View</Text>
                 </Button>
               </Right>
-            </CardItem>
+            </View>
             <Card transparent style={{ backgroundColor: 'white' }}>
-              <CardItem style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }}>
+              <View style={{ paddingTop: 2, paddingBottom: 2, margin: 2 }}>
                 <Body>
                   <Text>{this.props.ua_name}</Text>
                   <Text>{this.props.ua_address1} {this.props.ua_address2}</Text>
                   <Text>{this.props.ua_zip} {this.props.ua_city} {this.props.state_name} {this.props.country_name}</Text>
                   <Text>{this.props.ua_phone}</Text>
                 </Body>
-              </CardItem>
+              </View>
             </Card>
           </Card>
 
           <Card transparent style={{ backgroundColor: 'white' }}>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Favorite')}>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Favorite')}>
               <Left>
                 <Icon active name="heart" style={{ color: 'cornflowerblue' }} />
                 <Text> My Favourite Item : {this.props.fav_count}</Text>
@@ -141,8 +141,8 @@ class AccountScreen extends React.PureComponent {
               <Right>
                 <Icon name="arrow-forward" style={{ color: 'cornflowerblue' }} />
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Cart')}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Cart')}>
               <Left>
                 <Icon active name="cart" style={{ color: 'cornflowerblue' }} />
                 <Text> My Cart : {this.props.cart_count}</Text>
@@ -150,8 +150,8 @@ class AccountScreen extends React.PureComponent {
               <Right>
                 <Icon name="arrow-forward" style={{ color: 'cornflowerblue' }} />
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Notification')}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }} button onPress={() => this.props.navigation.navigate('Notification')}>
               <Left>
                 <Icon active name="notifications" style={{ color: 'cornflowerblue' }} />
                 <Text> Notification : {this.props.unread_notifications}</Text>
@@ -159,8 +159,8 @@ class AccountScreen extends React.PureComponent {
               <Right>
                 <Icon name="arrow-forward" style={{ color: 'cornflowerblue' }} />
               </Right>
-            </CardItem>
-            <CardItem style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
+            </View>
+            <View style={{ paddingTop: 5, paddingBottom: 5, margin: 3 }}>
               <Left>
                 <Icon active name="chatboxes" style={{ color: 'cornflowerblue' }} />
                 <Text> Message : {this.props.unread_messages}</Text>
@@ -168,12 +168,12 @@ class AccountScreen extends React.PureComponent {
               <Right>
                 <Icon name="arrow-forward" style={{ color: 'cornflowerblue' }} />
               </Right>
-            </CardItem>
+            </View>
           </Card>
           <Card transparent>
-            <CardItem>
+            <View>
               <Button full danger style={{ flex: 1 }} onPress={() => this.Logout()}><Text>Logout</Text></Button>
-            </CardItem>
+            </View>
           </Card>
         </Content>
         <Footer>

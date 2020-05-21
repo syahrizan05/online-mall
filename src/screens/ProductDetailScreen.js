@@ -60,8 +60,10 @@ class ProductDetailScreen extends React.PureComponent {
   }
 
   async addToCart() {
-    const quantity = await this.state.quantity
+    console.log(`ditekan`)
     this.setModalVisible(!this.state.addToCartView)
+    const quantity = await this.state.quantity
+
     await this.props.addToCart(this.props.product.selprod_id, quantity)
 
     await this.props.initiateHomeScreen()
@@ -91,7 +93,7 @@ class ProductDetailScreen extends React.PureComponent {
 
 
             <Card transparent >
-              <CardItem header >
+              <View header style={{ flexDirection: 'row' }} >
                 <Left />
                 <Body><H2>Add To Cart</H2></Body>
                 <Right>
@@ -99,8 +101,8 @@ class ProductDetailScreen extends React.PureComponent {
                     <Icon name='close' />
                   </Button>
                 </Right>
-              </CardItem>
-              <CardItem style={{ paddingTop: 10, paddingBottom: 10 }} >
+              </View>
+              <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row' }} >
                 <Left><H3>Quantity</H3></Left>
                 <Right>
                   <View style={{ flexDirection: 'row', width: Layout.window.width / 4, height: Layout.window.width / 12, marginRight: 10 }}>
@@ -115,15 +117,14 @@ class ProductDetailScreen extends React.PureComponent {
                     </TouchableOpacity>
                   </View>
                 </Right>
-              </CardItem>
-              <CardItem>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <View style={{ flex: 1 }}>
-                    <Button rounded info full onPress={() => this.addToCart()}>
-                      <Text>Confirm</Text>
-                    </Button></View>
-                </View>
-              </CardItem>
+              </View>
+              <View>
+                <TouchableOpacity onPress={() => this.addToCart()} style={{ borderWidth: 1, paddingTop: 5, paddingBottom: 5, borderColor: 'cornflowerblue', alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ color: 'cornflowerblue' }}>Confirm</Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+              </View>
             </Card>
           </View>
         </Modal>
@@ -169,65 +170,65 @@ class ProductDetailScreen extends React.PureComponent {
             </List>
           }
           {this.props.product && <Card transparent style={{ flex: 0, backgroundColor: '#ffffff' }}>
-            <CardItem >
+            <View >
               <Body>
                 <Text style={{ margin: 5, fontSize: 14, color: 'black' }}>Product Details</Text>
               </Body>
-            </CardItem>
-            <CardItem style={{ marginTop: 15 }}>
+            </View>
+            <View style={{ marginTop: 15 }}>
               <Body>
                 <Text> Model : {this.props.product.product_model}</Text>
               </Body>
               <Left>
                 <Text> Category : {this.props.product.prodcat_name}</Text>
               </Left>
-            </CardItem>
-            <CardItem style={{ marginTop: 10 }}>
+            </View>
+            <View style={{ marginTop: 10 }}>
               <Body>
                 <Text> Type : {this.props.product.product_type}</Text>
               </Body>
               <Left>
                 <Text> Condition : {this.props.product.selprod_condition == 0 ? 'New' : this.props.product.selprod_condition == 1 ? 'Refurbished' : 'Used'}</Text>
               </Left>
-            </CardItem>
-            <CardItem style={{ marginTop: 10 }}>
+            </View>
+            <View style={{ marginTop: 10 }}>
               <Body>
                 <Text> In Stock : {this.props.product.selprod_stock}</Text>
               </Body>
               <Left>
                 <Text> Product Rating : {this.props.product.prod_rating}</Text>
               </Left>
-            </CardItem>
-            <CardItem style={{ marginTop: 10 }}>
+            </View>
+            <View style={{ marginTop: 10 }}>
               <Body>
                 <Text> Favorite : {this.props.product.isfavorite}</Text>
               </Body>
               <Left>
                 <Text> Review : {this.props.product.totReviews}</Text>
               </Left>
-            </CardItem>
-            <CardItem style={{ marginTop: 10 }}>
+            </View>
+            <View style={{ marginTop: 10 }}>
               <Body>
                 <Text> Description : {this.props.product.product_short_description}</Text>
               </Body>
-            </CardItem>
+            </View>
           </Card>
           }
 
 
           {this.props.shop && <Card transparent style={{ flex: 0 }}>
-            <CardItem>
+            <View>
               <Left>
                 <TouchableHighlight onPress={() => this.props.navigation.navigate('ShopDetail', { shop_id: this.props.shop.shop_id })} >
-                  <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)', margin:5 }}  source={{ uri: this.props.shop.shop_logo }} />
+                  <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)', margin: 5 }} source={{ uri: this.props.shop.shop_logo }} />
                 </TouchableHighlight>
                 <Body>
                   <Text>{this.props.shop.shop_name}</Text>
                   <Text note>Open since {moment(this.props.shop.shop_created_on).format('L')}</Text>
                 </Body>
               </Left>
-            </CardItem>
-            <CardItem>
+            </View>
+            <View>
               <Body>
                 <Text style={{ margin: 5 }}>
                   {this.props.shop.shop_description}
@@ -236,25 +237,25 @@ class ProductDetailScreen extends React.PureComponent {
                   {this.props.shop.shop_state_name}, {this.props.shop.shop_country_name}
                 </Text>
               </Body>
-            </CardItem>
-            <CardItem>
+            </View>
+            <View>
               <Left>
                 <Text style={{ margin: 5 }}>Rating : {this.props.shop_rating}</Text>
               </Left>
-            </CardItem>
+            </View>
           </Card>
           }
 
           {this.props.relatedProductsRs && <Card transparent>
-            <CardItem header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
+            <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
               <Left>
                 <H2>Related Products</H2>
               </Left>
               <Right>
                 <Icon name='fastforward' style={{ color: '#000' }} />
               </Right>
-            </CardItem>
-            <CardItem>
+            </View>
+            <View>
               <FlatList
                 horizontal
                 data={this.props.relatedProductsRs}
@@ -264,33 +265,33 @@ class ProductDetailScreen extends React.PureComponent {
                   <View style={{ width: Layout.window.width / 2 }}>
                     <Card transparent>
 
-                      <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                      <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                         <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
                         <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
-                      </CardItem>
-                      <CardItem footer>
+                      </View>
+                      <View footer>
                         <Left>
                           <Text note>{item.product_name}</Text>
                         </Left>
-                      </CardItem>
+                      </View>
                     </Card>
                   </View>
                 )}
               />
-            </CardItem>
+            </View>
           </Card>}
 
 
           {this.props.recommendedProducts && <Card transparent>
-            <CardItem header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
+            <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
               <Left>
                 <H2>Recommendation</H2>
               </Left>
               <Right>
                 <Icon name='fastforward' style={{ color: '#000' }} />
               </Right>
-            </CardItem>
-            <CardItem>
+            </View>
+            <View>
               <FlatList
                 horizontal
                 data={this.props.recommendedProducts}
@@ -300,20 +301,20 @@ class ProductDetailScreen extends React.PureComponent {
                   <View style={{ width: Layout.window.width / 2 }}>
                     <Card transparent>
 
-                      <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                      <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                         <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
                         <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
-                      </CardItem>
-                      <CardItem footer>
+                      </View>
+                      <View footer>
                         <Left>
                           <Text note>{item.product_name}</Text>
                         </Left>
-                      </CardItem>
+                      </View>
                     </Card>
                   </View>
                 )}
               />
-            </CardItem>
+            </View>
           </Card>}
           <View style={{ margin: 15 }} />
         </Content>

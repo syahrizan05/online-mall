@@ -117,9 +117,13 @@ class HomeScreen extends React.PureComponent {
 
           {this.props.result ?
             <Content>
-
-              <Card style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
-                <View>
+               <FlatList
+                data={this.props.result}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={2}
+                renderItem={({ item }) => (
+                  <Card style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
+                    <View style={{flexDirection:'row'}}>
                   <Left><Text note>{item.prodcat_name}</Text></Left>
                 </View>
                 <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
@@ -133,7 +137,12 @@ class HomeScreen extends React.PureComponent {
                     <Text note>{item.product_name}</Text>
                   </Left>
                 </View>
-              </Card>
+                  </Card>
+                )}
+              />
+
+
+             
             </Content>
             :
             <Content>
@@ -158,7 +167,7 @@ class HomeScreen extends React.PureComponent {
                 />
               </View>
               <Card transparent>
-                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
+                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10,flexDirection:'row' }}>
                   <Left>
                     <H2>New Collections</H2>
                   </Left>
@@ -176,10 +185,12 @@ class HomeScreen extends React.PureComponent {
                       renderItem={({ item }) => (
                         <View style={{ width: Layout.window.width / 2 }}>
                           <Card transparent style={{ marginLeft: 10, marginRight: 10 }}>
-                            <View style={{ flex: 1, paddingRight: 0, paddingLeft: 0 }} cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                            <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                            <View style={{ flex: 1, paddingRight: 0, paddingLeft: 0 }} cardBody button >
                               <Image style={{ flex: 1, height: Layout.window.height / 9, width: Layout.window.width - 20, }} source={{ uri: item.image_url }} resizeMode='stretch' />
                               <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
                             </View>
+                            </TouchableHighlight>
                             <View footer>
                               <View style={{ flex: 1, flexDirection: 'row', paddingTop: 5 }}>
                                 <Text note style={{ flex: 3, fontSize: 12 }} numberOfLines={1} ellipsizeMode='tail'>{item.product_name}</Text>
@@ -195,7 +206,7 @@ class HomeScreen extends React.PureComponent {
                   </View> : <View style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></View>}
               </Card>
               <Card transparent>
-                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
+                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10,flexDirection:'row' }}>
                   <Left>
                     <H2>Featured Products</H2></Left>
                   <Right>
@@ -209,7 +220,8 @@ class HomeScreen extends React.PureComponent {
                     numColumns={2}
                     renderItem={({ item }) => (
                       <Card transparent style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
-                        <View>
+                        
+                        <View >
                           <Left>
                             <TouchableHighlight onPress={() => this.props.navigation.navigate('ShopDetail', { shop_id: item.shop_id })} >
                               <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)' }} small source={{ uri: item.shop_logo }} />
@@ -217,11 +229,13 @@ class HomeScreen extends React.PureComponent {
                             <Text note>{item.shop_name}</Text>
                           </Left>
                         </View>
+                        <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                         <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
                           <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
                         </View>
+                        </TouchableHighlight>
                         <View footer>
                           <View style={{ flex: 1, flexDirection: 'row', paddingTop: 5 }}>
                             <Text note style={{ flex: 3, fontSize: 12 }} numberOfLines={1} ellipsizeMode='tail'>{item.product_name}</Text>
@@ -238,7 +252,7 @@ class HomeScreen extends React.PureComponent {
                 </View> : <View style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></View>}
               </Card>
               {this.props.token && <Card transparent>
-                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
+                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10,flexDirection:'row' }}>
                   <Left>
                     <H2>All Products</H2></Left>
                   <Right>
@@ -255,11 +269,14 @@ class HomeScreen extends React.PureComponent {
                         <View>
                           <Left><Text note>{item.prodcat_name}</Text></Left>
                         </View>
-                        <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                        <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+
+                        <View cardBody button >
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.product_image }} />
                           <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
                         </View>
+                        </TouchableHighlight>
                         <View footer>
                           <View style={{ flex: 1, flexDirection: 'row', paddingTop: 5 }}>
                             <Text note style={{ flex: 3, fontSize: 12 }} numberOfLines={1} ellipsizeMode='tail'>{item.product_name}</Text>

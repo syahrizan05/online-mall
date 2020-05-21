@@ -53,7 +53,7 @@ class NotificationScreen extends React.PureComponent {
         </Header>
         <Content>
           <Card transparent style={{ marginTop: 0 }}>
-            <CardItem>
+            <View>
               <FlatList
                 data={this.props.records}
                 keyExtractor={(item, index) => index.toString()}
@@ -72,7 +72,7 @@ class NotificationScreen extends React.PureComponent {
                   </List>
                 )}
               />
-            </CardItem>
+            </View>
           </Card>
         </Content>
         <Footer>
