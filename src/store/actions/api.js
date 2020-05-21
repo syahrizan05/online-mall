@@ -4,7 +4,7 @@ import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store';
 // import {Constants, Facebook, GoogleSignIn} from 'expo';
 import _ from 'lodash'
-const apiUrl = 'https://www.mayamall.com/mobile-app-api/'
+const apiUrl = 'https://www.mayamall.io/mobile-app-api/'
 
 export const loginApi = (email, password) => {
 
