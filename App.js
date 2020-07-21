@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View,AsyncStorage,Alert } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage, Alert } from 'react-native';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
 
-import {initiateApp} from './src/store/actions/action'
+import { initiateApp } from './src/store/actions/action'
 
 import material from './native-base-theme/variables/material';
 import variables from './native-base-theme/variables/variables';
@@ -29,7 +29,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 export default class App extends React.PureComponent {
   state = {
     isLoadingComplete: false,
-    notFirstTime:false
+    notFirstTime: false
   };
 
   checkFirstTime = async () => {
@@ -45,7 +45,7 @@ export default class App extends React.PureComponent {
     }
   }
 
-  async checkUpdate(){
+  async checkUpdate() {
     try {
       const update = await Expo.Updates.checkForUpdateAsync();
       if (update.isAvailable) {
@@ -56,8 +56,8 @@ export default class App extends React.PureComponent {
           //body
           'I am two option alert. Do you want to cancel me ?',
           [
-            {text: 'Yes', onPress: () => console.log('Yes Pressed')},
-            {text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel'},
+            { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+            { text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel' },
           ],
           { cancelable: false }
           //clicking out side of alert will not cancel
@@ -69,7 +69,7 @@ export default class App extends React.PureComponent {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.checkUpdate()
     this.checkFirstTime()
     //store.dispatch(initiateApp())
@@ -85,15 +85,17 @@ export default class App extends React.PureComponent {
         />
       );
     } else {
+
       return (
         <Provider store={store}>
-        <StyleProvider  style={getTheme(minimal)}> 
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          
-          {this.state.notFirstTime ? <Intro /> : <Intro />}
-        </View>
-        </StyleProvider>
+          {/* minimal will produce error on CardItem */}
+          <StyleProvider style={getTheme(material)}>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+
+              {this.state.notFirstTime ? <Intro /> : <Intro />}
+            </View>
+          </StyleProvider>
         </Provider>
       );
     }

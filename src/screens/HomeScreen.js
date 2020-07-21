@@ -103,7 +103,7 @@ class HomeScreen extends React.PureComponent {
                 selectedValue='0'
                 onValueChange={(value) => this.onValueChange(value)}
               >
-                <Picker.Item label="0" value="0" />
+              <Picker.Item label="0" value="0" />
                 <Picker.Item label="1" value="2" />
                 <Picker.Item label="2" value="1" />
               </Picker>
@@ -117,32 +117,30 @@ class HomeScreen extends React.PureComponent {
 
           {this.props.result ?
             <Content>
-               <FlatList
+
+              <FlatList
                 data={this.props.result}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={2}
                 renderItem={({ item }) => (
                   <Card style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
-                    <View style={{flexDirection:'row'}}>
-                  <Left><Text note>{item.prodcat_name}</Text></Left>
-                </View>
-                <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
-                  <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.product_image }} />
-                  <View style={{ position: 'absolute', top: 0, right: 10 }}>
-                    <Text>{this.props.currencySymbol}{item.theprice}</Text>
-                  </View>
-                </View>
-                <View footer>
-                  <Left>
-                    <Text note>{item.product_name}</Text>
-                  </Left>
-                </View>
+                    <CardItem>
+                      <Left><Text note>{item.prodcat_name}</Text></Left>
+                    </CardItem>
+                    <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.product_id })}>
+                      <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.product_image }} />
+                      <View style={{ position: 'absolute', top: 0, right: 10 }}>
+                        <Text>{this.props.currencySymbol}{item.theprice}</Text>
+                      </View>
+                    </CardItem>
+                    <CardItem footer>
+                      <Left>
+                        <Text note>{item.product_name}</Text>
+                      </Left>
+                    </CardItem>
                   </Card>
                 )}
               />
-
-
-             
             </Content>
             :
             <Content>
@@ -167,16 +165,16 @@ class HomeScreen extends React.PureComponent {
                 />
               </View>
               <Card transparent>
-                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10,flexDirection:'row' }}>
+                <CardItem header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
                   <Left>
                     <H2>New Collections</H2>
                   </Left>
                   <Right>
                     <Icon name='fastforward' style={{ color: 'dimgrey' }} />
                   </Right>
-                </View>
+                </CardItem>
                 {this.props.newCollectionItems ?
-                  <View>
+                  <CardItem>
                     <FlatList
                       horizontal
                       data={this.props.newCollectionItems}
@@ -185,58 +183,53 @@ class HomeScreen extends React.PureComponent {
                       renderItem={({ item }) => (
                         <View style={{ width: Layout.window.width / 2 }}>
                           <Card transparent style={{ marginLeft: 10, marginRight: 10 }}>
-                            <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
-                            <View style={{ flex: 1, paddingRight: 0, paddingLeft: 0 }} cardBody button >
+                            <CardItem style={{ flex: 1, paddingRight: 0, paddingLeft: 0 }} cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                               <Image style={{ flex: 1, height: Layout.window.height / 9, width: Layout.window.width - 20, }} source={{ uri: item.image_url }} resizeMode='stretch' />
                               <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
-                            </View>
-                            </TouchableHighlight>
-                            <View footer>
+                            </CardItem>
+                            <CardItem footer>
                               <View style={{ flex: 1, flexDirection: 'row', paddingTop: 5 }}>
                                 <Text note style={{ flex: 3, fontSize: 12 }} numberOfLines={1} ellipsizeMode='tail'>{item.product_name}</Text>
                                 {this.props.token && <TouchableHighlight style={{ flex: 1, }} transparent onPress={() => this.setFavorite(item.selprod_id)}>
                                   <Icon name='heart' style={{ fontSize: 18, paddingRight: 3, textAlign: 'right', color: item.isfavorite == 1 ? 'red' : 'lightgrey' }} />
                                 </TouchableHighlight>}
                               </View>
-                            </View>
+                            </CardItem>
                           </Card>
                         </View>
                       )}
                     />
-                  </View> : <View style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></View>}
+                  </CardItem> : <CardItem style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></CardItem>}
               </Card>
               <Card transparent>
-                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10,flexDirection:'row' }}>
+                <CardItem header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
                   <Left>
                     <H2>Featured Products</H2></Left>
                   <Right>
                     <Icon name='fastforward' style={{ color: 'dimgrey', transform: [{ rotate: '90deg' }] }} />
                   </Right>
-                </View>
-                {this.props.featuredProduct ? <View>
+                </CardItem>
+                {this.props.featuredProduct ? <CardItem>
                   <FlatList
                     data={this.props.featuredProduct}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={2}
                     renderItem={({ item }) => (
                       <Card transparent style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
-                        
-                        <View >
+                        <CardItem>
                           <Left>
                             <TouchableHighlight onPress={() => this.props.navigation.navigate('ShopDetail', { shop_id: item.shop_id })} >
                               <Thumbnail style={{ borderWidth: 1, borderColor: 'rgba(0,0,102,0.5)' }} small source={{ uri: item.shop_logo }} />
                             </TouchableHighlight>
                             <Text note>{item.shop_name}</Text>
                           </Left>
-                        </View>
-                        <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
-                        <View cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
+                        </CardItem>
+                        <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.image_url }} />
                           <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
-                        </View>
-                        </TouchableHighlight>
-                        <View footer>
+                        </CardItem>
+                        <CardItem footer>
                           <View style={{ flex: 1, flexDirection: 'row', paddingTop: 5 }}>
                             <Text note style={{ flex: 3, fontSize: 12 }} numberOfLines={1} ellipsizeMode='tail'>{item.product_name}</Text>
 
@@ -245,50 +238,47 @@ class HomeScreen extends React.PureComponent {
                             </TouchableHighlight>}
 
                           </View>
-                        </View>
+                        </CardItem>
                       </Card>
                     )}
                   />
-                </View> : <View style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></View>}
+                </CardItem> : <CardItem style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></CardItem>}
               </Card>
               {this.props.token && <Card transparent>
-                <View header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10,flexDirection:'row' }}>
+                <CardItem header style={{ paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10 }}>
                   <Left>
                     <H2>All Products</H2></Left>
                   <Right>
                     <Icon name='fastforward' style={{ color: 'dimgrey', transform: [{ rotate: '90deg' }] }} />
                   </Right>
-                </View>
-                {this.props.products ? <View>
+                </CardItem>
+                {this.props.products ? <CardItem>
                   <FlatList
                     data={this.props.products}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={2}
                     renderItem={({ item }) => (
                       <Card transparent style={{ flex: 1, marginRight: 10, marginLeft: 10, marginTop: 10, marginBottom: 10 }}>
-                        <View>
+                        <CardItem>
                           <Left><Text note>{item.prodcat_name}</Text></Left>
-                        </View>
-                        <TouchableHighlight onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
-
-                        <View cardBody button >
+                        </CardItem>
+                        <CardItem cardBody button onPress={() => this.props.navigation.navigate('ProductDetail', { product_id: item.selprod_id })}>
                           <Image style={{ height: Layout.window.height / 9, width: null, flex: 1 }} source={{ uri: item.product_image }} />
                           <View style={{ position: 'absolute', top: 0, right: 10, backgroundColor: 'rgba(0,0,102,0.5)', paddingTop: 0, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <Text note style={{ color: '#fff', textAlignVertical: 'center', textAlign: 'center', marginTop: 0 }}>{this.props.currencySymbol}{item.theprice}</Text></View>
-                        </View>
-                        </TouchableHighlight>
-                        <View footer>
+                        </CardItem>
+                        <CardItem footer>
                           <View style={{ flex: 1, flexDirection: 'row', paddingTop: 5 }}>
                             <Text note style={{ flex: 3, fontSize: 12 }} numberOfLines={1} ellipsizeMode='tail'>{item.product_name}</Text>
                             <TouchableHighlight style={{ flex: 1, }} transparent onPress={() => this.setFavorite(item.selprod_id)}>
                               <Icon name='heart' style={{ fontSize: 18, paddingRight: 3, textAlign: 'right', color: item.isfavorite == 1 ? 'red' : 'lightgrey' }} />
                             </TouchableHighlight>
                           </View>
-                        </View>
+                        </CardItem>
                       </Card>
                     )}
                   />
-                </View> : <View style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></View>}
+                </CardItem> : <CardItem style={{ padding: 10 }}><Left /><Body><ActivityIndicator size="small" color="#37beef" /><Right /></Body></CardItem>}
               </Card>}
             </Content>
           }
