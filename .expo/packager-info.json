@@ -1,10 +1,10 @@
 {
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://37-axu.fcgbdeveloper.mayamall.exp.direct",
-  "packagerNgrokUrl": "https://packager.37-axu.fcgbdeveloper.mayamall.exp.direct",
-  "ngrokPid": 18292,
-  "devToolsPort": 19002,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "devToolsPort": 19003,
   "packagerPort": 19001,
-  "packagerPid": 17144,
+  "packagerPid": 12396,
   "webpackServerPort": null
 }
